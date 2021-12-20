@@ -23,7 +23,7 @@ namespace Bebruber.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddSwaggerGen();
             services.AddControllersWithViews();
         }
 
@@ -32,6 +32,8 @@ namespace Bebruber.Server
         {
             if (env.IsDevelopment())
             {
+                app.UseSwagger();
+                app.UseSwaggerUI();
                 app.UseDeveloperExceptionPage();
                 app.UseWebAssemblyDebugging();
             }
@@ -44,29 +46,29 @@ namespace Bebruber.Server
 
             app.UseHttpsRedirection();
 
-            app.MapWhen(ctx => ctx.Request.Path.StartsWithSegments("/FirstApp"), first =>
+            app.MapWhen(ctx => ctx.Request.Path.StartsWithSegments("/driver"), first =>
             {
-                first.UseBlazorFrameworkFiles("/FirstApp");
+                first.UseBlazorFrameworkFiles("/driver");
                 first.UseStaticFiles();
 
                 first.UseRouting();
                 first.UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();
-                    endpoints.MapFallbackToFile("FirstApp/{*path:nonfile}", "FirstApp/index.html");
+                    endpoints.MapFallbackToFile("driver/{*path:nonfile}", "driver/index.html");
                 });
             });
 
-            app.MapWhen(ctx => ctx.Request.Path.StartsWithSegments("/SecondApp"), second =>
+            app.MapWhen(ctx => ctx.Request.Path.StartsWithSegments("/user"), second =>
             {
-                second.UseBlazorFrameworkFiles("/SecondApp");
+                second.UseBlazorFrameworkFiles("/user");
                 second.UseStaticFiles();
 
                 second.UseRouting();
                 second.UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();
-                    endpoints.MapFallbackToFile("SecondApp/{*path:nonfile}", "SecondApp/index.html");
+                    endpoints.MapFallbackToFile("user/{*path:nonfile}", "user/index.html");
                 });
             });
         }

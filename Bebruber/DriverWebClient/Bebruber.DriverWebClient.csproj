@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <StaticWebAssetBasePath>FirstApp</StaticWebAssetBasePath>
+    <StaticWebAssetBasePath>driver</StaticWebAssetBasePath>
   </PropertyGroup>
 
   <ItemGroup>
