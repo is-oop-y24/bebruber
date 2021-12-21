@@ -1,12 +1,9 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Linq;
-using System.Threading.Tasks;
+using Bebruber.Core;
 
 namespace Bebruber.Server
 {
@@ -24,6 +21,8 @@ namespace Bebruber.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSwaggerGen();
+            services.AddCoreModule();
+            services.AddSignalR();
             services.AddControllersWithViews();
         }
 
@@ -46,26 +45,26 @@ namespace Bebruber.Server
 
             app.UseHttpsRedirection();
 
-            app.MapWhen(ctx => ctx.Request.Path.StartsWithSegments("/driver"), first =>
+            app.MapWhen(ctx => ctx.Request.Path.StartsWithSegments("/driver"), driverWebClient =>
             {
-                first.UseBlazorFrameworkFiles("/driver");
-                first.UseStaticFiles();
+                driverWebClient.UseBlazorFrameworkFiles("/driver");
+                driverWebClient.UseStaticFiles();
 
-                first.UseRouting();
-                first.UseEndpoints(endpoints =>
+                driverWebClient.UseRouting();
+                driverWebClient.UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();
                     endpoints.MapFallbackToFile("driver/{*path:nonfile}", "driver/index.html");
                 });
             });
 
-            app.MapWhen(ctx => ctx.Request.Path.StartsWithSegments("/user"), second =>
+            app.MapWhen(ctx => ctx.Request.Path.StartsWithSegments("/user"), userWebClient =>
             {
-                second.UseBlazorFrameworkFiles("/user");
-                second.UseStaticFiles();
+                userWebClient.UseBlazorFrameworkFiles("/user");
+                userWebClient.UseStaticFiles();
 
-                second.UseRouting();
-                second.UseEndpoints(endpoints =>
+                userWebClient.UseRouting();
+                userWebClient.UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();
                     endpoints.MapFallbackToFile("user/{*path:nonfile}", "user/index.html");

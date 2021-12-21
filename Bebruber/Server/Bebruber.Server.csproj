@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Bebruber.Core\Bebruber.Core.csproj" />
     <ProjectReference Include="..\DriverWebClient\Bebruber.DriverWebClient.csproj" />
     <ProjectReference Include="..\UserWebClient\Bebruber.UserWebClient.csproj" />
     <ProjectReference Include="..\Shared\Bebruber.Shared.csproj" />
