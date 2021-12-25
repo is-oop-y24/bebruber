@@ -1,6 +1,7 @@
-using System.Linq;
+using System;
 using Bebruber.Domain.Tools;
 using Bebruber.Domain.ValueObjects.Exceptions;
+using Bebruber.Utility.Extensions;
 
 namespace Bebruber.Domain.ValueObjects;
 
@@ -8,7 +9,7 @@ public class CvvCode : ValueObject<CvvCode>
 {
     public CvvCode(string value)
     {
-        if (value.Length is not 3 || !value.All(char.IsDigit))
+        if (value.Length is not 3 || !value.AsSpan().All(char.IsDigit))
             throw new InvalidCvvCodeException(value);
 
         Value = value;

@@ -1,7 +1,7 @@
 using System;
-using System.Linq;
 using Bebruber.Domain.Tools;
 using Bebruber.Domain.ValueObjects.Exceptions;
+using Bebruber.Utility.Extensions;
 
 namespace Bebruber.Domain.ValueObjects;
 
@@ -32,7 +32,7 @@ public sealed class Name : ValueObject<Name>
 
     private static void Validate(string componentName, string? componentValue)
     {
-        if (string.IsNullOrEmpty(componentValue) || !componentValue.All(char.IsLetter))
+        if (string.IsNullOrEmpty(componentValue) || !componentValue.AsSpan().All(char.IsLetter))
             throw new InvalidClientNameComponentException(componentName, componentValue);
     }
 }
