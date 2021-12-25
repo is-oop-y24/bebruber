@@ -11,9 +11,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Bebruber.Core\Bebruber.Core.csproj" />
-    <ProjectReference Include="..\DriverWebClient\Bebruber.DriverWebClient.csproj" />
-    <ProjectReference Include="..\UserWebClient\Bebruber.UserWebClient.csproj" />
-    <ProjectReference Include="..\Shared\Bebruber.Shared.csproj" />
+    <ProjectReference Include="..\Bebruber.Endpoints.DriverWebClient\Bebruber.Endpoints.DriverWebClient.csproj" />
+    <ProjectReference Include="..\Bebruber.Endpoints.UserWebClient\Bebruber.Endpoints.UserWebClient.csproj" />
+    <ProjectReference Include="..\Bebruber.Endpoints.Shared\Bebruber.Endpoints.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

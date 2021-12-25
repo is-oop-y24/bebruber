@@ -7,11 +7,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.2" />
-    <!--<PackageReference Include="System.Net.Http.Json" Version="3.2.0-preview4.20177.1" />-->
+    <PackageReference Include="MudBlazor" Version="5.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\Bebruber.Shared.csproj" />
+    <ProjectReference Include="..\Bebruber.Endpoints.Shared\Bebruber.Endpoints.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

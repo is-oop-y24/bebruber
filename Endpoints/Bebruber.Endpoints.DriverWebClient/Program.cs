@@ -1,12 +1,11 @@
 using System;
 using System.Net.Http;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Text;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using MudBlazor.Services;
 
-namespace Bebruber.DriverWebClient
+namespace Bebruber.Endpoints.DriverWebClient
 {
     public class Program
     {
@@ -14,6 +13,7 @@ namespace Bebruber.DriverWebClient
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
+            builder.Services.AddMudServices();
 
             builder.Services.AddSingleton(new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
