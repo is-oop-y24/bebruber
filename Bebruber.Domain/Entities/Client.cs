@@ -8,14 +8,14 @@ namespace Bebruber.Domain.Entities;
 
 public class Client : Entity<Client>
 {
-    private readonly List<PaymentInfo> _paymentInfos;
+    private readonly List<CardInfo> _paymentInfos;
 
     public Client(Name name, Rating rating, Address? paymentAddress)
     {
         Name = name.ThrowIfNull();
         Rating = rating.ThrowIfNull();
         PaymentAddress = paymentAddress;
-        _paymentInfos = new List<PaymentInfo>();
+        _paymentInfos = new List<CardInfo>();
     }
 
     private Client() { }
@@ -23,19 +23,19 @@ public class Client : Entity<Client>
     public Name Name { get; private init; }
     public Rating Rating { get; set; }
     public Address? PaymentAddress { get; private set; }
-    public IReadOnlyCollection<PaymentInfo> PaymentInfos => _paymentInfos;
+    public IReadOnlyCollection<CardInfo> PaymentInfos => _paymentInfos;
 
-    public void AddPaymentInfo(PaymentInfo paymentInfo)
+    public void AddPaymentInfo(CardInfo cardInfo)
     {
-        if (_paymentInfos.Contains(paymentInfo))
-            throw new OwnedPaymentInfoException(this, paymentInfo);
+        if (_paymentInfos.Contains(cardInfo))
+            throw new OwnedCardInfoException(this, cardInfo);
 
-        _paymentInfos.Add(paymentInfo);
+        _paymentInfos.Add(cardInfo);
     }
 
-    public void RemovePaymentInfo(PaymentInfo paymentInfo)
+    public void RemovePaymentInfo(CardInfo cardInfo)
     {
-        if (!_paymentInfos.Remove(paymentInfo))
-            throw new NonOwnedPaymentInfoException(this, paymentInfo);
+        if (!_paymentInfos.Remove(cardInfo))
+            throw new NonOwnedCardInfoException(this, cardInfo);
     }
 }

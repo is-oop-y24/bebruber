@@ -4,9 +4,9 @@ using Bebruber.Utility.Extensions;
 
 namespace Bebruber.Domain.Entities;
 
-public class PaymentInfo : Entity<PaymentInfo>
+public class CardInfo : Entity<CardInfo>
 {
-    public PaymentInfo(CardNumber cardNumber, ExpirationDate expirationDate, CvvCode cvvCode)
+    public CardInfo(CardNumber cardNumber, ExpirationDate expirationDate, CvvCode cvvCode)
     {
         CardNumber = cardNumber.ThrowIfNull();
         ExpirationDate = expirationDate.ThrowIfNull();
