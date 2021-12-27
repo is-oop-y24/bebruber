@@ -18,9 +18,7 @@ public class Client : Entity<Client>
         _paymentInfos = new List<PaymentInfo>();
     }
 
-#pragma warning disable CS8618
     private Client() { }
-#pragma warning restore CS8618
 
     public Name Name { get; private init; }
     public Rating Rating { get; set; }
