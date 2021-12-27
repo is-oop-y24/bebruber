@@ -28,6 +28,9 @@ dotnet_diagnostic.CA1001.severity=error
 # SA1503: Braces should not be omitted
 dotnet_diagnostic.SA1503.severity = none
 
+# SA1008: OpeningParenthesisMustBeSpacedCorrectly
+dotnet_diagnostic.SA1008.severity = none
+
 # SA1200: Using directives should be placed correctly
 dotnet_diagnostic.SA1200.severity = none
 
