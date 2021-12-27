@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bebruber.Domain.Tools;
 
@@ -6,17 +8,29 @@ public abstract class ValueObject<TObject> : IEquatable<TObject>
     where TObject : ValueObject<TObject>
 {
     public static bool operator ==(ValueObject<TObject>? left, ValueObject<TObject>? right)
-        => left?.Equals(right) ?? false;
+    {
+        if ((left, right) is (null, null))
+            return true;
+
+        return left?.Equals(right) ?? false;
+    }
 
     public static bool operator !=(ValueObject<TObject>? left, ValueObject<TObject>? right)
         => !(left == right);
 
     public bool Equals(TObject? other)
-        => other is not null && EqualTo(other);
+        => other is not null &&
+           other.GetEqualityComponents().SequenceEqual(GetEqualityComponents());
 
     public override bool Equals(object? obj)
         => Equals(obj as TObject);
 
-    public abstract override int GetHashCode();
-    protected abstract bool EqualTo(TObject other);
+    public override int GetHashCode()
+    {
+        return GetEqualityComponents()
+            .Select(x => x?.GetHashCode() ?? 0)
+            .Aggregate(HashCode.Combine);
+    }
+
+    protected abstract IEnumerable<object?> GetEqualityComponents();
 }

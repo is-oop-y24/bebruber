@@ -1,7 +1,7 @@
-using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Bebruber.Domain.Tools;
 using Bebruber.Domain.ValueObjects.Exceptions;
-using Bebruber.Utility.Extensions;
 
 namespace Bebruber.Domain.ValueObjects;
 
@@ -9,17 +9,18 @@ public class CvvCode : ValueObject<CvvCode>
 {
     public CvvCode(string value)
     {
-        if (value.Length is not 3 || !value.AsSpan().All(char.IsDigit))
+        if (!Regex.IsMatch(value))
             throw new InvalidCvvCodeException(value);
 
         Value = value;
     }
 
+    public static Regex Regex { get; } = new Regex(@"[0-9]{3}", RegexOptions.Compiled);
+
     public string Value { get; private init; }
 
-    public override int GetHashCode()
-        => Value.GetHashCode();
-
-    protected override bool EqualTo(CvvCode other)
-        => other.Value.Equals(Value);
+    protected override IEnumerable<object?> GetEqualityComponents()
+    {
+        yield return Value;
+    }
 }

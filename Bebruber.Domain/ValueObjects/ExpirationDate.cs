@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using Bebruber.Domain.Tools;
 using Bebruber.Domain.ValueObjects.Exceptions;
 
@@ -21,9 +21,9 @@ public class ExpirationDate : ValueObject<ExpirationDate>
     public int Year { get; private init; }
     public int Month { get; private init; }
 
-    public override int GetHashCode()
-        => HashCode.Combine(Year, Month);
-
-    protected override bool EqualTo(ExpirationDate other)
-        => other.Year.Equals(Year) && other.Month.Equals(Month);
+    protected override IEnumerable<object?> GetEqualityComponents()
+    {
+        yield return Year;
+        yield return Month;
+    }
 }

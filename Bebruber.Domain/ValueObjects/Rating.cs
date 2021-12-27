@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Bebruber.Domain.Tools;
 using Bebruber.Domain.ValueObjects.Exceptions;
 
@@ -18,9 +19,8 @@ public class Rating : ValueObject<Rating>
 
     public double Value { get; private init; }
 
-    public override int GetHashCode()
-        => Value.GetHashCode();
-
-    protected override bool EqualTo(Rating other)
-        => other.Value.Equals(Value);
+    protected override IEnumerable<object?> GetEqualityComponents()
+    {
+        yield return Value;
+    }
 }
