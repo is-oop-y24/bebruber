@@ -23,7 +23,7 @@ public sealed class Name : ValueObject<Name>
         LastName = lastName;
     }
 
-    public static Regex Regex { get; } = new Regex(@"[a-zа-я\-]+", RegexOptions.Compiled);
+    public static Regex Regex { get; } = new Regex(@"[a-zа-я\-]+", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
     public string FirstName { get; private init; }
     public string MiddleName { get; private init; }
