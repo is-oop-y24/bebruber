@@ -10,4 +10,9 @@ public class BebruberDatabaseContext : DbContext
 
     public DbSet<Client> Clients { get; private set; } = null!;
     public DbSet<CardInfo> PaymentInfos { get; private set; } = null!;
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(IAssemblyMarker).Assembly);
+    }
 }
