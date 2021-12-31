@@ -10,6 +10,7 @@ public class CarConfiguration : IEntityTypeConfiguration<Car>
     public void Configure(EntityTypeBuilder<Car> builder)
     {
         builder.HasOne(c => c.Owner);
+        builder.OwnsOne(d => d.CarNumber);
         builder.OwnsOne(c => c.Brand);
         builder.OwnsOne(c => c.Name);
         builder.OwnsOne(c => c.Color)

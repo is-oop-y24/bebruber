@@ -10,13 +10,12 @@ public class Driver : Entity<Driver>
 {
     private readonly List<Car> _cars;
 
-    public Driver(Name name, Rating rating, Address paymentAddress, CarNumber number, CardInfo cardInfo)
+    public Driver(Name name, Rating rating, Address paymentAddress, CardInfo cardInfo)
     {
         _cars = new List<Car>();
         Name = name.ThrowIfNull();
         Rating = rating.ThrowIfNull();
         PaymentAddress = paymentAddress.ThrowIfNull();
-        CarNumber = number.ThrowIfNull();
         CardInfo = cardInfo.ThrowIfNull();
     }
 
@@ -25,7 +24,6 @@ public class Driver : Entity<Driver>
     public Name Name { get; private init; }
     public Rating Rating { get; set; }
     public Address PaymentAddress { get; set; }
-    public CarNumber CarNumber { get; set; }
     public CardInfo CardInfo { get; set; }
     public IReadOnlyCollection<Car> Cars => _cars.AsReadOnly();
 

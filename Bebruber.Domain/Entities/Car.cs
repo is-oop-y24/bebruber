@@ -17,6 +17,7 @@ public class Car : Entity<Car>
     private Car() { }
 
     public Driver Owner { get; protected init; }
+    public CarNumber CarNumber { get; set; }
     public CarBrand Brand { get; private init; }
     public CarName Name { get; private init; }
     public CarColor Color { get; private init; }
