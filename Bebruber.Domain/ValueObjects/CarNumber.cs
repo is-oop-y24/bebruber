@@ -6,24 +6,21 @@ namespace Bebruber.Domain.ValueObjects;
 
 public class CarNumber : ValueObject<CardNumber>
 {
-    public CarNumber(CarNumberSeries series, CarNumberRegistrationNumber registrationNumber, CarNumberRegionCode regionCode)
+    public CarNumber(CarNumberRegistrationSeries series, CarNumberRegionCode regionCode)
     {
-        Series = series.ThrowIfNull();
-        RegistrationNumber = registrationNumber.ThrowIfNull();
+        RegistrationSeries = series.ThrowIfNull();
         RegionCode = regionCode.ThrowIfNull();
     }
 
-    public CarNumberSeries Series { get; private init; }
-    public CarNumberRegistrationNumber RegistrationNumber { get; private init; }
+    public CarNumberRegistrationSeries RegistrationSeries { get; private init; }
     public CarNumberRegionCode RegionCode { get; private init; }
 
     public override string ToString()
-        => $"{Series.FirstLetter}{RegistrationNumber}{Series.SecondLetters} {RegionCode}";
+        => $"{RegistrationSeries} {RegionCode}";
 
     protected override IEnumerable<object?> GetEqualityComponents()
     {
-        yield return Series;
-        yield return RegistrationNumber;
+        yield return RegistrationSeries;
         yield return RegionCode;
     }
 }
