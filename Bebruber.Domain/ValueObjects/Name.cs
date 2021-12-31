@@ -9,10 +9,10 @@ public sealed class Name : ValueObject<Name>
 {
     public Name(string firstName, string? middleName, string lastName)
     {
-        if (string.IsNullOrEmpty(firstName) || !Regex.IsMatch(firstName))
+        if (!Regex.IsMatch(firstName))
             throw new InvalidClientNameComponentException(nameof(FirstName), firstName);
 
-        if (string.IsNullOrEmpty(lastName) || !Regex.IsMatch(lastName))
+        if (!Regex.IsMatch(lastName))
             throw new InvalidClientNameComponentException(nameof(LastName), lastName);
 
         if (middleName is not null && !Regex.IsMatch(middleName))
