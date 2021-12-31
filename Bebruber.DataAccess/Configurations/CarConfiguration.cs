@@ -14,7 +14,7 @@ public class CarConfiguration : IEntityTypeConfiguration<Car>
         builder.OwnsOne(c => c.Brand);
         builder.OwnsOne(c => c.Name);
         builder.OwnsOne(c => c.Color)
-            .Property(c => c.Color)
+            .Property(c => c.Value)
             .HasConversion(c => c.ToArgb(),
                 i => Color.FromArgb(i));
     }
