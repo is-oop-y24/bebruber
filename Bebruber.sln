@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Endpoints.Shared",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Endpoints.Server", "Bebruber.Endpoints.Server\Bebruber.Endpoints.Server.csproj", "{82D8DB25-83D5-4FBA-BE6E-D0E6CA9D04A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Utility", "Bebruber.Utility\Bebruber.Utility.csproj", "{17EE56A9-F496-4A3E-A000-0BF2D24FD4D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
