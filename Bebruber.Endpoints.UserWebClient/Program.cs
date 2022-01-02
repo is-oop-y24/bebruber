@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using FisSst.BlazorMaps.DependencyInjection;
 using MudBlazor.Services;
 
 namespace Bebruber.Endpoints.UserWebClient
@@ -20,6 +21,8 @@ namespace Bebruber.Endpoints.UserWebClient
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddMudServices();
+            builder.Services.AddBlazorLeafletMaps();
+
             await builder.Build().RunAsync();
         }
     }
