@@ -1,78 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Bebruber.Endpoints.Shared.Models;
 using FisSst.BlazorMaps;
 using Microsoft.AspNetCore.Components;
+using Marker = Bebruber.Endpoints.Shared.Models.Marker;
+using Polyline = Bebruber.Endpoints.Shared.Models.Polyline;
 
 namespace Bebruber.Endpoints.Shared.Components
 {
-    public class MapPoint
-    {
-        public double Latitude { get; }
-        public double Longitude { get; }
-
-        public MapPoint(double latitude, double longitude)
-        {
-            Latitude = latitude;
-            Longitude = longitude;
-        }
-
-        public MapPoint(LatLng latLng)
-        {
-            Latitude = latLng.Lat;
-            Longitude = latLng.Lng;
-        }
-
-        internal LatLng ToLatLng() => new LatLng(Latitude, Longitude);
-
-        public override string ToString() => $"{Latitude} {Longitude}";
-    }
-
-    public class Marker
-    {
-        private FisSst.BlazorMaps.Marker _marker;
-
-        public MapPoint Coordinates { get; }
-        public string Tooltip { get; }
-
-        public Marker(MapPoint coordinates, FisSst.BlazorMaps.Marker marker)
-        {
-            _marker = marker;
-            Coordinates = coordinates;
-        }
-
-        public async Task SetTooltipAsync(string tooltip)
-        {
-            await _marker.BindTooltip(tooltip);
-        }
-
-        public async Task RemoveTooltipAsync()
-        {
-            await _marker.UnbindTooltip();
-        }
-
-        public async Task DeleteAsync()
-        {
-            await _marker.Remove();
-        }
-    }
-
-    public class Polyline
-    {
-        private List<MapPoint> _points;
-        private FisSst.BlazorMaps.Polyline _polyline;
-
-        public IReadOnlyList<MapPoint> Points => _points.AsReadOnly();
-
-        public Polyline(ICollection<MapPoint> points, FisSst.BlazorMaps.Polyline polyline)
-        {
-            _points = points.ToList();
-            _polyline = polyline;
-        }
-    }
-
     public partial class Map
     {
         private FisSst.BlazorMaps.Map _mapObject;
