@@ -1,0 +1,117 @@
+@startuml Creating The Ride
+'https://plantuml.com/sequence-diagram
+
+actor Client as client
+participant ClientHub as clientHub
+participant Server as server
+participant IClientNotificationService as clientNotificationService
+participant IPaymentService as paymentService
+participant IDriverLocationService as locationService
+participant RideFinishedCommandHandler as rideFinishedHandler
+participant DriverLocationUpdateCommandHandler as updateLocationHandler
+participant CreateRideCommandHandler as createRideHandler
+participant AcceptRideCommandHandler as acceptRideHandler
+participant Mediator as mediator
+participant DriverArrivedCommandHandler as driverArrivedHandler
+participant RideStartedCommandHandler as rideStartedHandler
+participant IRideService as rideService
+participant IRideQueueService as queueService
+participant IDriverNotificationService as driverNotificationService
+participant DriverHub as driverHub
+actor Driver as driver
+
+client -> server: post CreateRideRequest
+server -> mediator: send CreateRideCommand
+mediator -> createRideHandler: handle CreateRideCommand
+
+createRideHandler -> queueService: enqueue ride request
+createRideHandler <-- queueService: return ride request info
+
+createRideHandler -> locationService: get drivers nearby
+createRideHandler <-- locationService: return drivers list
+
+createRideHandler -> driverNotificationService: request drivers notification
+driverNotificationService -> driverHub: request driver notification
+driverHub -> driver: offers a ride
+
+createRideHandler -> clientNotificationService: registers hub
+mediator <-- createRideHandler: return hub connection info
+server <-- mediator: return hub connection info
+client <-- server: return hub connection info
+
+client -> client: waiting
+
+alt driver accept offer
+    driver -> driverHub: accept offer
+    driverHub -> mediator: send AcceptRideCommand
+    mediator -> acceptRideHandler: handle AcceptRideCommand
+    acceptRideHandler -> queueService: ask for owning queue entry
+    alt entry owning succeeded
+        queueService -> queueService: deletes entry from queue
+        acceptRideHandler <-- queueService: returns entry
+        acceptRideHandler -> rideService: create ride
+        acceptRideHandler <-- rideService: return ride
+        acceptRideHandler -> rideService: register ride
+
+        acceptRideHandler -> driverNotificationService
+        driverNotificationService -> driverHub
+        driverHub -> driver: notify successful acceptance
+
+        acceptRideHandler -> clientNotificationService: subscribe to driver location updates
+        mediator <-- acceptRideHandler: responds success
+        driverHub <-- mediator: returns success
+        driver <-- driverHub: returns success
+
+        loop driver approaching
+            driver -> driverHub: arival notification
+            driverHub -> mediator: send DriverLocationUpdateCommand
+            mediator -> updateLocationHandler: handle DriverLocationUpdateCommand
+
+            updateLocationHandler -> locationService: updates location
+
+            locationService -> clientNotificationService
+            clientNotificationService -> clientHub
+            clientHub -> client: post driver location
+        end
+
+        driver -> driverHub: reports arival
+        driverHub -> mediator: send DriverArrivedCommand
+        mediator -> driverArrivedHandler: handle DriverArrivedCommand
+        driverArrivedHandler -> rideService: update ride status
+
+        driverArrivedHandler -> clientNotificationService
+        clientNotificationService -> clientHub
+        clientHub -> client: driver arrived notification
+
+
+        driver -> driverHub: reports ride start
+        driverHub -> mediator: send RideStartCommand
+        mediator -> rideStartedHandler: handle RideStartCommand
+        rideStartedHandler -> rideService: update ride status
+
+        driverArrivedHandler -> clientNotificationService
+        clientNotificationService -> clientHub
+        clientHub -> client: ride started notification 
+
+
+        driver -> driverHub: ride finished
+        driverHub -> mediator: send RideFinishedCommand
+        mediator -> rideFinishedHandler: handle RideFinishedCommand
+
+        rideFinishedHandler -> clientNotificationService
+        clientNotificationService -> clientHub
+        clientHub -> client: ride finished notification
+
+        rideFinishedHandler -> rideService: update ride status
+        rideFinishedHandler -> paymentService: process payment
+        rideFinishedHandler <-- paymentService: return payment operation status
+
+        alt payment failed 
+        end        
+    else entry owning failed
+        driverHub <-- acceptRideHandler: returns failure
+        driver <-- driverHub: failure notification
+    end
+end
+
+@enduml
