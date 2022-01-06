@@ -1,0 +1,135 @@
+@startuml Structure
+'https://plantuml.com/class-diagram
+
+package Bebruber.Domain
+{
+    class Client
+    {
+        + Name Name
+        + Rating Rating
+        + Address Address
+        + CardInfo[] CardInfos
+        + Ride[] Rides[]
+    }
+
+    class Driver
+    {
+        + Name Name
+        + Rating Rating
+        + Address Address
+        + CardInfo CardInfo
+        + Car[] Cars
+        + Ride[] Rides
+    }
+
+    class CardInfo
+    {
+        + CardNumber CardNumber
+        + ExpirationDate ExpirationDate
+        + CvvCode CvvCode
+    }
+    
+    interface IPaymentVisitor
+    {
+        --
+        + PayWithCard(CardInfo info, Roubles amount)
+    }
+
+    abstract class PaymentMethod
+    {
+        --
+        + void Visit(IPaymentVisitor visitor, Roubles amount)
+    }
+
+    PaymentMethod <|-- CashPaymentMethod
+    class CashPaymentMethod
+
+    PaymentMethod <|-- CardPaymentMethod
+    class CardPaymentMethod
+    {
+        + CardInfo Card
+    }
+
+    class Car
+    {
+        + Driver Owner
+        + CarNumber Number
+        + CarBrand Brand
+        + CarName Name
+        + CarColor Color
+        + CarCategory Category
+    }
+
+    class Ride
+    {
+        + Client Client
+        + Car Car
+        + RideStatus Status
+        + Roubles Cost
+        + DateTime DateTime
+        + Location Origin
+        + Location Destination
+        + Location[] IntermediatePoints
+    }
+
+    class Location
+    {
+        + Coordinate Coordinate
+        + Address Address
+    }
+
+    class Route
+    {
+        + RouteSector[] Sectors
+    }
+
+    class RouteSector
+    {
+        + Coordinate Begin
+        + Coordinate End
+        + LoadLevel LoadLevel
+    }
+
+    class RideContext
+    {
+        + Client Client
+        + Car Car
+        + Location Origin
+        + Location Destination 
+        + Location[] IntermediatePoints
+    }
+
+    interface IRideService
+    {
+        --
+        + Ride StartRide(\n Client client, \n Driver driver, \n Route route, \n Location origin,\n Location destination, \n Location[] intermediatePoints)
+    }
+
+    interface IPriceCalculator
+    {
+        + Roubles Calculate(Route route)
+    }
+
+    interface IPricingService
+    {
+        + IPriceCalculator GetCalculator(RideContext context)
+    }
+
+    IPricingService <|.. CarCategoryBasedPricingService
+    class CarCategoryBasedPricingService
+
+    IPricingService <|.. RouteBasedPricingService
+    class RouteBasedPricingService
+
+    Client --> "0..n" CardInfo
+    Client "1" <--> "0..n" Ride
+
+    Driver "1" <--> "0..n" Car
+    Driver "1" <--> "0..n" Ride
+
+    Ride --> "2" Location
+
+    Route --> "1..n" RouteSector
+}
+
+@enduml
