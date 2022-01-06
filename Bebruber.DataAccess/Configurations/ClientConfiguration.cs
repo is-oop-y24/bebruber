@@ -13,5 +13,6 @@ public class ClientConfiguration : IEntityTypeConfiguration<Client>
         builder.OwnsOne(nameof(Rating), c => c.Rating);
         builder.OwnsOne(c => c.PaymentAddress);
         builder.Navigation(c => c.PaymentInfos).HasField("_paymentInfos");
+        builder.Navigation(c => c.Rides).HasField("_rides");
     }
 }

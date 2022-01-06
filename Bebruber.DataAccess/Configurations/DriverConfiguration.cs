@@ -13,5 +13,6 @@ public class DriverConfiguration : IEntityTypeConfiguration<Driver>
         builder.OwnsOne(d => d.PaymentAddress);
         builder.HasOne(d => d.CardInfo);
         builder.Navigation(d => d.Cars).HasField("_cars");
+        builder.Navigation(d => d.Rides).HasField("_rides");
     }
 }
