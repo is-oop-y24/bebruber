@@ -11,13 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bebruber.DataAccess", "Bebr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bebruber.Core", "Bebruber.Core\Bebruber.Core.csproj", "{353FA50A-5FE3-44BE-B83D-EDC34829F7C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Endpoints.DriverWebClient", "Bebruber.Endpoints.DriverWebClient\Bebruber.Endpoints.DriverWebClient.csproj", "{3BEC20F1-E2F7-4BD2-B91B-F25680124BE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Endpoints.DriverWebClient", "Endpoints\Bebruber.Endpoints.DriverWebClient\Bebruber.Endpoints.DriverWebClient.csproj", "{3BEC20F1-E2F7-4BD2-B91B-F25680124BE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Endpoints.UserWebClient", "Bebruber.Endpoints.UserWebClient\Bebruber.Endpoints.UserWebClient.csproj", "{65FDB55B-188F-4EDB-9CE2-98AFE598BF99}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Endpoints.UserWebClient", "Endpoints\Bebruber.Endpoints.UserWebClient\Bebruber.Endpoints.UserWebClient.csproj", "{65FDB55B-188F-4EDB-9CE2-98AFE598BF99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Endpoints.Shared", "Bebruber.Endpoints.Shared\Bebruber.Endpoints.Shared.csproj", "{F0AE84DC-71FA-4873-9489-9A13C85AB85E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Endpoints.Shared", "Endpoints\Bebruber.Endpoints.Shared\Bebruber.Endpoints.Shared.csproj", "{F0AE84DC-71FA-4873-9489-9A13C85AB85E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Endpoints.Server", "Bebruber.Endpoints.Server\Bebruber.Endpoints.Server.csproj", "{82D8DB25-83D5-4FBA-BE6E-D0E6CA9D04A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Endpoints.Server", "Endpoints\Bebruber.Endpoints.Server\Bebruber.Endpoints.Server.csproj", "{82D8DB25-83D5-4FBA-BE6E-D0E6CA9D04A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Utility", "Bebruber.Utility\Bebruber.Utility.csproj", "{17EE56A9-F496-4A3E-A000-0BF2D24FD4D5}"
 EndProject
