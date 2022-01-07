@@ -37,8 +37,7 @@ namespace Bebruber.Core.Bahaviours
             if (!validationErrors.Any()) 
                 return await next();
 
-            string error = string.Join("\r\n", validationErrors);
-            throw new ValidationException(error);
+            throw new ValidationException(validationErrors);
         }
     }
 }
