@@ -127,7 +127,7 @@ package Bebruber.Domain
     Driver "1" <--> "0..n" Car
     Driver "1" <--> "0..n" Ride
 
-    Ride --> "2" Location
+    Ride --> "2..n" Location
 
     Route --> "1..n" RouteSector
 }
