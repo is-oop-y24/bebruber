@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Bebruber.Domain.Tools;
 
-namespace Bebruber.Domain.ValueObjects;
+namespace Bebruber.Domain.ValueObjects.User;
 
 public class Address : ValueObject<Address>
 {

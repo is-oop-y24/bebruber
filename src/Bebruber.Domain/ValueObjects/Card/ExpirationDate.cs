@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Bebruber.Domain.Tools;
 using Bebruber.Domain.ValueObjects.Exceptions;
 
-namespace Bebruber.Domain.ValueObjects;
+namespace Bebruber.Domain.ValueObjects.Card;
 
 public class ExpirationDate : ValueObject<ExpirationDate>
 {

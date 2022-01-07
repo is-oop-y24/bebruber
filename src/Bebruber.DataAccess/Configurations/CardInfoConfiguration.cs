@@ -1,5 +1,5 @@
 using Bebruber.Domain.Entities;
-using Bebruber.Domain.ValueObjects;
+using Bebruber.Domain.ValueObjects.Card;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

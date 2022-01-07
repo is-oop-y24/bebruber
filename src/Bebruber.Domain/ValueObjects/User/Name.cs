@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using Bebruber.Domain.Tools;
 using Bebruber.Domain.ValueObjects.Exceptions;
 
-namespace Bebruber.Domain.ValueObjects;
+namespace Bebruber.Domain.ValueObjects.User;
 
 public sealed class Name : ValueObject<Name>
 {

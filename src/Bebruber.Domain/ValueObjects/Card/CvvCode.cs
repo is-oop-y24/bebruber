@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 using Bebruber.Domain.Tools;
 using Bebruber.Domain.ValueObjects.Exceptions;
 
-namespace Bebruber.Domain.ValueObjects;
+namespace Bebruber.Domain.ValueObjects.Card;
 
 public class CvvCode : ValueOf<string, CvvCode>
 {

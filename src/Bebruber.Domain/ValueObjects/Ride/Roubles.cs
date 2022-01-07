@@ -1,7 +1,7 @@
 using Bebruber.Domain.Tools;
 using Bebruber.Domain.ValueObjects.Exceptions;
 
-namespace Bebruber.Domain.ValueObjects;
+namespace Bebruber.Domain.ValueObjects.Ride;
 
 public class Roubles : ValueOf<decimal, Roubles>
 {

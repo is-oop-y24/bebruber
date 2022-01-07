@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using Bebruber.Domain.Tools;
+using Bebruber.Domain.ValueObjects.Card;
 using Bebruber.Utility.Extensions;
 
-namespace Bebruber.Domain.ValueObjects;
+namespace Bebruber.Domain.ValueObjects.Car;
 
 public class CarNumber : ValueObject<CardNumber>
 {
