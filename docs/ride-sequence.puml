@@ -34,7 +34,6 @@ createRideHandler -> driverNotificationService: request drivers notification
 driverNotificationService -> driverHub: request driver notification
 driverHub -> driver: offers a ride
 
-createRideHandler -> clientNotificationService: registers hub
 mediator <-- createRideHandler: return hub connection info
 server <-- mediator: return hub connection info
 client <-- server: return hub connection info

@@ -93,7 +93,8 @@ package Bebruber.Domain
     class RideContext
     {
         + Client Client
-        + Car Car
+        + Driver Driver
+        + Route Route
         + Location Origin
         + Location Destination 
         + Location[] IntermediatePoints
@@ -102,7 +103,7 @@ package Bebruber.Domain
     interface IRideService
     {
         --
-        + Ride StartRide(\n Client client, \n Driver driver, \n Route route, \n Location origin,\n Location destination, \n Location[] intermediatePoints)
+        + Ride StartRide(RideContext context)
     }
 
     interface IPriceCalculator
