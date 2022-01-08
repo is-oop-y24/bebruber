@@ -1,7 +1,8 @@
-﻿<FisSst.BlazorMaps.Map @ref="_mapObject" MapOptions="@_options"></FisSst.BlazorMaps.Map>
+﻿@using Blazorise
+<FisSst.BlazorMaps.Map @ref="_mapObject" MapOptions="@_options"></FisSst.BlazorMaps.Map>
 
 <style>
     #Map {
-        height: 400px;
+        height: @Height;
     }
 </style>
