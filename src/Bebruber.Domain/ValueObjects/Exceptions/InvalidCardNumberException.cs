@@ -1,4 +1,5 @@
 using Bebruber.Domain.Tools;
+using Bebruber.Domain.ValueObjects.Card;
 
 namespace Bebruber.Domain.ValueObjects.Exceptions;
 

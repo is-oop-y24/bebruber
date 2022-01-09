@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Bebruber.Domain.Entities.Exceptions;
 using Bebruber.Domain.Tools;
-using Bebruber.Domain.ValueObjects;
+using Bebruber.Domain.ValueObjects.User;
 using Bebruber.Utility.Extensions;
 
 namespace Bebruber.Domain.Entities;

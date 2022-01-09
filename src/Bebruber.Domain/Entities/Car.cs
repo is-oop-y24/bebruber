@@ -1,6 +1,6 @@
 using Bebruber.Domain.Enumerations;
 using Bebruber.Domain.Tools;
-using Bebruber.Domain.ValueObjects;
+using Bebruber.Domain.ValueObjects.Car;
 using Bebruber.Utility.Extensions;
 
 namespace Bebruber.Domain.Entities;
