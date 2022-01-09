@@ -5,21 +5,21 @@ namespace Bebruber.Domain.ValueObjects.Ride;
 
 public class Coordinate : ValueObject<Coordinate>
 {
-    public Coordinate(double x, double y)
+    public Coordinate(double latitude, double longitude)
     {
-        X = x;
-        Y = y;
+        Latitude = latitude;
+        Longitude = longitude;
     }
 
-    public double X { get; protected init; }
-    public double Y { get; protected init; }
+    public double Latitude { get; protected init; }
+    public double Longitude { get; protected init; }
 
     public override string ToString()
-        => $"X: {X}, Y: {Y}";
+        => $"Latitude: {Latitude}, Longitude: {Longitude}";
 
     protected override IEnumerable<object?> GetEqualityComponents()
     {
-        yield return X;
-        yield return Y;
+        yield return Latitude;
+        yield return Longitude;
     }
 }
