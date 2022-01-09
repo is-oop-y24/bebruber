@@ -29,6 +29,8 @@ namespace Bebruber.Endpoints.Shared.Components
         [Inject] private IMarkerFactory MarkerFactory { get; set; }
         [Inject] private IPolylineFactory PolylineFactory { get; set; }
 
+        [Parameter] public string Height { get; set; }
+
         [Parameter] public bool AddMarkerOnClick { get; set; }
         [Parameter] public Action<Marker> OnMarkerAdded { get; set; }
 

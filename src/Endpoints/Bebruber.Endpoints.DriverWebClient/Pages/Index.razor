@@ -1,3 +1,60 @@
 ﻿@page "/"
 
-<Map></Map>
+<div class="row">
+    <div class="col-md-9">
+        <Map Height="550px"/>
+    </div>
+    <div class="col-md-3 justify-content-center">
+        <div class="row">
+            <div class="form-group form-check ml-2">
+                <input type="checkbox" class="form-check-input" id="canTakeOrders">
+                <label class="form-check-label" for="canTakeOrders">Готов принимать заказы</label>
+            </div>
+            <div id="ride-info">
+                <div class="card">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><span class="font-weight-bold">Поездка</span> #lorem-ipsum.</li>
+                        <li class="list-group-item"><span class="font-weight-bold">Цена: </span> 999</li>
+                        <li class="list-group-item"><span class="font-weight-bold">Точка отправления:</span> Lorem ipsum.</li>
+                        <li class="list-group-item"><span class="font-weight-bold">Точка назначения:</span> Lorem ipsum.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn btn-primary mt-1 w-100" id="action-btn">
+                Прибыл на место назначения
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="newRideOffer" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Поступил новый заказ</h5>
+      </div>
+      <div class="modal-body">
+          <p><span class="font-weight-bold">Точка отправления:</span> Lorem ipsum.</p>
+          <p><span class="font-weight-bold">Точка назначения:</span> Lorem ipsum.</p>
+          <p><span class="font-weight-bold">Промежуточные точки:</span> Lorem ipsum.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Отказаться</button>
+        <button type="button" class="btn btn-success">Принять</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@*
+Что должно быть на странице:
+- Чекбокс "Готов выполнять заказы"
+- Кнопка "Ожидаю клиента", "Начать поездку", "Закончить поездку"
+-
+
+Всплывающие окна
+- Информация о заказе и кнопки принять\отклонить
+
+*@
