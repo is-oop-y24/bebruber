@@ -1,6 +1,6 @@
 @page "/register"
-@using Bebruber.Endpoints.UserWebClient.Models
-@using Bebruber.Endpoints.UserWebClient.Interfaces
+@using Bebruber.Endpoints.DriverWebClient.Models
+@using Bebruber.Endpoints.DriverWebClient.Interfaces
 @inject IAccountService _accountService
 @inject IJSRuntime JS
 @inject NavigationManager _navigationManager
@@ -11,20 +11,9 @@
         <EditForm Model="@_model" OnValidSubmit="OnValidSubmit">
             <DataAnnotationsValidator />
             <div class="form-group">
-                <label>Phone Number</label>
-                <InputText @bind-Value="_model.PhoneNumber" type="" class="form-control" />
-                <ValidationMessage For="@(() => _model.PhoneNumber)" />
+                <label>Registration Token</label>
+                <InputText @bind-Value="_model.RegistrationToken" type="" class="form-control" />
             </div>
-            <div class="form-group">
-                <label>Name</label>
-                <InputText @bind-Value="_model.Name" class="form-control" />
-                <ValidationMessage For="@(() => _model.Name)" />
-            </div>
-            <div class="form-group">
-                <label>Surname</label>
-                <InputText @bind-Value="_model.Surname" class="form-control" />
-                <ValidationMessage For="@(() => _model.Surname)" />
-                </div>
             <div class="form-group">
                 <label>Password</label>
                 <InputText @bind-Value="_model.Password" type="@_passwordFieldType" class="form-control" />

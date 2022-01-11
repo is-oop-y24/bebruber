@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Bebruber.Endpoints.DriverWebClient.Interfaces;
+using Bebruber.Endpoints.DriverWebClient.Services;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
@@ -29,6 +31,7 @@ namespace Bebruber.Endpoints.DriverWebClient
                    .AddBootstrapProviders()
                    .AddFontAwesomeIcons();
             builder.Services.AddBlazorLeafletMaps();
+            builder.Services.AddScoped<IAccountService, AccountService>();
 
             await builder.Build().RunAsync();
         }
