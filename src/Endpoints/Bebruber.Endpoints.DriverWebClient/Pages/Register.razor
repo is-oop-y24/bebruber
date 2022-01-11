@@ -6,21 +6,21 @@
 @inject NavigationManager _navigationManager
 
 <div class="card">
-    <h4 class="card-header">Register</h4>
+    <h4 class="card-header">Регистрация</h4>
     <div class="card-body">
         <EditForm Model="@_model" OnValidSubmit="OnValidSubmit">
             <DataAnnotationsValidator />
             <div class="form-group">
-                <label>Registration Token</label>
+                <label>Код регистрации (выдается администратором)</label>
                 <InputText @bind-Value="_model.RegistrationToken" class="form-control" />
             </div>
             <div class="form-group">
-                <label>Password</label>
+                <label>Пароль</label>
                 <InputText @bind-Value="_model.Password" type="@_passwordFieldType" class="form-control" />
                 <ValidationMessage For="@(() => _model.Password)" />
             </div>
             <div class="form-group">
-                <label>Show password</label>
+                <label>Отображать пароль</label>
                 <input type="checkbox" @bind="_showPassword" @onclick="UpdatePasswordVisibility" class="form-control">Show password</input>
             </div>
             <button disabled="@_loading" class="btn btn-primary">
@@ -28,9 +28,9 @@
                 {
                     <span class="spinner-border spinner-border-sm mr-1"></span>
                 }
-                Register
+                Зарегистрироваться
             </button>
-            <NavLink href="/login" class="btn btn-link">Already have an account? Login.</NavLink>
+            <NavLink href="/login" class="btn btn-link">Уже есть аккаунт? Войти.</NavLink>
         </EditForm>
     </div>
 </div>

@@ -6,17 +6,17 @@
 @inject NavigationManager _navigationManager
 
 <div class="card">
-    <h4 class="card-header">Login</h4>
+    <h4 class="card-header">Вход</h4>
     <div class="card-body">
         <EditForm Model="@_model" OnValidSubmit="OnValidSubmit">
             <DataAnnotationsValidator />
             <div class="form-group">
-                <label>Phone Number</label>
+                <label>Номер телефона</label>
                 <InputText @bind-Value="_model.PhoneNumber" class="form-control" />
                 <ValidationMessage For="@(() => _model.PhoneNumber)" />
             </div>
             <div class="form-group">
-                <label>Password</label>
+                <label>Пароль</label>
                 <InputText @bind-Value="_model.Password" type="password" class="form-control" />
                 <ValidationMessage For="@(() => _model.Password)" />
             </div>
@@ -25,9 +25,9 @@
                 {
                     <span class="spinner-border spinner-border-sm mr-1"></span>
                 }
-                Register
+                Войти
             </button>
-            <NavLink href="/register" class="btn btn-link">Don't have an account? Register.</NavLink>
+            <NavLink href="/register" class="btn btn-link">Нет аккаунта? Зарегистрироваться.</NavLink>
         </EditForm>
     </div>
 </div>
