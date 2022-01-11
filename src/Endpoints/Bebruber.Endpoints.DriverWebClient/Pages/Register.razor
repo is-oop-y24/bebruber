@@ -1,7 +1,5 @@
 @page "/register"
 @using Bebruber.Endpoints.DriverWebClient.Models
-@using Bebruber.Endpoints.DriverWebClient.Interfaces
-@inject IAccountService _accountService
 @inject IJSRuntime JS
 @inject NavigationManager _navigationManager
 
@@ -46,7 +44,7 @@
         _loading = true;
         try
         {
-            await _accountService.Register(_model);
+            throw new NotImplementedException();
             _navigationManager.NavigateTo("/login");
         }
         catch (Exception e)

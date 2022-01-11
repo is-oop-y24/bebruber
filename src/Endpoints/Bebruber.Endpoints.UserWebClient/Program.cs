@@ -3,8 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Bebruber.Endpoints.UserWebClient.Interfaces;
-using Bebruber.Endpoints.UserWebClient.Services;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
@@ -26,7 +24,6 @@ namespace Bebruber.Endpoints.UserWebClient
                                            } )
                    .AddBootstrapProviders()
                    .AddFontAwesomeIcons();
-            builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddBlazorLeafletMaps();
 
             await builder.Build().RunAsync();

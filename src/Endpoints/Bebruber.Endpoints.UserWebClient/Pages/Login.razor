@@ -1,7 +1,5 @@
 @page "/login"
-@using Bebruber.Endpoints.UserWebClient.Interfaces
 @using Bebruber.Endpoints.UserWebClient.Models
-@inject IAccountService _accountService
 @inject IJSRuntime JS
 @inject NavigationManager _navigationManager
 
@@ -41,7 +39,7 @@
         _loading = true;
         try
         {
-            await _accountService.Login(_model);
+            throw new NotImplementedException();
             _navigationManager.NavigateTo("/");
         }
         catch (Exception e)
