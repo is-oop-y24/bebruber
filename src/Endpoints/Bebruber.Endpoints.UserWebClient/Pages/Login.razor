@@ -6,13 +6,13 @@
 @inject NavigationManager _navigationManager
 
 <div class="card">
-    <h4 class="card-header">Register</h4>
+    <h4 class="card-header">Login</h4>
     <div class="card-body">
         <EditForm Model="@_model" OnValidSubmit="OnValidSubmit">
             <DataAnnotationsValidator />
             <div class="form-group">
                 <label>Phone Number</label>
-                <InputText @bind-Value="_model.PhoneNumber" type="tel" class="form-control" />
+                <InputText @bind-Value="_model.PhoneNumber" class="form-control" />
                 <ValidationMessage For="@(() => _model.PhoneNumber)" />
             </div>
             <div class="form-group">
