@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-md-8">
-        <Map Height="550px" OnMarkerAdded="async (marker) => {await OnMarkerAddedAsync(marker);}" AddMarkerOnClick="CanAddMarker"></Map>
+        <Map Height="550px" NeedGetMarkerAddress="true" OnMarkerAdded="async (marker) => {await OnMarkerAddedAsync(marker);}" AddMarkerOnClick="CanAddMarker"></Map>
     </div>
     <div class="col-md-4">
         <div id="order-block">
@@ -17,10 +17,11 @@
                 {
                     <li class="list-group-item">Дополнительные точки:</li>
                 }
-                @foreach (var extraPoint in _extraPointsMarkers)
+                @for (var pointNumber = 0; pointNumber<_extraPointsMarkers.Count; pointNumber++)
                 {
-                    <button type="button" class="list-group-item list-group-item-action">
-                        @extraPoint.Coordinates.ToString()
+                    var pointNumberForClick = pointNumber;
+                    <button type="button" class="list-group-item list-group-item-action" @onclick="async () => await RemoveExtraPointAsync(pointNumberForClick)">
+                        @(_extraPointsMarkers[pointNumber].Address ?? _extraPointsMarkers[pointNumber].Coordinates.ToString())
                     </button>
                 }
                 <button type="button" class="list-group-item list-group-item-action" @onclick="@EnableExtraPointSelection">

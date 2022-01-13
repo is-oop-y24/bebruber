@@ -64,5 +64,12 @@ namespace Bebruber.Endpoints.UserWebClient.Pages
             SelectionState = SelectionState.ExtraPoint;
             CanAddMarker = true;
         }
+
+        public async Task RemoveExtraPointAsync(int pointNumber)
+        {
+            Console.WriteLine(pointNumber);
+            await _extraPointsMarkers[pointNumber].DeleteAsync();
+            _extraPointsMarkers.RemoveAt(pointNumber);
+        }
     }
 }

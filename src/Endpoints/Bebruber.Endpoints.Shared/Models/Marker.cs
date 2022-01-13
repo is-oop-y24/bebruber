@@ -6,12 +6,21 @@ namespace Bebruber.Endpoints.Shared.Models
     {
         private FisSst.BlazorMaps.Marker _marker;
 
+        public string Address { get; }
         public MapPoint Coordinates { get; }
         public string Tooltip { get; }
 
         public Marker(MapPoint coordinates, FisSst.BlazorMaps.Marker marker)
         {
             _marker = marker;
+            Address = null;
+            Coordinates = coordinates;
+        }
+
+        public Marker(MapPoint coordinates, string address, FisSst.BlazorMaps.Marker marker)
+        {
+            _marker = marker;
+            Address = address;
             Coordinates = coordinates;
         }
 

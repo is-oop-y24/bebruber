@@ -1,10 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Runtime.Serialization.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Bebruber.Endpoints.Shared.Models;
 using FisSst.BlazorMaps;
 using Microsoft.AspNetCore.Components;
+using Newtonsoft.Json;
 using Marker = Bebruber.Endpoints.Shared.Models.Marker;
 using Polyline = Bebruber.Endpoints.Shared.Models.Polyline;
 
@@ -30,6 +38,7 @@ namespace Bebruber.Endpoints.Shared.Components
         [Inject] private IPolylineFactory PolylineFactory { get; set; }
 
         [Parameter] public string Height { get; set; }
+        [Parameter] public bool NeedGetMarkerAddress { get; set; }
 
         [Parameter] public bool AddMarkerOnClick { get; set; }
         [Parameter] public Action<Marker> OnMarkerAdded { get; set; }
@@ -38,10 +47,22 @@ namespace Bebruber.Endpoints.Shared.Components
         {
             if (AddMarkerOnClick)
             {
+                string markerAddress = NeedGetMarkerAddress ? await GetAddress(mouseEvent.LatLng) : null;
                 var marker = await MarkerFactory.CreateAndAddToMap(mouseEvent.LatLng, _mapObject);
-                var mapMarker = new Marker(new MapPoint(mouseEvent.LatLng), marker);
+                var mapMarker = new Marker(new MapPoint(mouseEvent.LatLng), markerAddress, marker);
                 OnMarkerAdded?.Invoke(mapMarker);
             }
+        }
+
+        private async Task<string> GetAddress(LatLng point)
+        {
+            HttpClient httpClient = new HttpClient();
+            var latitudeString = point.Lat.ToString(CultureInfo.InvariantCulture);
+            var longitudeString = point.Lng.ToString(CultureInfo.InvariantCulture);
+            var response = await httpClient.GetAsync($"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitudeString}&lon={longitudeString}");
+            var stringData = await response.Content.ReadAsStringAsync();
+            var location = JsonConvert.DeserializeObject<LocationInfo>(stringData);
+            return location.address.road is null ? null : $"{location.address.house_number}, {location.address.road}";
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
