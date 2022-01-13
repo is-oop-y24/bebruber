@@ -1,5 +1,32 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+<div class="row">
+    <div class="col-md-8">
+        <Map Height="550px" OnMarkerAdded="async (marker) => {await OnMarkerAddedAsync(marker);}" AddMarkerOnClick="CanAddMarker"></Map>
+    </div>
+    <div class="col-md-4">
+        <div id="order-block">
+            <div class="list-group">
+                <button type="button" class="list-group-item list-group-item-action" @onclick="@EnableStartPointSelection">
+                    Точка отправления: @_startPointMarker?.Coordinates.ToString()
+                </button>
+                <button type="button" class="list-group-item list-group-item-action" @onclick="@EnableEndPointSelection">
+                    Точка назначения: @_endPointMarker?.Coordinates.ToString()
+                </button>
+                @if (_extraPointsMarkers.Any())
+                {
+                    <li class="list-group-item">Дополнительные точки:</li>
+                }
+                @foreach (var extraPoint in _extraPointsMarkers)
+                {
+                    <button type="button" class="list-group-item list-group-item-action">
+                        @extraPoint.Coordinates.ToString()
+                    </button>
+                }
+                <button type="button" class="list-group-item list-group-item-action" @onclick="@EnableExtraPointSelection">
+                    Добавить промежуточную точку <i class="bi bi-plus-circle"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
