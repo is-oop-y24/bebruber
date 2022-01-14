@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-md-8">
-        // Note: temporary disable address feauter to not reach api limit
+        @* Note: temporary disable address feauter to not reach api limit *@
         <Map Height="550px" NeedGetMarkerAddress="false" OnMarkerAdded="async (marker) => { await OnMarkerAddedAsync(marker); }" AddMarkerOnClick="CanAddMarker"></Map>
     </div>
     <div class="col-md-4">
@@ -29,6 +29,38 @@
                     Добавить промежуточную точку <i class="bi bi-plus-circle"></i>
                 </button>
             </div>
+            <div class="mt-2">
+                <div class="btn-group btn-group-toggle d-flex" role="group" data-toggle="buttons">
+                    <label class="btn btn-outline-primary active">
+                        <input type="radio" name="options" id="tariff-economy" checked> Эконом
+                    </label>
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" name="options" id="tariff-comfort"> Комфорт
+                    </label>
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" name="options" id="tariff-business"> Бизнес
+                    </label>
+                </div>
+
+                <div class="mt-2 form-group">
+                    <label for="paymentMethod">Метод оплаты:</label>
+                    <select class="form-control" id="paymentMethod">
+                        <option>Наличные</option>
+                        <option>Карта ****8800</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-success btn-block">Заказать</button>
+            </div>
+        </div>
+        <div id="waiting-block">
+            <div class="d-flex align-items-center">
+                <strong>Ищем водителя...</strong>
+                <div class="spinner-grow text-secondary ml-auto" role="status" aria-hidden="true"></div>
+            </div>
+        </div>
+        <div id="ride-info-block">
+            
         </div>
     </div>
 </div>
