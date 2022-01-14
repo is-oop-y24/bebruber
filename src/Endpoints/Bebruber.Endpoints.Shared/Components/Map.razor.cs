@@ -62,7 +62,7 @@ namespace Bebruber.Endpoints.Shared.Components
             var response = await httpClient.GetAsync($"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitudeString}&lon={longitudeString}");
             var stringData = await response.Content.ReadAsStringAsync();
             var location = JsonConvert.DeserializeObject<LocationInfo>(stringData);
-            return location.address.road is null ? null : $"{location.address.house_number}, {location.address.road}";
+            return location.address.road is null ? null : $"{location.address.road} {location.address.house_number}";
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
