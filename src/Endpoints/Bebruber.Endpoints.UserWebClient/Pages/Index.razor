@@ -1,5 +1,73 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<div class="row">
+    <div class="col-md-8">
+        @* Note: temporary disable address feauter to not reach api limit *@
+        <Map Height="550px" NeedGetMarkerAddress="false" OnMarkerAdded="async (marker) => { await OnMarkerAddedAsync(marker); }" AddMarkerOnClick="CanAddMarker"></Map>
+    </div>
+    <div class="col-md-4">
+        <div id="order-block">
+            <div class="list-group">
+                <button type="button" class="list-group-item list-group-item-action" @onclick="@EnableStartPointSelection">
+                    Точка отправления: @(_startPointMarker?.Address ?? _startPointMarker?.Coordinates.ToString())
+                </button>
+                <button type="button" class="list-group-item list-group-item-action" @onclick="@EnableEndPointSelection">
+                    Точка назначения: @(_endPointMarker?.Address ?? _endPointMarker?.Coordinates.ToString())
+                </button>
+                @if (_extraPointsMarkers.Any())
+                {
+                    <li class="list-group-item">Дополнительные точки:</li>
+                }
+                @for (var pointNumber = 0; pointNumber<_extraPointsMarkers.Count; pointNumber++)
+                {
+                    var pointNumberForClick = pointNumber;
+                    <button type="button" class="list-group-item list-group-item-action" @onclick="async () => await RemoveExtraPointAsync(pointNumberForClick)">
+                        @(_extraPointsMarkers[pointNumber].Address ?? _extraPointsMarkers[pointNumber].Coordinates.ToString())
+                    </button>
+                }
+                <button type="button" class="list-group-item list-group-item-action" @onclick="@EnableExtraPointSelection">
+                    Добавить промежуточную точку <i class="bi bi-plus-circle"></i>
+                </button>
+            </div>
+            <div class="mt-2">
+                <div class="btn-group btn-group-toggle d-flex" role="group" data-toggle="buttons">
+                    <label class="btn btn-outline-primary active">
+                        <input type="radio" name="options" id="tariff-economy" checked> Эконом
+                    </label>
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" name="options" id="tariff-comfort"> Комфорт
+                    </label>
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" name="options" id="tariff-business"> Бизнес
+                    </label>
+                </div>
 
-Welcome to your new app.
+                <div class="mt-2 form-group">
+                    <label for="paymentMethod">Метод оплаты:</label>
+                    <select class="form-control" id="paymentMethod">
+                        <option>Наличные</option>
+                        <option>Карта ****8800</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-success btn-block">Заказать</button>
+            </div>
+        </div>
+        <div id="waiting-block">
+            <div class="d-flex align-items-center">
+                <strong>Ищем водителя...</strong>
+                <div class="spinner-grow text-secondary ml-auto" role="status" aria-hidden="true"></div>
+            </div>
+        </div>
+        <div id="ride-info-block">
+            <div class="card">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><span class="font-weight-bold">Цена: </span> 999</li>
+                    <li class="list-group-item"><span class="font-weight-bold">Оставшееся время в пути:</span> #lorem-ipsum.</li>
+                    <li class="list-group-item"><span class="font-weight-bold">Точка отправления:</span> Lorem ipsum.</li>
+                    <li class="list-group-item"><span class="font-weight-bold">Точка назначения:</span> Lorem ipsum.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
