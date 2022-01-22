@@ -1,13 +1,12 @@
 using Bebruber.Domain.Entities;
 using Bebruber.Domain.ValueObjects.User;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Bebruber.DataAccess.Configurations;
 
-public class ClientConfiguration : IEntityTypeConfiguration<Client>
+internal class ClientConfiguration : EntityConfiguration<Client>
 {
-    public void Configure(EntityTypeBuilder<Client> builder)
+    protected override void ConfigureEntity(EntityTypeBuilder<Client> builder)
     {
         builder.OwnsOne(c => c.Name);
         builder.OwnsOne(nameof(Rating), c => c.Rating);
