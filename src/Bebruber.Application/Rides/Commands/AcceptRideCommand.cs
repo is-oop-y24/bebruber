@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Bebruber.Application.Rides.Commands;
 
-public class AcceptRideCommand
+public static class AcceptRideCommand
 {
     public record Command(
         Guid RideEntryId,
