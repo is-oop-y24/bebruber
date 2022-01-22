@@ -1,3 +1,3 @@
 namespace Bebruber.DataAccess;
 
-public interface IAssemblyMarker { }
+internal interface IAssemblyMarker { }
