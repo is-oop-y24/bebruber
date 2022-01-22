@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Bebruber.Application.Rides.Commands.Exception;
+using Bebruber.Domain.Entities;
 using Bebruber.Domain.Services;
+using Bebruber.Domain.Tools;
+using FluentResults;
 using FluentValidation;
 using MediatR;
 
 namespace Bebruber.Application.Rides.Commands;
 
-public class CancelSearchCommand
+public static class CancelSearchCommand
 {
     public record Command(Guid RideId) : IRequest<Response>;
 
@@ -24,7 +28,11 @@ public class CancelSearchCommand
 
         public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
         {
-            await _rideQueueService.DequeueRideEntryAsync(request.RideId, cancellationToken);
+            Result<RideEntry> result = await _rideQueueService.DequeueRideEntryAsync(request.RideId, cancellationToken);
+            if (result.IsFailed)
+            {
+                throw new WrongRideEntryException();
+            }
             return new Response(true);
         }
     }
