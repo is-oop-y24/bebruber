@@ -1,9 +1,9 @@
 ﻿@page "/"
-
+s
 <div class="row">
     <div class="col-md-8">
         @* Note: temporary disable address feauter to not reach api limit *@
-        <Map Height="550px" NeedGetMarkerAddress="false" OnMarkerAdded="async (marker) => { await OnMarkerAddedAsync(marker); }" AddMarkerOnClick="CanAddMarker"></Map>
+        <Map Height="550px" @ref="_mapRef" MarkerConfig="_markerConfig" NeedGetMarkerAddress="false" OnMarkerAdded="async (marker) => { await OnMarkerAddedAsync(marker); }" AddMarkerOnClick="CanAddMarker"></Map>
     </div>
     <div class="col-md-4">
         <div id="order-block">

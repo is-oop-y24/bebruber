@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bebruber.Endpoints.Shared.Models
 {
@@ -14,6 +15,11 @@ namespace Bebruber.Endpoints.Shared.Models
         {
             _points = points.ToList();
             _polyline = polyline;
+        }
+
+        public async Task DeleteAsync()
+        {
+            await _polyline.Remove();
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
+using FisSst.BlazorMaps;
 
 namespace Bebruber.Endpoints.Shared.Models
 {
     public class Marker
     {
         private FisSst.BlazorMaps.Marker _marker;
-
         public string Address { get; }
         public MapPoint Coordinates { get; }
         public string Tooltip { get; }
