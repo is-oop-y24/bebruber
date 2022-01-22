@@ -9,6 +9,7 @@ internal class RideEntryConfiguration : EntityConfiguration<RideEntry>
     {
         builder.OwnsOne(e => e.Origin);
         builder.OwnsOne(e => e.Destination);
+        builder.Navigation(e => e.DismissedDrives).HasField("_dismissedDrivers");
         builder.OwnsMany(r => r.IntermediatePoints, p =>
         {
             p.WithOwner().HasForeignKey("OwnerId");
