@@ -5,11 +5,6 @@ namespace Bebruber.Domain.ValueObjects.Ride;
 
 public class Address : ValueObject<Address>
 {
-    public string Country { get; protected init; }
-    public string City { get; protected init; }
-    public string Street { get; private init; }
-    public string HouseNumber { get; private init; }
-
     public Address(string country, string city, string street, string houseNumber)
     {
         Country = country;
@@ -17,6 +12,11 @@ public class Address : ValueObject<Address>
         Street = street;
         HouseNumber = houseNumber;
     }
+
+    public string Country { get; protected init; }
+    public string City { get; protected init; }
+    public string Street { get; private init; }
+    public string HouseNumber { get; private init; }
 
     protected override IEnumerable<object?> GetEqualityComponents()
     {
