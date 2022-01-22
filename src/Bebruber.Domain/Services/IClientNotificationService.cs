@@ -10,5 +10,6 @@ public interface IClientNotificationService
     Task PostDriverCoordinatesAsync(Client client, Coordinate coordinate, CancellationToken cancellationToken);
     Task NotifyDriverFoundAsync(Client client, CancellationToken cancellationToken);
     Task NotifyDriverArrivedAsync(Client client, CancellationToken cancellationToken);
+    Task NotifyRideStartedAsync(Client client, CancellationToken cancellationToken);
     Task NotifyRideFinishedAsync(Client client, CancellationToken cancellationToken);
 }
