@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Bebruber.Domain.Models;
 using Bebruber.Domain.Tools;
 using Bebruber.Domain.ValueObjects.Ride;
 using Bebruber.Utility.Extensions;
@@ -18,6 +19,7 @@ public class Ride : Entity<Ride>
         Location destination,
         IReadOnlyCollection<Location> intermediatePoints)
     {
+        State = RideState.AwaitingDriver;
         Client = client.ThrowIfNull();
         Driver = driver.ThrowIfNull();
         Cost = cost.ThrowIfNull();
@@ -27,6 +29,9 @@ public class Ride : Entity<Ride>
         IntermediatePoints = intermediatePoints.ThrowIfNull().ToList();
     }
 
+    protected Ride() { }
+
+    public RideState State { get; set; }
     public Client Client { get; private init; }
     public Driver Driver { get; private init; }
     public Roubles Cost { get; private init; }
