@@ -1,4 +1,4 @@
-﻿using Bebruber.Application.Bahaviours;
+﻿using Bebruber.Application.Behaviours;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
