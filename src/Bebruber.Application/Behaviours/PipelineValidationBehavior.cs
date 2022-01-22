@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 
-namespace Bebruber.Core.Bahaviours
+namespace Bebruber.Application.Behaviours
 {
-    public class PipelineValidationBehavior<TRequest, TResponse> 
+    public class PipelineValidationBehavior<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
@@ -25,7 +25,7 @@ namespace Bebruber.Core.Bahaviours
         {
             if (!_validators.Any())
                 return await next();
-            
+
             var context = new ValidationContext<TRequest>(request);
 
             var validationErrors = _validators
@@ -34,7 +34,7 @@ namespace Bebruber.Core.Bahaviours
                 .Where(x => x != null)
                 .ToList();
 
-            if (!validationErrors.Any()) 
+            if (!validationErrors.Any())
                 return await next();
 
             throw new ValidationException(validationErrors);

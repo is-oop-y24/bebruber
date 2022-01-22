@@ -1,9 +1,9 @@
-﻿using Bebruber.Core.Bahaviours;
+﻿using Bebruber.Application.Behaviours;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Bebruber.Core
+namespace Bebruber.Application
 {
     public static class CoreModule
     {
