@@ -4,28 +4,28 @@
 @inject NavigationManager _navigationManager
 
 <div class="card">
-    <h4 class="card-header">Вход</h4>
+    <h4 class="card-header" style="background-color: #ffffff">Вход</h4>
     <div class="card-body">
         <EditForm Model="@_model" OnValidSubmit="OnValidSubmit">
-            <DataAnnotationsValidator />
+            <DataAnnotationsValidator/>
             <div class="form-group">
                 <label>Номер телефона</label>
-                <InputText @bind-Value="_model.PhoneNumber" class="form-control" />
-                <ValidationMessage For="@(() => _model.PhoneNumber)" />
+                <InputText @bind-Value="_model.PhoneNumber" class="form-control"/>
+                <ValidationMessage For="@(() => _model.PhoneNumber)"/>
             </div>
             <div class="form-group">
                 <label>Пароль</label>
-                <InputText @bind-Value="_model.Password" type="password" class="form-control" />
-                <ValidationMessage For="@(() => _model.Password)" />
+                <PasswordFieldComponent @bind-Value="_model.Password" class="form-control"/>
+                <ValidationMessage For="@(() => _model.Password)"/>
             </div>
             <button disabled="@_loading" class="btn btn-primary">
-                @if (_loading) 
+                @if (_loading)
                 {
                     <span class="spinner-border spinner-border-sm mr-1"></span>
                 }
                 Войти
             </button>
-            <NavLink href="/register" class="btn btn-link">Нет аккаунта? Зарегистрироваться.</NavLink>
+            <NavLink href="/register" class="btn btn-link">Нет аккаунта? Заявка на регистрацию.</NavLink>
         </EditForm>
     </div>
 </div>
@@ -48,4 +48,5 @@
         }
         _loading = false;
     }
+
 }

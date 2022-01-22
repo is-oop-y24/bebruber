@@ -4,25 +4,43 @@
 @inject NavigationManager _navigationManager
 
 <div class="card">
-    <h4 class="card-header">Регистрация</h4>
+    <h4 class="card-header" style="background-color: #ffffff">Регистрация</h4>
     <div class="card-body">
         <EditForm Model="@_model" OnValidSubmit="OnValidSubmit">
-            <DataAnnotationsValidator />
+            <DataAnnotationsValidator/>
+
             <div class="form-group">
-                <label>Код регистрации (выдается администратором)</label>
-                <InputText @bind-Value="_model.RegistrationToken" class="form-control" />
+                <label>ФИО</label>
+                <InputText @bind-Value="_model.Name" placeholder="Иванов Иван Иванович" class="form-control"/>
+                <ValidationMessage For="@(() => _model.Name)" />
             </div>
+
             <div class="form-group">
-                <label>Пароль</label>
-                <InputText @bind-Value="_model.Password" type="@_passwordFieldType" class="form-control" />
-                <ValidationMessage For="@(() => _model.Password)" />
+                <label>Номер телефона</label>
+                <InputText @bind-Value="_model.PhoneNumber" placeholder="+7 (800) 555-35-35" class="form-control"/>
+                <ValidationMessage For="@(() => _model.PhoneNumber)" />
             </div>
+
             <div class="form-group">
-                <label>Отображать пароль</label>
-                <input type="checkbox" @bind="_showPassword" @onclick="UpdatePasswordVisibility" class="form-control">Show password</input>
+                <label>Номер водительского удостоверения</label>
+                <InputText @bind-Value="_model.DriverLicense" placeholder="12 34 567890" class="form-control"/>
+                <ValidationMessage For="@(() => _model.DriverLicense)" />
             </div>
+
+            <div class="form-group">
+                <label>Марка, модель и цвет автомобиля</label>
+                <InputText @bind-Value="_model.CarType" placeholder="Bebromobil A1, черный" class="form-control"/>
+                <ValidationMessage For="@(() => _model.CarType)" />
+            </div>
+            
+            <div class="form-group">
+                <label>Номер автомобиля</label>
+                <InputText @bind-Value="_model.CarNumber" placeholder="A001AA198"  class="form-control"/>
+                <ValidationMessage For="@(() => _model.CarNumber)" />
+            </div>
+
             <button disabled="@_loading" class="btn btn-primary">
-                @if (_loading) 
+                @if (_loading)
                 {
                     <span class="spinner-border spinner-border-sm mr-1"></span>
                 }
@@ -36,8 +54,6 @@
 @code {
     private RegisterModel _model = new();
     private bool _loading;
-    private string _passwordFieldType = "password";
-    private bool _showPassword;
 
     private async Task OnValidSubmit()
     {
@@ -49,13 +65,8 @@
         }
         catch (Exception e)
         {
-            await JS.InvokeVoidAsync("alert", e.Message);
+            await JS.InvokeVoidAsync("alert", e.Message); //TODO: custom error handling
         }
         _loading = false;
-    }
-
-    private void UpdatePasswordVisibility()
-    {
-        _passwordFieldType = _showPassword ? "password" : "text";
     }
 }

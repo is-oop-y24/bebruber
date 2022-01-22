@@ -5,10 +5,27 @@ namespace Bebruber.Endpoints.DriverWebClient.Models;
 public class RegisterModel
 {
     [Required]
-    public string RegistrationToken { get; set; }
+    public string Name { get; set; }
+    
+    [Required]
+    [RegularExpression(@"^(\+?[0-9]{11})$",
+        ErrorMessage = "Неверный формат номера телефона")]
+    public string PhoneNumber { get; set; }
+    
+    [Required]
+    [RegularExpression(@"^([0-9]{2}\s?[0-9]{2}\s?[0-9]{6})$",
+        ErrorMessage = "Неверный формат номера лицензии")]
+    public string DriverLicense { get; set; }
 
     [Required]
-    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,128}$",
-        ErrorMessage = "Password must contain minimum 8 and maximum 128 characters, at least one uppercase letter, one lowercase letter, one number and one special character")]
-    public string Password { get; set; }
+    [RegularExpression(@"^[АВЕКМНОРСТУХ][0-9]{3}[АВЕКМНОРСТУХ]{2}\s?[0-9]{2,3}$",
+        ErrorMessage = "Неверный формат автомобильного номера")]
+    public string CarNumber { get; set; }
+
+    [Required]
+    public string CarType { get; set; }
+
+
+
+
 }

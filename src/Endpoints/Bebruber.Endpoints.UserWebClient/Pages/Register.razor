@@ -4,34 +4,42 @@
 @inject NavigationManager _navigationManager
 
 <div class="card">
-    <h4 class="card-header">Регистрация</h4>
+    <h4 class="card-header" style="background-color: #ffffff">Регистрация</h4>
     <div class="card-body">
         <EditForm Model="@_model" OnValidSubmit="OnValidSubmit">
             <DataAnnotationsValidator />
             <div class="form-group">
                 <label>Номер телефона</label>
-                <InputText @bind-Value="_model.PhoneNumber" class="form-control" />
+                <InputText @bind-Value="_model.PhoneNumber" placeholder="+7 (800) 555-35-35" class="form-control" />
                 <ValidationMessage For="@(() => _model.PhoneNumber)" />
             </div>
+
+            <div class="form-group">
+                <label>Электронная почта</label>
+                <InputText @bind-Value="_model.Email" placeholder="ivanov@Bebruber.bebra" class="form-control" />
+                <ValidationMessage For="@(() => _model.Email)" />
+            </div>
+
             <div class="form-group">
                 <label>Имя</label>
-                <InputText @bind-Value="_model.Name" class="form-control" />
+                <InputText @bind-Value="_model.Name" placeholder="Иван" class="form-control" />
                 <ValidationMessage For="@(() => _model.Name)" />
             </div>
+
             <div class="form-group">
                 <label>Фамилия</label>
-                <InputText @bind-Value="_model.Surname" class="form-control" />
+                <InputText @bind-Value="_model.Surname" placeholder="Иванович" class="form-control" />
                 <ValidationMessage For="@(() => _model.Surname)" />
-                </div>
+            </div>
+
             <div class="form-group">
                 <label>Пароль</label>
-                <InputText @bind-Value="_model.Password" type="@_passwordFieldType" class="form-control" />
+                <PasswordFieldComponent @bind-Value="_model.Password" class="form-control"/>
+                <Help>Пароль должен содержать минимум 8 и максимум 128 символов, включая как минимум одну заглавную букву, одну строчную букву, одну цифру и один специальный символ.</Help>
+                @_model.Password
                 <ValidationMessage For="@(() => _model.Password)" />
             </div>
-            <div class="form-group">
-                <label>Отображать пароль</label>
-                <input type="checkbox" @bind="_showPassword" @onclick="UpdatePasswordVisibility" class="form-control">Show password</input>
-            </div>
+
             <button disabled="@_loading" class="btn btn-primary">
                 @if (_loading) 
                 {
@@ -48,7 +56,7 @@
     private RegisterModel _model = new();
     private bool _loading;
     private string _passwordFieldType = "password";
-    private bool _showPassword;
+    private string _buttonText = "Показать пароль";
 
     private async Task OnValidSubmit()
     {
@@ -60,13 +68,14 @@
         }
         catch (Exception e)
         {
-            await JS.InvokeVoidAsync("alert", e.Message);
+            await JS.InvokeVoidAsync("alert", e.Message); //TODO: custom error handling
         }
         _loading = false;
     }
 
     private void UpdatePasswordVisibility()
     {
-        _passwordFieldType = _showPassword ? "password" : "text";
+        _passwordFieldType = _passwordFieldType == "text" ? "password" : "text";
+        _buttonText = _passwordFieldType == "text" ? "Скрыть пароль" : "Показать пароль";
     }
 }
