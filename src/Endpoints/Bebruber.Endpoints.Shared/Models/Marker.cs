@@ -29,11 +29,6 @@ namespace Bebruber.Endpoints.Shared.Models
             await _marker.BindTooltip(tooltip);
         }
 
-        public async Task SetIcon(Icon icon)
-        {
-            await _marker.SetIcon(icon);
-        }
-
         public async Task RemoveTooltipAsync()
         {
             await _marker.UnbindTooltip();

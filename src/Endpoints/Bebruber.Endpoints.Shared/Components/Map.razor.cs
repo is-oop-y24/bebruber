@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Bebruber.Endpoints.Shared.Models;
 using FisSst.BlazorMaps;
 using Microsoft.AspNetCore.Components;
+using Bebruber.Endpoints.Shared.Models;
 using Newtonsoft.Json;
 using Marker = Bebruber.Endpoints.Shared.Models.Marker;
 using Polyline = Bebruber.Endpoints.Shared.Models.Polyline;
@@ -35,12 +36,14 @@ namespace Bebruber.Endpoints.Shared.Components
             }
         };
         [Inject] private IMarkerFactory MarkerFactory { get; set; }
+        [Inject] private IIconFactory IconFactory { get; init; }
         [Inject] private IPolylineFactory PolylineFactory { get; set; }
 
         [Parameter] public string Height { get; set; }
         [Parameter] public bool NeedGetMarkerAddress { get; set; }
 
         [Parameter] public bool AddMarkerOnClick { get; set; }
+        [Parameter] public MakerConfig MarkerConfig { get; set; }
         [Parameter] public Action<Marker> OnMarkerAdded { get; set; }
 
         private async Task MapOnClick(MouseEvent mouseEvent)
@@ -48,7 +51,26 @@ namespace Bebruber.Endpoints.Shared.Components
             if (AddMarkerOnClick)
             {
                 string markerAddress = NeedGetMarkerAddress ? await GetAddress(mouseEvent.LatLng) : null;
-                var marker = await MarkerFactory.CreateAndAddToMap(mouseEvent.LatLng, _mapObject);
+                FisSst.BlazorMaps.Marker marker = null;
+                if (MarkerConfig.IconUrl is not "")
+                {
+                    var iconOptions = new IconOptions()
+                    {
+                        IconUrl = MarkerConfig.IconUrl,
+                        IconSize =MarkerConfig.IconSize,
+                        IconAnchor = MarkerConfig.IconAnchor
+                    };
+                    var icon = await IconFactory.Create(iconOptions);
+                    var markerOptions = new MarkerOptions()
+                    {
+                        IconRef = icon
+                    };
+                    marker = await MarkerFactory.CreateAndAddToMap(mouseEvent.LatLng, _mapObject, markerOptions);
+                }
+                else
+                {
+                    marker = await MarkerFactory.CreateAndAddToMap(mouseEvent.LatLng, _mapObject);
+                }
                 var mapMarker = new Marker(new MapPoint(mouseEvent.LatLng), markerAddress, marker);
                 OnMarkerAdded?.Invoke(mapMarker);
             }
