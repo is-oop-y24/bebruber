@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Bebruber.DataAccess.Configurations;
 
-public class RideConfiguration : IEntityTypeConfiguration<Ride>
+internal class RideConfiguration : IEntityTypeConfiguration<Ride>
 {
     public void Configure(EntityTypeBuilder<Ride> builder)
     {

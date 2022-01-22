@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Bebruber.DataAccess.Configurations;
 
-public class CarConfiguration : IEntityTypeConfiguration<Car>
+internal class CarConfiguration : IEntityTypeConfiguration<Car>
 {
     public void Configure(EntityTypeBuilder<Car> builder)
     {

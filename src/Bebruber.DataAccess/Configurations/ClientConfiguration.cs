@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Bebruber.DataAccess.Configurations;
 
-public class ClientConfiguration : IEntityTypeConfiguration<Client>
+internal class ClientConfiguration : IEntityTypeConfiguration<Client>
 {
     public void Configure(EntityTypeBuilder<Client> builder)
     {

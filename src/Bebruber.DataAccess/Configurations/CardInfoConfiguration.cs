@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Bebruber.DataAccess.Configurations;
 
-public class CardInfoConfiguration : IEntityTypeConfiguration<CardInfo>
+internal class CardInfoConfiguration : IEntityTypeConfiguration<CardInfo>
 {
     public void Configure(EntityTypeBuilder<CardInfo> builder)
     {
