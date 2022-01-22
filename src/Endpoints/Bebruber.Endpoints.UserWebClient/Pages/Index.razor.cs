@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Bebruber.Endpoints.Shared.Models;
+using FisSst.BlazorMaps;
+using Microsoft.AspNetCore.Components;
+using Marker = Bebruber.Endpoints.Shared.Models.Marker;
 
 namespace Bebruber.Endpoints.UserWebClient.Pages
 {
@@ -14,7 +16,8 @@ namespace Bebruber.Endpoints.UserWebClient.Pages
     }
 
     public partial class Index
-    {
+    { 
+        [Inject] private IIconFactory IconFactory { get; init; }
         public bool CanAddMarker { get; set; } = false;
         private SelectionState SelectionState = SelectionState.None;
 
@@ -31,7 +34,14 @@ namespace Bebruber.Endpoints.UserWebClient.Pages
                 case SelectionState.StartPoint:
                     if (_startPointMarker is not null)
                         await _startPointMarker.DeleteAsync();
+                    var iconOptions = new IconOptions()
+                    {
+                        IconUrl = "/_content/Bebruber.Endpoints.Shared/img/bebra-red.png"
+                    };
+
+                    Icon icon = await IconFactory.Create(iconOptions);
                     _startPointMarker = marker;
+                    await marker.SetIcon(icon);
                     break;
                 case SelectionState.EndPoint:
                     if (_endPointMarker is not null)
