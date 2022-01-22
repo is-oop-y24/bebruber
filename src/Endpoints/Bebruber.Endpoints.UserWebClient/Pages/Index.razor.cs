@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Bebruber.Endpoints.Shared.Models;
@@ -30,6 +31,11 @@ namespace Bebruber.Endpoints.UserWebClient.Pages
         private readonly List<Marker> _extraPointsMarkers = new List<Marker>();
         private Bebruber.Endpoints.Shared.Components.Map _mapRef;
         private Polyline _polyline;
+        private static string _bebraGreenPath = "/_content/Bebruber.Endpoints.Shared/img/bebra-green.png";
+        private static string _bebraRedPath = "/_content/Bebruber.Endpoints.Shared/img/bebra-red.png";
+        private static string _bebraBluePath = "/_content/Bebruber.Endpoints.Shared/img/bebra-blue.png";
+        private static Point _bebraSize = new(54/2, 95/2);
+        private static Point _bebraAnchor = new(54/4, 95/2);
 
         public async Task OnMarkerAddedAsync(Marker marker)
         {
@@ -57,27 +63,27 @@ namespace Bebruber.Endpoints.UserWebClient.Pages
 
         public void EnableStartPointSelection()
         {
-            _markerConfig.IconUrl = "/_content/Bebruber.Endpoints.Shared/img/bebra-green.png";
-            _markerConfig.IconSize = new Point(54/2, 95/2);
-            _markerConfig.IconAnchor = new Point(54/4, 95/2);
+            _markerConfig.IconUrl = _bebraGreenPath;
+            _markerConfig.IconSize = _bebraSize;
+            _markerConfig.IconAnchor = _bebraAnchor;
             SelectionState = SelectionState.StartPoint;
             CanAddMarker = true;
         }
 
         public void EnableEndPointSelection()
         {
-            _markerConfig.IconUrl = "/_content/Bebruber.Endpoints.Shared/img/bebra-red.png";
-            _markerConfig.IconSize = new Point(54/2, 95/2);
-            _markerConfig.IconAnchor = new Point(54/4, 95/2);
+            _markerConfig.IconUrl = _bebraRedPath;
+            _markerConfig.IconSize = _bebraSize;
+            _markerConfig.IconAnchor = _bebraAnchor;
             SelectionState = SelectionState.EndPoint;
             CanAddMarker = true;
         }
 
         public void EnableExtraPointSelection()
         {
-            _markerConfig.IconUrl = "/_content/Bebruber.Endpoints.Shared/img/bebra-blue.png";
-            _markerConfig.IconSize = new Point(54/2, 95/2);
-            _markerConfig.IconAnchor = new Point(54/4, 95/2);
+            _markerConfig.IconUrl = _bebraBluePath;
+            _markerConfig.IconSize = _bebraSize;
+            _markerConfig.IconAnchor = _bebraAnchor;
             SelectionState = SelectionState.ExtraPoint;
             CanAddMarker = true;
         }
@@ -98,8 +104,7 @@ namespace Bebruber.Endpoints.UserWebClient.Pages
                 points.Insert(0 ,_startPointMarker.Coordinates);
             if(_endPointMarker is not null)
                 points.Add(_endPointMarker.Coordinates);
-            var latLngs = new List<LatLng>(new List<LatLng>(points.Select(p => new LatLng(p.Latitude, p.Longitude))));
-            _polyline = new Polyline(points, await _mapRef.CreatePolyline(latLngs));
+            _polyline = new Polyline(points, await _mapRef.CreatePolyline(points));
         }
     }
 }

@@ -123,8 +123,9 @@ namespace Bebruber.Endpoints.Shared.Components
             return new Marker(point, marker);
         }
 
-        public async Task<FisSst.BlazorMaps.Polyline> CreatePolyline(IReadOnlyList<LatLng> latLngs)
+        public async Task<FisSst.BlazorMaps.Polyline> CreatePolyline(ICollection<MapPoint> points)
         {
+            var latLngs = new List<LatLng>(new List<LatLng>(points.Select(p => new LatLng(p.Latitude, p.Longitude))));
             return await PolylineFactory.CreateAndAddToMap(latLngs, _mapObject);
         }
     }
