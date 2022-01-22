@@ -11,13 +11,13 @@ public class Client : Entity<Client>
     private readonly List<CardInfo> _paymentInfos;
     private readonly List<Ride> _rides;
 
-    public Client(Name name, Rating rating, PaymentAddress paymentPaymentAddress)
+    public Client(Name name, Rating rating, PaymentAddress paymentAddress)
     {
         _paymentInfos = new List<CardInfo>();
         _rides = new List<Ride>();
         Name = name.ThrowIfNull();
         Rating = rating.ThrowIfNull();
-        PaymentAddress = paymentPaymentAddress.ThrowIfNull();
+        PaymentAddress = paymentAddress.ThrowIfNull();
     }
 
     private Client() { }
