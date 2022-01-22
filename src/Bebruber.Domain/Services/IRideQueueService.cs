@@ -8,6 +8,7 @@ namespace Bebruber.Domain.Services;
 
 public interface IRideQueueService
 {
-    Task<Result> EnqueueRideEntryAsync(RideEntry rideEntry, CancellationToken cancellationToken);
+    Task EnqueueRideEntryAsync(RideEntry rideEntry, CancellationToken cancellationToken);
     Task<Result<RideEntry>> DequeueRideEntryAsync(Guid entryId, CancellationToken cancellationToken);
+    Task<Result> DismissRideEntryAsync(Guid entryId, Driver driver, CancellationToken cancellationToken);
 }
