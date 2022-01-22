@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Bebruber.Application;
+using Bebruber.Application.Services;
+using Bebruber.Domain.Services;
 
 namespace Bebruber.Endpoints.Server
 {
@@ -20,7 +22,16 @@ namespace Bebruber.Endpoints.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddScoped<IClientNotificationService, ClientNotificationService>();
+            services.AddScoped<IDriverLocationService, DriverLocationService>();
+            services.AddScoped<IDriverNotificationService, DriverNotificationService>();
+            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IPricingService, PricingService>();
+            services.AddScoped<IRideQueueService, RideQueueService>();
+            services.AddScoped<IRideService, RideService>();
+            services.AddScoped<IRouteService, RouteService>();
+            services.AddScoped<ITimeProviderService, TimeProviderService>();
+            
             services.AddControllers();
             services.AddSignalR();
             services.AddCoreModule();
