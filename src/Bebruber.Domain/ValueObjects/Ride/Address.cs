@@ -10,6 +10,14 @@ public class Address : ValueObject<Address>
     public string Street { get; private init; }
     public string HouseNumber { get; private init; }
 
+    public Address(string country, string city, string street, string houseNumber)
+    {
+        Country = country;
+        City = city;
+        Street = street;
+        HouseNumber = houseNumber;
+    }
+
     protected override IEnumerable<object?> GetEqualityComponents()
     {
         yield return Country;
