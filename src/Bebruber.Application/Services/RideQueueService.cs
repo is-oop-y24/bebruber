@@ -6,6 +6,7 @@ using Bebruber.DataAccess;
 using Bebruber.Domain.Entities;
 using Bebruber.Domain.Services;
 using Bebruber.Utility.Extensions;
+using FluentResults;
 
 namespace Bebruber.Application.Services;
 
@@ -18,7 +19,7 @@ public class RideQueueService : IRideQueueService
         _context = context.ThrowIfNull();
     }
 
-    public async Task EnqueueRideEntryAsync(RideEntry rideEntry, CancellationToken cancellationToken)
+    public async Task<Result> EnqueueRideEntryAsync(RideEntry rideEntry, CancellationToken cancellationToken)
     {
         RideEntry? existingEntry = await _context.Entries
             .FindAsync(new object?[] { rideEntry.Id }, cancellationToken);
@@ -27,17 +28,18 @@ public class RideQueueService : IRideQueueService
             throw new RideEntryEnqueuedException(rideEntry);
 
         await _context.Entries.AddAsync(rideEntry, cancellationToken);
+        return Result.Ok();
     }
 
-    public async Task<RideEntry> DequeueRideEntryAsync(Guid entryId, CancellationToken cancellationToken)
+    public async Task<Result<RideEntry>> DequeueRideEntryAsync(Guid entryId, CancellationToken cancellationToken)
     {
         RideEntry? existingEntry = await _context.Entries
             .FindAsync(new object?[] { entryId }, cancellationToken);
 
         if (existingEntry is null)
-            throw new RideEntryNotEnqueuedException(entryId);
+            return Result.Fail(new Error($"{existingEntry?.ToString()} is null"));
 
         _context.Entries.Remove(existingEntry);
-        return existingEntry;
+        return Result.Ok(existingEntry);
     }
 }
