@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Bebruber.Application.Extensions;
+using Bebruber.Common.Dto;
 using Bebruber.Domain.Entities;
 using Bebruber.Domain.Models;
 using Bebruber.Domain.Services;
@@ -16,38 +18,11 @@ namespace Bebruber.Application.Rides.Commands;
 public static class CreateRideCommand
 {
     public record Command(
-        Command.Location Origin,
-        Command.Location Destination,
-        IReadOnlyCollection<Command.Location> IntermediatePoints
+        LocationDto Origin,
+        LocationDto Destination,
+        IReadOnlyCollection<LocationDto> IntermediatePoints
             ) : IRequest<Response>
     {
-        public record Location(
-            Address Address,
-            double Latitude,
-            double Longitude
-        )
-        {
-            public Domain.ValueObjects.Ride.Location ToDomainLocation() =>
-                new Domain.ValueObjects.Ride.Location(
-                    new Domain.ValueObjects.Ride.Address(
-                        Address.Country,
-                        Address.City,
-                        Address.Street,
-                        Address.Country
-                    ),
-                    new Coordinate(
-                        Latitude,
-                        Longitude
-                    )
-                );
-        }
-
-        public record Address(
-            string Country,
-            string City,
-            string Street,
-            string House
-        );
     }
 
     public class CommandValidator : AbstractValidator<Command>
@@ -75,9 +50,9 @@ public static class CreateRideCommand
         public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
         {
             var rideEntry = new RideEntry(
-                request.Origin.ToDomainLocation(),
-                request.Destination.ToDomainLocation(),
-                request.IntermediatePoints.Select(p => p.ToDomainLocation()).ToList()
+                request.Origin.ToLocation(),
+                request.Destination.ToLocation(),
+                request.IntermediatePoints.Select(p => p.ToLocation()).ToList()
             );
 
             await _rideQueueService.EnqueueRideEntryAsync(rideEntry, cancellationToken);
