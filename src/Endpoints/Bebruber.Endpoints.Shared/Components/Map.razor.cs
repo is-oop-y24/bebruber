@@ -36,8 +36,8 @@ namespace Bebruber.Endpoints.Shared.Components
             }
         };
         [Inject] private IMarkerFactory MarkerFactory { get; set; }
+        [Inject] public IPolylineFactory PolylineFactory { get; init; }
         [Inject] private IIconFactory IconFactory { get; init; }
-        [Inject] private IPolylineFactory PolylineFactory { get; set; }
 
         [Parameter] public string Height { get; set; }
         [Parameter] public bool NeedGetMarkerAddress { get; set; }
@@ -72,6 +72,7 @@ namespace Bebruber.Endpoints.Shared.Components
                     marker = await MarkerFactory.CreateAndAddToMap(mouseEvent.LatLng, _mapObject);
                 }
                 var mapMarker = new Marker(new MapPoint(mouseEvent.LatLng), markerAddress, marker);
+                
                 OnMarkerAdded?.Invoke(mapMarker);
             }
         }
@@ -122,10 +123,9 @@ namespace Bebruber.Endpoints.Shared.Components
             return new Marker(point, marker);
         }
 
-        public async Task<Polyline> CreatePolyline(ICollection<MapPoint> points)
+        public async Task<FisSst.BlazorMaps.Polyline> CreatePolyline(IReadOnlyList<LatLng> latLngs)
         {
-            var polyline =  await PolylineFactory.CreateAndAddToMap(points.Select(p => p.ToLatLng()), _mapObject);
-            return new Polyline(points, polyline);
+            return await PolylineFactory.CreateAndAddToMap(latLngs, _mapObject);
         }
     }
 }

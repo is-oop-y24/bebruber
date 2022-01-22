@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Bebruber.Endpoints.Shared.Models;
 using FisSst.BlazorMaps;
 using Microsoft.AspNetCore.Components;
 using MarkerConfig = Bebruber.Endpoints.Shared.Models.MakerConfig;
 using Marker = Bebruber.Endpoints.Shared.Models.Marker;
+using Polyline = Bebruber.Endpoints.Shared.Models.Polyline;
 
 namespace Bebruber.Endpoints.UserWebClient.Pages
 {
@@ -18,7 +20,7 @@ namespace Bebruber.Endpoints.UserWebClient.Pages
 
     public partial class Index
     { 
-        [Inject] private IIconFactory IconFactory { get; init; }
+        [Inject] public IIconFactory IconFactory { get; init; }
         public bool CanAddMarker { get; set; } = false;
         public SelectionState SelectionState = SelectionState.None;
 
@@ -26,11 +28,12 @@ namespace Bebruber.Endpoints.UserWebClient.Pages
         private Marker _startPointMarker;
         private Marker _endPointMarker;
         private readonly List<Marker> _extraPointsMarkers = new List<Marker>();
+        private Bebruber.Endpoints.Shared.Components.Map _mapRef;
+        private Polyline _polyline;
 
         public async Task OnMarkerAddedAsync(Marker marker)
         {
             CanAddMarker = false;
-
             switch (SelectionState)
             {
                 case SelectionState.StartPoint:
@@ -47,8 +50,8 @@ namespace Bebruber.Endpoints.UserWebClient.Pages
                     _extraPointsMarkers.Add(marker);
                     break;
             };
-
             SelectionState = SelectionState.None;
+            await UpdateLine();
             StateHasChanged();
         }
 
@@ -81,9 +84,22 @@ namespace Bebruber.Endpoints.UserWebClient.Pages
 
         public async Task RemoveExtraPointAsync(int pointNumber)
         {
-            Console.WriteLine(pointNumber);
             await _extraPointsMarkers[pointNumber].DeleteAsync();
             _extraPointsMarkers.RemoveAt(pointNumber);
+            await UpdateLine();
+        }
+
+        private async Task UpdateLine()
+        {
+            if (_polyline is not null)
+                await _polyline?.DeleteAsync();
+            var points = new List<MapPoint>(_extraPointsMarkers.Select(p => p.Coordinates));
+            if(_startPointMarker is not null)
+                points.Insert(0 ,_startPointMarker.Coordinates);
+            if(_endPointMarker is not null)
+                points.Add(_endPointMarker.Coordinates);
+            var latLngs = new List<LatLng>(new List<LatLng>(points.Select(p => new LatLng(p.Latitude, p.Longitude))));
+            _polyline = new Polyline(points, await _mapRef.CreatePolyline(latLngs));
         }
     }
 }
