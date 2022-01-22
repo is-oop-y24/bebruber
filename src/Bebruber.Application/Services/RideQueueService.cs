@@ -78,6 +78,7 @@ public class RideQueueService : IRideQueueService
     {
         while (entry.State is RideEntryState.Enqueued)
         {
+            // TODO: Search radius extension
             IReadOnlyCollection<Driver> drivers = await _locationService
                 .GetDriversNearbyAsync(entry.Origin.Coordinate, cancellationToken);
 
