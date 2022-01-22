@@ -16,5 +16,6 @@ internal class CarConfiguration : EntityConfiguration<Car>
             .Property(c => c.Value)
             .HasConversion(c => c.ToArgb(),
                 i => Color.FromArgb(i));
+        builder.OwnsOne(c => c.Category);
     }
 }
