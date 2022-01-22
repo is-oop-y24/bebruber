@@ -1,13 +1,12 @@
 using Bebruber.Domain.Entities;
 using Bebruber.Domain.ValueObjects.Card;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Bebruber.DataAccess.Configurations;
 
-internal class CardInfoConfiguration : IEntityTypeConfiguration<CardInfo>
+internal class CardInfoConfiguration : EntityConfiguration<CardInfo>
 {
-    public void Configure(EntityTypeBuilder<CardInfo> builder)
+    protected override void ConfigureEntity(EntityTypeBuilder<CardInfo> builder)
     {
         builder.OwnsOne(nameof(CardNumber), i => i.CardNumber);
         builder.OwnsOne(nameof(CvvCode), i => i.CvvCode);

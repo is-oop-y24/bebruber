@@ -1,12 +1,11 @@
 using Bebruber.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Bebruber.DataAccess.Configurations;
 
-internal class RideConfiguration : IEntityTypeConfiguration<Ride>
+internal class RideConfiguration : EntityConfiguration<Ride>
 {
-    public void Configure(EntityTypeBuilder<Ride> builder)
+    protected override void ConfigureEntity(EntityTypeBuilder<Ride> builder)
     {
         builder.HasOne(r => r.Client);
         builder.HasOne(r => r.Driver);
