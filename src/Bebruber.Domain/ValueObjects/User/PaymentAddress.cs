@@ -3,9 +3,9 @@ using Bebruber.Domain.Tools;
 
 namespace Bebruber.Domain.ValueObjects.User;
 
-public class Address : ValueObject<Address>
+public class PaymentAddress : ValueObject<PaymentAddress>
 {
-    public Address(string country, string street, int houseNumber, int apartmentNumber)
+    public PaymentAddress(string country, string street, int houseNumber, int apartmentNumber)
     {
         Country = country;
         Street = street;

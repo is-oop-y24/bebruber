@@ -11,20 +11,20 @@ public class Client : Entity<Client>
     private readonly List<CardInfo> _paymentInfos;
     private readonly List<Ride> _rides;
 
-    public Client(Name name, Rating rating, Address paymentAddress)
+    public Client(Name name, Rating rating, PaymentAddress paymentPaymentAddress)
     {
         _paymentInfos = new List<CardInfo>();
         _rides = new List<Ride>();
         Name = name.ThrowIfNull();
         Rating = rating.ThrowIfNull();
-        PaymentAddress = paymentAddress.ThrowIfNull();
+        PaymentAddress = paymentPaymentAddress.ThrowIfNull();
     }
 
     private Client() { }
 
     public Name Name { get; protected init; }
     public Rating Rating { get; set; }
-    public Address PaymentAddress { get; set; }
+    public PaymentAddress PaymentAddress { get; set; }
     public IReadOnlyCollection<CardInfo> PaymentInfos => _paymentInfos.AsReadOnly();
     public IReadOnlyCollection<Ride> Rides => _rides.AsReadOnly();
 
