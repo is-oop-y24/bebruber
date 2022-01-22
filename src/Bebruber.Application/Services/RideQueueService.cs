@@ -54,7 +54,7 @@ public class RideQueueService : IRideQueueService
             .FindAsync(new object?[] { entryId }, cancellationToken);
 
         if (existingEntry is null)
-            return Result.Fail(new Error($"{existingEntry} is null"));
+            return Result.Fail(new Error($"{nameof(existingEntry)} is null"));
 
         // TODO: Transaction 
         _context.Entries.Remove(existingEntry);
@@ -68,7 +68,7 @@ public class RideQueueService : IRideQueueService
             .FindAsync(new object?[] { entryId }, cancellationToken);
 
         if (existingEntry is null)
-            return Result.Fail(new Error($"{existingEntry} is null"));
+            return Result.Fail(new Error($"{nameof(existingEntry)} is null"));
 
         existingEntry.Dismiss(driver);
         return Result.Ok();
