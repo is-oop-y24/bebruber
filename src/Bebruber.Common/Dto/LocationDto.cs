@@ -2,6 +2,5 @@
 
 public record LocationDto(
     AddressDto Address,
-    double Latitude,
-    double Longitude
+    CoordinateDto CoordinateDto
 );

@@ -24,7 +24,7 @@ public static class AcceptRideCommand
         private readonly IRideService _rideService;
         private readonly IRouteService _routeService;
 
-        CommandHandler(
+        public CommandHandler(
             IRideQueueService rideQueueService,
             IRideService rideService,
             BebruberDatabaseContext databaseContext,
@@ -38,16 +38,16 @@ public static class AcceptRideCommand
 
         public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
         {
+            (Guid rideEntryId, Guid clientId, Guid driverId) = request;
+
             Result<RideEntry> result = await _rideQueueService
-                .DequeueRideEntryAsync(request.RideEntryId, cancellationToken);
+                .DequeueRideEntryAsync(rideEntryId, cancellationToken);
 
             if (result.IsFailed)
                 return new Response(Guid.Empty);
 
-            Driver? driver = await _databaseContext.Drivers
-                .FindAsync(new object?[] { request.DriverId }, cancellationToken);
-            Client? client = await _databaseContext.Clients
-                .FindAsync(new object?[] { request.ClientId }, cancellationToken);
+            Driver? driver = await _databaseContext.Drivers.FindAsync(new object?[] { driverId }, cancellationToken);
+            Client? client = await _databaseContext.Clients.FindAsync(new object?[] { clientId }, cancellationToken);
 
             driver = driver.ThrowIfNull();
             client = client.ThrowIfNull();
