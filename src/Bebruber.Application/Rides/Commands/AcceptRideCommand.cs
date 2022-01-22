@@ -16,7 +16,7 @@ public class AcceptRideCommand
         RideContext RideContext) : IRequest<Response>;
     
     public record Response(
-        bool Success);
+        Guid RideId);
 
     public class CommandHandler : IRequestHandler<Command, Response>
     {
@@ -38,10 +38,10 @@ public class AcceptRideCommand
                 cancellationToken);
             if (result.IsFailed)
             {
-                return new Response(false);
+                return new Response(Guid.Empty);
             }
-            await _rideService.RegisterRideAsync(request.RideContext, cancellationToken);
-            return new Response(true);
+            Ride ride = await _rideService.RegisterRideAsync(request.RideContext, cancellationToken);
+            return new Response(ride.Id);
         }   
     }
 }
