@@ -3,15 +3,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Bebruber.DataAccess.Configurations;
 
-internal class RideConfiguration : EntityConfiguration<Ride>
+internal class RideEntryConfiguration : EntityConfiguration<RideEntry>
 {
-    protected override void ConfigureEntity(EntityTypeBuilder<Ride> builder)
+    protected override void ConfigureEntity(EntityTypeBuilder<RideEntry> builder)
     {
-        builder.HasOne(r => r.Client);
-        builder.HasOne(r => r.Driver);
-        builder.OwnsOne(r => r.Cost);
-        builder.OwnsOne(r => r.Origin);
-        builder.OwnsOne(r => r.Destination);
+        builder.OwnsOne(e => e.Origin);
+        builder.OwnsOne(e => e.Destination);
         builder.OwnsMany(r => r.IntermediatePoints, p =>
         {
             p.WithOwner().HasForeignKey("OwnerId");

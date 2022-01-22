@@ -5,6 +5,11 @@ namespace Bebruber.Domain.Tools;
 public abstract class Entity<TEntity> : IEquatable<TEntity>
     where TEntity : Entity<TEntity>
 {
+    protected Entity()
+    {
+        Id = Guid.NewGuid();
+    }
+
     public Guid Id { get; protected init; }
 
     public bool Equals(TEntity? other)
