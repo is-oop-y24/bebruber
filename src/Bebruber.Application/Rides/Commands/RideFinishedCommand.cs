@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Bebruber.Application.Rides.Commands;
 
-public class RideFinishedCommand
+public static class RideFinishedCommand
 {
     public record Command(
         Guid RideId) : IRequest<Response>;
