@@ -6,7 +6,7 @@ namespace Bebruber.Domain.Services;
 
 public interface IDriverNotificationService
 {
-    Task OfferRideToDriver(Driver driver, RideEntry rideEntry);
-    Task NotifySuccessfulAcceptance(Driver driver, RideEntry rideEntry);
-    Task NotifyFailedAcceptance(Driver driver);
+    Task OfferRideToDriverAsync(Driver driver, RideEntry rideEntry);
+    Task NotifySuccessfulAcceptanceAsync(Driver driver, Ride rideEntry);
+    Task NotifyFailedAcceptanceAsync(Driver driver);
 }
