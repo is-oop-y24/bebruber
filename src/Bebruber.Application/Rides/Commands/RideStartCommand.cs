@@ -34,7 +34,7 @@ public static class RideStartCommand
             Ride? ride = await _databaseContext.Rides.FindAsync(request.RideId);
             if (ride is not null)
             {
-                await _rideService.FinishRideAsync(ride, cancellationToken);   
+                await _rideService.StartRideAsync(ride, cancellationToken);   
             }
 
             return new Response(ride is not null);
