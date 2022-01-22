@@ -34,9 +34,6 @@ public class RideService : IRideService
             context.Destination,
             context.IntermediatePoints);
 
-        context.Client.AddRide(ride);
-        context.Driver.AddRide(ride);
-
         return Task.FromResult(ride);
     }
 
