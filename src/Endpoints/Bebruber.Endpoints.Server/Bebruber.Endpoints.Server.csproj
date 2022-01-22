@@ -12,11 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Bebruber.Core\Bebruber.Core.csproj" />
+    <ProjectReference Include="..\..\Bebruber.Application\Bebruber.Application.csproj" />
   </ItemGroup>
 
 </Project>
