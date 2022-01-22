@@ -10,6 +10,8 @@ public class BebruberDatabaseContext : DbContext
 
     public DbSet<Client> Clients { get; private set; } = null!;
     public DbSet<CardInfo> PaymentInfos { get; private set; } = null!;
+    public DbSet<Ride> Rides { get; private set; } = null!;
+    public DbSet<Driver> Drivers { get; private set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
