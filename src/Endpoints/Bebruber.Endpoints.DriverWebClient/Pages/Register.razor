@@ -20,6 +20,9 @@
                 <InputText @bind-Value="_model.PhoneNumber" placeholder="+7 (800) 555-35-35" class="form-control"/>
                 <ValidationMessage For="@(() => _model.PhoneNumber)" />
             </div>
+            <div class="form-group form-check">
+                <input type="checkbox" @bind="_showPassword" @onclick="UpdatePasswordVisibility" class="form-check-input">Show password</input>
+                <label class="form-check-label">Отображать пароль</label>
 
             <div class="form-group">
                 <label>Номер водительского удостоверения</label>

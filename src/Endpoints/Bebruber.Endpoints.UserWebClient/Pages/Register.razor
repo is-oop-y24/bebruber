@@ -39,9 +39,12 @@
                 @_model.Password
                 <ValidationMessage For="@(() => _model.Password)" />
             </div>
-
+            <div class="form-group form-check">
+                <input type="checkbox" @bind="_showPassword" @onclick="UpdatePasswordVisibility" class="form-check-input">Show password</input>
+                <label class="form-check-label">Отображать пароль</label>
+            </div>
             <button disabled="@_loading" class="btn btn-primary">
-                @if (_loading) 
+                @if (_loading)
                 {
                     <span class="spinner-border spinner-border-sm mr-1"></span>
                 }
