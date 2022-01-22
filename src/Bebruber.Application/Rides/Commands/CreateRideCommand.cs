@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Bebruber.Domain.Entities;
 using Bebruber.Domain.Models;
 using Bebruber.Domain.Services;
 using Bebruber.Domain.ValueObjects.Ride;
@@ -20,10 +22,32 @@ public static class CreateRideCommand
             ) : IRequest<Response>
     {
         public record Location(
-            string Address,
+            Address Address,
             double Latitude,
             double Longitude
-            );
+        )
+        {
+            public Domain.ValueObjects.Ride.Location ToDomainLocation() =>
+                new Domain.ValueObjects.Ride.Location(
+                    new Domain.ValueObjects.Ride.Address(
+                        Address.Country,
+                        Address.City,
+                        Address.Street,
+                        Address.Country
+                    ),
+                    new Coordinate(
+                        Latitude,
+                        Longitude
+                    )
+                );
+        }
+
+        public record Address(
+            string Country,
+            string City,
+            string Street,
+            string House
+        );
     }
 
     public class CommandValidator : AbstractValidator<Command>
@@ -33,26 +57,32 @@ public static class CreateRideCommand
         }
     }
 
-    public record Response();
+    public record Response(Guid RideEntryId);
 
     public class CommandHandler : IRequestHandler<Command, Response>
     {
         private IRideQueueService _rideQueueService;
+        private IDriverLocationService _driverLocationService;
+        private IDriverNotificationService _driverNotificationService;
 
-        public CommandHandler(IRideQueueService rideQueueService)
+        public CommandHandler(IRideQueueService rideQueueService, IDriverLocationService driverLocationService, IDriverNotificationService driverNotificationService)
         {
             _rideQueueService = rideQueueService;
+            _driverLocationService = driverLocationService;
+            _driverNotificationService = driverNotificationService;
         }
 
         public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
         {
             var rideEntry = new RideEntry(
-                new Location(
-                        new PaymentAddress(request.Origin.Address)
-                    )
-                )
+                request.Origin.ToDomainLocation(),
+                request.Destination.ToDomainLocation(),
+                request.IntermediatePoints.Select(p => p.ToDomainLocation()).ToList()
+            );
 
-            _rideQueueService.EnqueueRideEntryAsync()
+            await _rideQueueService.EnqueueRideEntryAsync(rideEntry, cancellationToken);
+
+            return new Response(rideEntry.Id);
         }
     }
 }
