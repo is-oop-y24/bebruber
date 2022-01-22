@@ -56,6 +56,7 @@ public class RideQueueService : IRideQueueService
         if (existingEntry is null)
             return Result.Fail(new Error($"{existingEntry} is null"));
 
+        // TODO: Transaction 
         _context.Entries.Remove(existingEntry);
         existingEntry.State = RideEntryState.Dequeued;
         return Result.Ok(existingEntry);
