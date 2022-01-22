@@ -13,13 +13,9 @@ namespace Bebruber.Application.Rides.Commands;
 
 public static class AcceptRideCommand
 {
-    public record Command(
-        Guid RideEntryId,
-        Guid ClientId,
-        Guid DriverId) : IRequest<Response>;
-    
-    public record Response(
-        Guid RideId);
+    public record Command(Guid RideEntryId, Guid ClientId, Guid DriverId) : IRequest<Response>;
+
+    public record Response(Guid RideId);
 
     public class CommandHandler : IRequestHandler<Command, Response>
     {
@@ -30,8 +26,8 @@ public static class AcceptRideCommand
 
         CommandHandler(
             IRideQueueService rideQueueService,
-            IRideService rideService, 
-            BebruberDatabaseContext databaseContext, 
+            IRideService rideService,
+            BebruberDatabaseContext databaseContext,
             IRouteService routeService)
         {
             _rideQueueService = rideQueueService;
@@ -39,38 +35,37 @@ public static class AcceptRideCommand
             _databaseContext = databaseContext;
             _routeService = routeService;
         }
-        
+
         public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
         {
-            Result<RideEntry> result = await _rideQueueService.DequeueRideEntryAsync(
-                request.RideEntryId,
-                cancellationToken);
-            if (result.IsFailed)
-            {
-                return new Response(Guid.Empty);
-            }
+            Result<RideEntry> result = await _rideQueueService
+                .DequeueRideEntryAsync(request.RideEntryId, cancellationToken);
 
-            Driver? driver = await _databaseContext.Drivers.FindAsync(request.DriverId);
-            Client? client = await _databaseContext.Clients.FindAsync(request.ClientId);
+            if (result.IsFailed)
+                return new Response(Guid.Empty);
+
+            Driver? driver = await _databaseContext.Drivers
+                .FindAsync(new object?[] { request.DriverId }, cancellationToken);
+            Client? client = await _databaseContext.Clients
+                .FindAsync(new object?[] { request.ClientId }, cancellationToken);
 
             driver = driver.ThrowIfNull();
             client = client.ThrowIfNull();
-            
+
             RideEntry rideEntry = result.Value;
-            Route route = await _routeService.CreateRouteAsync(
+            Route route = await _routeService
+                .CreateRouteAsync(rideEntry.Origin, rideEntry.Destination, rideEntry.IntermediatePoints);
+
+            var rideContext = new RideContext(
+                client,
+                driver,
+                route,
                 rideEntry.Origin,
                 rideEntry.Destination,
                 rideEntry.IntermediatePoints);
-            Ride ride = await _rideService.RegisterRideAsync(
-                new RideContext(
-                    client,
-                    driver,
-                    route,
-                    rideEntry.Origin,
-                    rideEntry.Destination,
-                    rideEntry.IntermediatePoints)
-                , cancellationToken);
+
+            Ride ride = await _rideService.RegisterRideAsync(rideContext, cancellationToken);
             return new Response(ride.Id);
-        }   
+        }
     }
 }
