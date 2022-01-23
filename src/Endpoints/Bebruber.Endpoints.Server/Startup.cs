@@ -7,8 +7,10 @@ using Bebruber.Application.Services.Models;
 using Bebruber.Core.Services;
 using Bebruber.DataAccess;
 using Bebruber.DataAccess.Seeding;
+using Bebruber.Domain.Entities;
 using Bebruber.Domain.Services;
 using Bebruber.Identity.Tools;
+using Bebruber.Utility.Tools;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -37,6 +39,11 @@ namespace Bebruber.Endpoints.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var typeLocator = new TypeLocator();
+            typeLocator.RegisterType(typeof(Driver));
+            typeLocator.RegisterType(typeof(Client));
+            services.AddSingleton(typeLocator);
+
             services.AddScoped<IClientNotificationService, ClientNotificationService>();
             services.AddScoped<IDriverLocationService, DriverLocationService>();
             services.AddScoped<IDriverNotificationService, DriverNotificationService>();
@@ -46,8 +53,8 @@ namespace Bebruber.Endpoints.Server
             services.AddScoped<IRouteService, RouteService>();
             services.AddScoped<ITimeProviderService, TimeProviderService>();
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
-            services.AddScoped<IPricingService, RoutePricingService>();
 
+            services.AddScoped<IPricingService, RoutePricingService>();
             services.Decorate<IPricingService, CarCategoryPricingService>();
 
             services.AddControllers();
@@ -103,16 +110,16 @@ namespace Bebruber.Endpoints.Server
             services.AddScoped<IdentityDatabaseSeeder>();
 
             services.AddIdentity<IdentityUser, IdentityRole>(m =>
-                                                             {
-                                                                 m.Password.RequireDigit = false;
-                                                                 m.Password.RequiredLength = 0;
-                                                                 m.Password.RequireLowercase = false;
-                                                                 m.Password.RequireUppercase = false;
-                                                                 m.Password.RequiredUniqueChars = 0;
-                                                                 m.Password.RequireNonAlphanumeric = false;
-                                                             })
-                    .AddEntityFrameworkStores<IdentityDatabaseContext>()
-                    .AddSignInManager<SignInManager<IdentityUser>>();
+                {
+                    m.Password.RequireDigit = false;
+                    m.Password.RequiredLength = 0;
+                    m.Password.RequireLowercase = false;
+                    m.Password.RequireUppercase = false;
+                    m.Password.RequiredUniqueChars = 0;
+                    m.Password.RequireNonAlphanumeric = false;
+                })
+                .AddEntityFrameworkStores<IdentityDatabaseContext>()
+                .AddSignInManager<SignInManager<IdentityUser>>();
 
             var signingConfigurations = new SigningConfigurations(Configuration["TokenKey"]);
             services.AddSingleton(signingConfigurations);
