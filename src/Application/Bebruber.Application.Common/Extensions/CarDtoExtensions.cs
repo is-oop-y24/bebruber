@@ -8,7 +8,7 @@ public static class CarDtoExtensions
     public static CarDto ToDto(this Car car)
     {
         return new CarDto(
-            car.CarNumber.ToString(),
+            car.Number.ToString(),
             car.Brand.Value,
             car.Name.Value,
             car.Color.Name,
