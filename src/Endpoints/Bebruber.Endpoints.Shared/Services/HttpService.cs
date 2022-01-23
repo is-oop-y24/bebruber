@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -8,7 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Bebruber.Endpoints.DriverWebClient.Interfaces;
+using Bebruber.Endpoints.Shared.Interfaces;
 using Bebruber.Endpoints.Shared.Models;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
@@ -139,7 +140,7 @@ public class HttpService : IHttpService
         if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
-            throw new Exception(error["message"]);
+            throw new DataException(error["message"]);
         }
     }
 }

@@ -1,0 +1,27 @@
+@using Bebruber.Endpoints.Shared.Interfaces
+@using Bebruber.Endpoints.Shared.Models
+@using Blazored.LocalStorage
+@inject NavigationManager _navigationManager
+@inject IAccountService _accountService
+@inject ILocalStorageService _localStorageService
+
+@if (_authorized)
+{
+    @ChildContent
+}
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public string Path { get; set; }
+    [Parameter] public string Role { get; set; }
+    
+    private bool _authorized;
+    protected override async Task OnInitializedAsync()
+    {
+        if (await _accountService.CheckRole(Role))
+            _navigationManager.NavigateTo(Path);
+        else
+            _authorized = true;
+
+    }
+}

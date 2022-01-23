@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Data;
 using System.Threading.Tasks;
-using Bebruber.Endpoints.DriverWebClient.Interfaces;
+using Bebruber.Endpoints.Shared.Interfaces;
 using Bebruber.Endpoints.Shared.Models;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
@@ -47,5 +48,19 @@ public class AccountService : IAccountService
     public async Task Register<TRegister>(TRegister model)
     {
         await _httpService.PostAsync("/users/register", model);
+    }
+
+    public async Task<bool> CheckRole(string role)
+    {
+        var token = await _localStorageService.GetItemAsync<UserToken>(_userKey);
+        try
+        {
+            await _httpService.PostAsync($"/users/check-role/", role);
+            return true;
+        }
+        catch (DataException)
+        {
+            return false;
+        }
     }
 }

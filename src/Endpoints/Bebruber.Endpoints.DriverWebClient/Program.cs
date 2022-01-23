@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Bebruber.Endpoints.DriverWebClient.Interfaces;
+using Bebruber.Endpoints.Shared.Interfaces;
 using Bebruber.Endpoints.Shared.Services;
 using Blazored.LocalStorage;
 using Blazorise;

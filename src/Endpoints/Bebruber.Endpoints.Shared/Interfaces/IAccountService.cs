@@ -1,8 +1,7 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Bebruber.Endpoints.Shared.Models;
 
-namespace Bebruber.Endpoints.DriverWebClient.Interfaces;
+namespace Bebruber.Endpoints.Shared.Interfaces;
 
 public interface IAccountService
 {
@@ -11,4 +10,5 @@ public interface IAccountService
     Task Login(LoginModel model);
     Task Logout();
     Task Register<TRegister>(TRegister model);
+    Task<bool> CheckRole(string role);
 }

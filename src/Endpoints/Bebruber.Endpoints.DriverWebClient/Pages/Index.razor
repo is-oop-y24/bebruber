@@ -1,5 +1,7 @@
 ﻿@page "/"
 
+<AuthRedirectComponent Role="Driver" Path="/login">
+
 <div class="row">
     <div class="col-md-9">
         <Map Height="550px"/>
@@ -29,21 +31,22 @@
     </div>
 </div>
 
-<div class="modal fade" id="newRideOffer" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Поступил новый заказ</h5>
-      </div>
-      <div class="modal-body">
-          <p><span class="font-weight-bold">Точка отправления:</span> Lorem ipsum.</p>
-          <p><span class="font-weight-bold">Точка назначения:</span> Lorem ipsum.</p>
-          <p><span class="font-weight-bold">Промежуточные точки:</span> Lorem ipsum.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Отказаться</button>
-        <button type="button" class="btn btn-success">Принять</button>
-      </div>
+    <div class="modal fade" id="newRideOffer" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Поступил новый заказ</h5>
+                </div>
+                <div class="modal-body">
+                    <p><span class="font-weight-bold">Точка отправления:</span> Lorem ipsum.</p>
+                    <p><span class="font-weight-bold">Точка назначения:</span> Lorem ipsum.</p>
+                    <p><span class="font-weight-bold">Промежуточные точки:</span> Lorem ipsum.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Отказаться</button>
+                    <button type="button" class="btn btn-success">Принять</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
+</AuthRedirectComponent>

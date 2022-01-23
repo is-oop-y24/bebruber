@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Bebruber.Endpoints.DriverWebClient.Interfaces;
+namespace Bebruber.Endpoints.Shared.Interfaces;
 
 public interface IHttpService
 {
