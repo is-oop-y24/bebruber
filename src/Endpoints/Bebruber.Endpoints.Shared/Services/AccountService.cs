@@ -41,21 +41,11 @@ public class AccountService : IAccountService
     {
         User = null;
         await _localStorageService.RemoveItemAsync(_userKey);
-        _navigationManager.NavigateTo("account/login");
+        _navigationManager.NavigateTo("users/login");
     }
 
     public async Task Register<TRegister>(TRegister model)
     {
         await _httpService.PostAsync("/users/register", model);
-    }
-
-    public async Task<IList<UserToken>> GetAll()
-    {
-        return await _httpService.GetAsync<IList<UserToken>>("/users");
-    }
-
-    public async Task<UserToken> GetById(string id)
-    {
-        return await _httpService.GetAsync<UserToken>($"/users/{id}");
     }
 }

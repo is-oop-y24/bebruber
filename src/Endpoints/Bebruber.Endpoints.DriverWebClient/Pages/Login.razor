@@ -2,9 +2,9 @@
 @using Bebruber.Endpoints.DriverWebClient.Models
 @using Bebruber.Endpoints.DriverWebClient.Interfaces
 @using Bebruber.Endpoints.Shared.Models
-@inject IJSRuntime JS
+@inject IJSRuntime _js
 @inject NavigationManager _navigationManager
-@inject IAccountService AccountService
+@inject IAccountService _accountService
 
 <div class="card">
     <h4 class="card-header" style="background-color: #ffffff">Вход</h4>
@@ -52,12 +52,12 @@
         _loading = true;
         try
         {
-            await AccountService.Login(_model);
+            await _accountService.Login(_model);
             _navigationManager.NavigateTo("/");
         }
         catch (Exception e)
         {
-            await JS.InvokeVoidAsync("alert", e.Message);
+            await _js.InvokeVoidAsync("alert", e.Message);
         }
         _loading = false;
     }

@@ -11,6 +11,4 @@ public interface IAccountService
     Task Login(LoginModel model);
     Task Logout();
     Task Register<TRegister>(TRegister model);
-    Task<IList<UserToken>> GetAll();
-    Task<UserToken> GetById(string id);
 }
