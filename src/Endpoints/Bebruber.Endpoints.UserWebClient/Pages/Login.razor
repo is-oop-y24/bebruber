@@ -15,7 +15,14 @@
             </div>
             <div class="form-group">
                 <label>Пароль</label>
-                <PasswordFieldComponent @bind-Value="_model.Password" class="form-control"/>
+                <Addons>    
+                    <Addon AddonType="AddonType.Body">
+                        <InputText type="@_passwordFieldType" @bind-Value="@_model.Password" class="form-control" />
+                    </Addon>
+                    <Addon AddonType="AddonType.End">
+                        <Button Color="Color.Primary" @onclick="UpdatePasswordVisibility">@_buttonText</Button>
+                    </Addon>
+                </Addons>
                 <ValidationMessage For="@(() => _model.Password)"/>
             </div>`
             <button disabled="@_loading" class="btn btn-primary">
@@ -33,6 +40,8 @@
 @code {
     private LoginModel _model = new();
     private bool _loading;
+    private string _passwordFieldType = "password";
+    private string _buttonText = "Показать пароль";
 
     private async Task OnValidSubmit()
     {
@@ -47,6 +56,11 @@
             await JS.InvokeVoidAsync("alert", e.Message);
         }
         _loading = false;
+    }
+    private void UpdatePasswordVisibility()
+    {
+        _passwordFieldType = _passwordFieldType == "text" ? "password" : "text";
+        _buttonText = _passwordFieldType == "text" ? "Скрыть пароль" : "Показать пароль";
     }
 
 }
