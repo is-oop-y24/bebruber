@@ -8,6 +8,7 @@ public sealed class BebruberDatabaseContext : DbContext
     public BebruberDatabaseContext(DbContextOptions<BebruberDatabaseContext> options)
         : base(options)
     {
+        Database.EnsureDeleted();
         Database.EnsureCreated();
     }
 

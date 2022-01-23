@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Bebruber.Domain.Entities;
+using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,8 +16,11 @@ public class ClientController : ControllerBase
     [Authorize(AuthenticationSchemes = "Bearer", Roles="Client")]
     public ActionResult<List<string>> GetPaymentMethods()
     {
-        var client = (Client)User.Identity;
-        var infos = client.PaymentInfos.Select(item => item.ToString()).ToList();
-        return infos;
+        var userIdentity = (ClaimsIdentity)User.Identity;
+        foreach (var item in userIdentity.Claims)
+        {
+        }
+
+        return new List<string>();
     }
 }
