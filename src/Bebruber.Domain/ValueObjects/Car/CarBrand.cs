@@ -7,4 +7,6 @@ public class CarBrand : ValueOf<string, CarBrand>
 {
     public CarBrand(string value)
         : base(value.ThrowIfNull()) { }
+
+    protected CarBrand() { }
 }

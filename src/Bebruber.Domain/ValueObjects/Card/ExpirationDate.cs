@@ -18,6 +18,8 @@ public class ExpirationDate : ValueObject<ExpirationDate>
         Month = month;
     }
 
+    protected ExpirationDate() { }
+
     public int Year { get; private init; }
     public int Month { get; private init; }
 
