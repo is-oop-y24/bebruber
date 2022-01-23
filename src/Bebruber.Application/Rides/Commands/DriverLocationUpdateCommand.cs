@@ -12,7 +12,7 @@ using MediatR;
 
 namespace Bebruber.Application.Rides.Commands;
 
-public class DriverLocationUpdateCommand
+public static class DriverLocationUpdateCommand
 {
     public record Command(Guid DriverId, CoordinateDto Coord) : IRequest<Response>;
 

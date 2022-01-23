@@ -19,7 +19,7 @@ public static class RideStartCommand
         private readonly IRideService _rideService;
         private readonly BebruberDatabaseContext _databaseContext;
 
-        CommandHandler(IRideService rideService, BebruberDatabaseContext databaseContext)
+        public CommandHandler(IRideService rideService, BebruberDatabaseContext databaseContext)
         {
             _rideService = rideService;
             _databaseContext = databaseContext;

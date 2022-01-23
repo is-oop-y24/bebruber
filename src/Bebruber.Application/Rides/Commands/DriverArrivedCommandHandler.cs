@@ -10,7 +10,7 @@ using MediatR;
 
 namespace Bebruber.Application.Rides.Commands;
 
-public class DriverArrivedCommandHandler
+public static class DriverArrivedCommandHandler
 {
     public record Command(Guid RideId, Guid ClientId) : IRequest<Response>;
 

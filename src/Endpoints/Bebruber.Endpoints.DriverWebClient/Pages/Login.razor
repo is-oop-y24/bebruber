@@ -1,5 +1,6 @@
 @page "/login"
 @using Bebruber.Endpoints.DriverWebClient.Models
+@using Bebruber.Endpoints.DriverWebClient.Services
 @inject IJSRuntime JS
 @inject NavigationManager _navigationManager
 
@@ -15,7 +16,7 @@
             </div>
             <div class="form-group">
                 <label>Пароль</label>
-                <PasswordFieldComponent @bind-Value="_model.Password" class="form-control"/>
+                <InputText @bind-Value="_model.Password" class="form-control"/>
                 <ValidationMessage For="@(() => _model.Password)"/>
             </div>
             <button disabled="@_loading" class="btn btn-primary">
@@ -32,6 +33,8 @@
 
 @code {
     private LoginModel _model = new();
+    [Inject]
+    public AccountService AccountService { get; set; }
     private bool _loading;
 
     private async Task OnValidSubmit()
@@ -39,8 +42,7 @@
         _loading = true;
         try
         {
-            throw new NotImplementedException();
-            _navigationManager.NavigateTo("/");
+            await AccountService.Login(_model);
         }
         catch (Exception e)
         {

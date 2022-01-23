@@ -6,7 +6,11 @@ namespace Bebruber.DataAccess;
 
 public class DriverLocationDatabaseContext : DbContext
 {
-    public DriverLocationDatabaseContext(DbContextOptions options) : base(options) { }
+    public DriverLocationDatabaseContext(DbContextOptions<DriverLocationDatabaseContext> options)
+        : base(options)
+    {
+        Database.EnsureCreated();
+    }
 
     public DbSet<DriverLocation> Locations { get; private set; } = null!;
 

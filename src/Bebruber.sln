@@ -25,6 +25,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Core", "Bebruber.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Common", "Bebruber.Common\Bebruber.Common.csproj", "{CE840E00-4017-4F74-AFAF-6FA665F8B916}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Identity", "Bebruber.Identity\Bebruber.Identity.csproj", "{786E28EF-B164-4D7B-AB47-4E03177806FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.DataAccess.Seeding", "Bebruber.DataAccess.Seeding\Bebruber.DataAccess.Seeding.csproj", "{3DF2E772-AF94-42CF-89BC-7073597B8DFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +75,14 @@ Global
 		{CE840E00-4017-4F74-AFAF-6FA665F8B916}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE840E00-4017-4F74-AFAF-6FA665F8B916}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE840E00-4017-4F74-AFAF-6FA665F8B916}.Release|Any CPU.Build.0 = Release|Any CPU
+		{786E28EF-B164-4D7B-AB47-4E03177806FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{786E28EF-B164-4D7B-AB47-4E03177806FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{786E28EF-B164-4D7B-AB47-4E03177806FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{786E28EF-B164-4D7B-AB47-4E03177806FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DF2E772-AF94-42CF-89BC-7073597B8DFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DF2E772-AF94-42CF-89BC-7073597B8DFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DF2E772-AF94-42CF-89BC-7073597B8DFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DF2E772-AF94-42CF-89BC-7073597B8DFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
