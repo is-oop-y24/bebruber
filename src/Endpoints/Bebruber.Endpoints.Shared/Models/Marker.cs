@@ -5,11 +5,7 @@ namespace Bebruber.Endpoints.Shared.Models
 {
     public class Marker
     {
-        private FisSst.BlazorMaps.Marker _marker;
-        public string Address { get; }
-        public MapPoint Coordinates { get; }
-        public string Tooltip { get; }
-
+        private readonly FisSst.BlazorMaps.Marker _marker;
         public Marker(MapPoint coordinates, FisSst.BlazorMaps.Marker marker)
         {
             _marker = marker;
@@ -23,6 +19,10 @@ namespace Bebruber.Endpoints.Shared.Models
             Address = address;
             Coordinates = coordinates;
         }
+
+        public string Address { get; }
+        public MapPoint Coordinates { get; }
+        public string Tooltip { get; }
 
         public async Task SetTooltipAsync(string tooltip)
         {

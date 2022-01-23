@@ -21,8 +21,7 @@ public class CreateRideHandler : IRequestHandler<Command, Response>
         var rideEntry = new RideEntry(
             request.Origin.ToLocation(),
             request.Destination.ToLocation(),
-            request.IntermediatePoints.Select(p => p.ToLocation()).ToList()
-        );
+            request.IntermediatePoints.Select(p => p.ToLocation()).ToList());
 
         await _rideQueueService.EnqueueRideEntryAsync(rideEntry, cancellationToken);
 

@@ -4,6 +4,5 @@ namespace Bebruber.Endpoints.DriverWebClient.Pages
 {
     public partial class Index
     {
-
     }
 }

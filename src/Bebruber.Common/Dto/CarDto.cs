@@ -8,5 +8,4 @@ public record CarDto(
     string Name,
     string ColorName,
     Color Color,
-    string Category
-);
+    string Category);
