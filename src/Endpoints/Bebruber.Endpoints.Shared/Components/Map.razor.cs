@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Bebruber.Endpoints.Shared.Models;
 using FisSst.BlazorMaps;
 using Microsoft.AspNetCore.Components;
-using Bebruber.Endpoints.Shared.Models;
 using Newtonsoft.Json;
 using Marker = Bebruber.Endpoints.Shared.Models.Marker;
 using Polyline = Bebruber.Endpoints.Shared.Models.Polyline;
@@ -22,7 +21,8 @@ namespace Bebruber.Endpoints.Shared.Components
     public partial class Map
     {
         private FisSst.BlazorMaps.Map _mapObject;
-        private MapOptions _options = new MapOptions() {
+        private MapOptions _options = new MapOptions() 
+        {
             DivId = "Map",
             Center = new LatLng(59.956175868546254, 30.309461702204565),
             Zoom = 13,
@@ -67,10 +67,12 @@ namespace Bebruber.Endpoints.Shared.Components
                     };
                     marker = await MarkerFactory.CreateAndAddToMap(mouseEvent.LatLng, _mapObject, markerOptions);
                 }
+
                 else
                 {
                     marker = await MarkerFactory.CreateAndAddToMap(mouseEvent.LatLng, _mapObject);
                 }
+
                 var mapMarker = new Marker(new MapPoint(mouseEvent.LatLng), markerAddress, marker);
                 
                 OnMarkerAdded?.Invoke(mapMarker);
@@ -104,7 +106,7 @@ namespace Bebruber.Endpoints.Shared.Components
                     await _mapObject.OnClick(MapOnClick);
                     break;
                 }
-                catch (NullReferenceException e)
+                catch (NullReferenceException)
                 {
                     await Task.Delay(TimeSpan.FromMilliseconds(5));
                 }
