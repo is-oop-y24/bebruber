@@ -2,9 +2,6 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-﻿using System.Net;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Bebruber.Application.Requests.Accounts;
 using Bebruber.DataAccess;
 using Bebruber.DataAccess.Seeding;
@@ -56,9 +53,9 @@ public class UsersController : ControllerBase
         return Ok();
     }
 
-    [Authorize]
-    [HttpGet("check-role/{role}")]
-    public async Task<IActionResult> CheckRole(string role)
+    [HttpPost("check-role")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    public async Task<IActionResult> CheckRole([FromBody] string role)
     {
         var userIdentity = (ClaimsIdentity)User.Identity;
         CheckRole.Response response = await _mediator.Send(new CheckRole.Command(userIdentity, role));

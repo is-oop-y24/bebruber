@@ -19,9 +19,9 @@
     protected override async Task OnInitializedAsync()
     {
         if (await _accountService.CheckRole(Role))
-            _navigationManager.NavigateTo(Path);
-        else
             _authorized = true;
+        else
+            _navigationManager.NavigateTo(Path);
 
     }
 }
