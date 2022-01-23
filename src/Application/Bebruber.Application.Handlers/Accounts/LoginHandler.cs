@@ -35,12 +35,12 @@ public class LoginHandler : IRequestHandler<Login.Command, Login.Response>
     public async Task<Login.Response> Handle(Login.Command request, CancellationToken cancellationToken)
     {
         Console.WriteLine(request.Email);
-        var user = await _userManager.FindByEmailAsync(request.Email);
+        ApplicationUser? user = await _userManager.FindByEmailAsync(request.Email);
 
         if (user is null)
             throw new AuthenticationException("Wrong email");
 
-        var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
+        SignInResult? result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
         if (result.Succeeded)
             return new Login.Response(_tokenGenerator.CreateToken(user));
