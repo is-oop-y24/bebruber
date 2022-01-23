@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bebruber.Domain", "Bebruber
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bebruber.DataAccess", "Bebruber.DataAccess\Bebruber.DataAccess.csproj", "{E6CED95D-E93A-4330-9980-AB225F3A0EF3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bebruber.Application", "Bebruber.Application\Bebruber.Application.csproj", "{353FA50A-5FE3-44BE-B83D-EDC34829F7C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bebruber.Application.Common", "Application\Bebruber.Application.Common\Bebruber.Application.Common.csproj", "{353FA50A-5FE3-44BE-B83D-EDC34829F7C1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Endpoints.DriverWebClient", "Endpoints\Bebruber.Endpoints.DriverWebClient\Bebruber.Endpoints.DriverWebClient.csproj", "{3BEC20F1-E2F7-4BD2-B91B-F25680124BE5}"
 EndProject
@@ -24,6 +24,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Core", "Bebruber.Core\Bebruber.Core.csproj", "{A7482BA3-15B8-44A1-B102-77D6E857D78C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Common", "Bebruber.Common\Bebruber.Common.csproj", "{CE840E00-4017-4F74-AFAF-6FA665F8B916}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Endpoints.SignalR", "Endpoints\Bebruber.Endpoints.SignalR\Bebruber.Endpoints.SignalR.csproj", "{2769B821-15E6-445F-8FEC-1BE7B33BE65B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{84324624-8181-4B32-89D1-4A0B146A79C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Application.Requests", "Application\Bebruber.Application.Requests\Bebruber.Application.Requests.csproj", "{60947E66-CD78-467F-B77F-5E73795D8EEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Application.Handlers", "Application\Bebruber.Application.Handlers\Bebruber.Application.Handlers.csproj", "{302CAC93-9EFB-4CF8-BC25-0291CFAA7EB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebruber.Application.Services", "Application\Bebruber.Application.Services\Bebruber.Application.Services.csproj", "{21977438-3FE9-4C91-87F4-DA233D7484ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +81,22 @@ Global
 		{CE840E00-4017-4F74-AFAF-6FA665F8B916}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE840E00-4017-4F74-AFAF-6FA665F8B916}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE840E00-4017-4F74-AFAF-6FA665F8B916}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2769B821-15E6-445F-8FEC-1BE7B33BE65B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2769B821-15E6-445F-8FEC-1BE7B33BE65B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2769B821-15E6-445F-8FEC-1BE7B33BE65B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2769B821-15E6-445F-8FEC-1BE7B33BE65B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60947E66-CD78-467F-B77F-5E73795D8EEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60947E66-CD78-467F-B77F-5E73795D8EEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60947E66-CD78-467F-B77F-5E73795D8EEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60947E66-CD78-467F-B77F-5E73795D8EEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{302CAC93-9EFB-4CF8-BC25-0291CFAA7EB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{302CAC93-9EFB-4CF8-BC25-0291CFAA7EB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{302CAC93-9EFB-4CF8-BC25-0291CFAA7EB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{302CAC93-9EFB-4CF8-BC25-0291CFAA7EB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21977438-3FE9-4C91-87F4-DA233D7484ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21977438-3FE9-4C91-87F4-DA233D7484ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21977438-3FE9-4C91-87F4-DA233D7484ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21977438-3FE9-4C91-87F4-DA233D7484ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +106,11 @@ Global
 		{65FDB55B-188F-4EDB-9CE2-98AFE598BF99} = {2A7A00B2-CD03-4CAE-9752-1DFE747F3232}
 		{F0AE84DC-71FA-4873-9489-9A13C85AB85E} = {2A7A00B2-CD03-4CAE-9752-1DFE747F3232}
 		{82D8DB25-83D5-4FBA-BE6E-D0E6CA9D04A0} = {2A7A00B2-CD03-4CAE-9752-1DFE747F3232}
+		{2769B821-15E6-445F-8FEC-1BE7B33BE65B} = {2A7A00B2-CD03-4CAE-9752-1DFE747F3232}
+		{353FA50A-5FE3-44BE-B83D-EDC34829F7C1} = {84324624-8181-4B32-89D1-4A0B146A79C8}
+		{60947E66-CD78-467F-B77F-5E73795D8EEF} = {84324624-8181-4B32-89D1-4A0B146A79C8}
+		{302CAC93-9EFB-4CF8-BC25-0291CFAA7EB0} = {84324624-8181-4B32-89D1-4A0B146A79C8}
+		{21977438-3FE9-4C91-87F4-DA233D7484ED} = {84324624-8181-4B32-89D1-4A0B146A79C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {64C2802F-E551-44BA-BB1F-8B453C3FB451}
