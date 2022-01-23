@@ -13,7 +13,7 @@ public class WrongRideEntryException : BebruberException
     {
     }
 
-    public WrongRideEntryException(string? content, System.Exception? innerException)
+    public WrongRideEntryException(string? content, Exception? innerException)
         : base(content, innerException)
     {
     }

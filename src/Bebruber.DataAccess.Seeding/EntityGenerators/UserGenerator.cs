@@ -1,6 +1,5 @@
 ﻿using Bebruber.Identity;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace Bebruber.DataAccess.Seeding.EntityGenerators;
 

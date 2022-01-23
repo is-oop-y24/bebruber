@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Bebruber.Domain.Tools;
-using Bebruber.Domain.ValueObjects.Card;
 using Bebruber.Utility.Extensions;
 
 namespace Bebruber.Domain.ValueObjects.Car;
