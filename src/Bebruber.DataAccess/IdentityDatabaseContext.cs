@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bebruber.DataAccess;
 
-public sealed class IdentityDatabaseContext : IdentityDbContext<IdentityUser>
+public sealed class IdentityDatabaseContext : IdentityDbContext<ApplicationUser>
 {
     private readonly TypeLocator _typeLocator;
 
@@ -16,5 +16,15 @@ public sealed class IdentityDatabaseContext : IdentityDbContext<IdentityUser>
     {
         _typeLocator = typeLocator;
         Database.EnsureCreated();
+    }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.Entity<ApplicationUser>()
+               .Property(u => u.ModelType)
+               .HasConversion(
+                   t => _typeLocator.GetKey(t),
+                   s => _typeLocator.Resolve(s));
+        base.OnModelCreating(builder);
     }
 }

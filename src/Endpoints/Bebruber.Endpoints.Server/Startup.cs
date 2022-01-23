@@ -110,7 +110,7 @@ namespace Bebruber.Endpoints.Server
             services.AddDbContext<IdentityDatabaseContext>(opt => opt.UseSqlite("Filename=identity.db"));
             services.AddScoped<IdentityDatabaseSeeder>();
 
-            services.AddIdentity<IdentityUser, IdentityRole>(m =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(m =>
                 {
                     m.Password.RequireDigit = false;
                     m.Password.RequiredLength = 0;
@@ -120,7 +120,7 @@ namespace Bebruber.Endpoints.Server
                     m.Password.RequireNonAlphanumeric = false;
                 })
                 .AddEntityFrameworkStores<IdentityDatabaseContext>()
-                .AddSignInManager<SignInManager<IdentityUser>>();
+                .AddSignInManager<SignInManager<ApplicationUser>>();
 
             var signingConfigurations = new SigningConfigurations(Configuration["TokenKey"]);
             services.AddSingleton(signingConfigurations);

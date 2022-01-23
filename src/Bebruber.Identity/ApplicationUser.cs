@@ -7,6 +7,6 @@ public class ApplicationUser : IdentityUser
     public ApplicationUser() : base()
     { }
 
-    public string ModelType { get; init; } = String.Empty;
+    public Type ModelType { get; init; }
     public Guid ModelId { get; init; } = Guid.Empty;
 }

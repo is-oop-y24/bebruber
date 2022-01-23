@@ -29,7 +29,6 @@ public class RegisterUserHandler : IRequestHandler<RegisterUser.Command, Registe
         if (user is not null)
             throw new UserAlreadyExistException(request.Email);
 
-        // TODO : use type locator
         var client = new Client(
                             new Name(
                                 request.FirstName,
@@ -43,7 +42,7 @@ public class RegisterUserHandler : IRequestHandler<RegisterUser.Command, Registe
         var result = await _userManager.CreateAsync(
             new ApplicationUser()
             {
-                ModelType = typeof(ApplicationUser).FullName!,
+                ModelType = typeof(ApplicationUser),
                 ModelId = client.Id,
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber,
