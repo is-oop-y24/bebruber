@@ -24,7 +24,7 @@ public class RegisterUserHandler : IRequestHandler<RegisterUser.Command, Registe
 
     public async Task<RegisterUser.Response> Handle(RegisterUser.Command request, CancellationToken cancellationToken)
     {
-        var user = await _userManager.FindByEmailAsync(request.Email);
+        ApplicationUser? user = await _userManager.FindByEmailAsync(request.Email);
 
         if (user is not null)
             throw new UserAlreadyExistException(request.Email);
@@ -39,7 +39,7 @@ public class RegisterUserHandler : IRequestHandler<RegisterUser.Command, Registe
 
         await _databaseContext.Clients.AddAsync(client, cancellationToken);
 
-        var result = await _userManager.CreateAsync(
+        IdentityResult? result = await _userManager.CreateAsync(
             new ApplicationUser()
             {
                 ModelType = typeof(ApplicationUser),
