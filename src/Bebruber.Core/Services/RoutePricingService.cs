@@ -7,7 +7,7 @@ namespace Bebruber.Core.Services;
 
 public class RoutePricingService : IPricingService
 {
-    private RoutePricingServiceConfiguration _configuration;
+    private readonly RoutePricingServiceConfiguration _configuration;
 
     public RoutePricingService(RoutePricingServiceConfiguration pricingServiceConfiguration)
     {
@@ -16,14 +16,16 @@ public class RoutePricingService : IPricingService
 
     public Roubles Calculate(RideContext context)
     {
-        var finalPrice = new Roubles(0);
+        return context.Route.Aggregate(
+            new Roubles(0),
+            (i, sector) => i + new Roubles(Calculate(sector)));
+    }
 
-        return context.Route.Select(
-            item => new Roubles(
-                (decimal)item.Length *
-                (decimal)item.LoadLevel *
-                _configuration.PricePerKilometer *
-                _configuration.LoadMultiplier))
-            .Aggregate(finalPrice, (current, delta) => current + delta);
+    private decimal Calculate(RouteSector sector)
+    {
+        return (decimal)sector.Length *
+               (decimal)sector.LoadLevel *
+               _configuration.PricePerKilometer *
+               _configuration.LoadMultiplier;
     }
 }

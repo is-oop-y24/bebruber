@@ -42,8 +42,8 @@ namespace Bebruber.Endpoints.Server
             services.AddScoped<IRouteService, RouteService>();
             services.AddScoped<ITimeProviderService, TimeProviderService>();
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+            services.AddScoped<IPricingService, RoutePricingService>();
 
-            services.Decorate<IPricingService, RoutePricingService>();
             services.Decorate<IPricingService, CarCategoryPricingService>();
 
             services.AddControllers();

@@ -13,6 +13,6 @@ public class CarCategoryPricingServiceConfiguration : ICarCategoryPricingService
             return 2.0;
         if (category.Value.Equals(CarCategory.Business.Value))
             return 3.0;
-        throw new NonExistingCategoryException("This car category is not exist");
+        throw new NonExistingCategoryException(category);
     }
 }

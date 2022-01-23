@@ -1,19 +1,12 @@
-﻿namespace Bebruber.Core.Exceptions;
+﻿using Bebruber.Domain.Enumerations;
+using Bebruber.Domain.Tools;
 
-public class NonExistingCategoryException : Exception
+namespace Bebruber.Core.Exceptions;
+
+public class NonExistingCategoryException : BebruberException
 {
-    public NonExistingCategoryException()
-        : base()
-    {
-    }
-
-    public NonExistingCategoryException(string content)
-        : base(content)
-    {
-    }
-
-    public NonExistingCategoryException(string content, Exception innerException)
-        : base(content, innerException)
+    public NonExistingCategoryException(CarCategory category)
+        : base($"{nameof(CarCategory)} {category} does not exists")
     {
     }
 }
