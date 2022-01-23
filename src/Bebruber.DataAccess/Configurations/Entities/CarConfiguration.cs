@@ -1,15 +1,16 @@
 using System.Drawing;
+using Bebruber.DataAccess.Configurations.ValueObjects;
 using Bebruber.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Bebruber.DataAccess.Configurations;
+namespace Bebruber.DataAccess.Configurations.Entities;
 
 internal class CarConfiguration : EntityConfiguration<Car>
 {
     protected override void ConfigureEntity(EntityTypeBuilder<Car> builder)
     {
-        builder.HasOne(c => c.Owner);
-        builder.OwnsOne(d => d.CarNumber);
+        // builder.HasOne(c => c.Owner);
+        builder.OwnsOne(d => d.Number).ConfigureCarNumber();
         builder.OwnsOne(c => c.Brand);
         builder.OwnsOne(c => c.Name);
         builder.OwnsOne(c => c.Color)

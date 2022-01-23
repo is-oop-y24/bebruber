@@ -46,30 +46,53 @@ namespace Bebruber.Endpoints.Server
             services.AddControllers();
             services.AddSignalR();
 
-            services.AddMediatR(typeof(Bebruber.Application.Handlers.IAssemblyMarker).Assembly);
-            AssemblyScanner.FindValidatorsInAssembly(typeof(Bebruber.Application.Handlers.IAssemblyMarker).Assembly)
-                           .ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
+            services.AddMediatR(typeof(Application.Handlers.IAssemblyMarker).Assembly);
+            AssemblyScanner.FindValidatorsInAssembly(typeof(Application.Handlers.IAssemblyMarker).Assembly)
+                .ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PipelineValidationBehavior<,>));
-            services.AddSwaggerGen(c =>
-            {
-                c.CustomSchemaIds(type => type.FullName);
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Bebruber.Endpoints.Server", Version = "v1" });
-            });
+
+            services.AddSwaggerGen(
+                c =>
+                {
+                    c.CustomSchemaIds(type => type.FullName);
+
+                    c.SwaggerDoc(
+                        "v1",
+                        new OpenApiInfo { Title = "Bebruber.Endpoints.Server", Version = "v1" });
+
+                    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                    {
+                        In = ParameterLocation.Header,
+                        Description = "JSON Web Token to access resources. Example: Bearer {token}",
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.ApiKey,
+                    });
+
+                    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                    { Type = ReferenceType.SecurityScheme, Id = "Bearer" },
+                            },
+                            new[] { string.Empty }
+                        },
+                    });
+                });
 
             services.AddDbContext<BebruberDatabaseContext>(
-                opt => opt.UseInMemoryDatabase(Guid.NewGuid().ToString()));
-
-            services.AddDbContext<DriverLocationDatabaseContext>(
-                opt => opt.UseInMemoryDatabase(Guid.NewGuid().ToString()));
-
-            services.AddDbContext<RideEntryDatabaseContext>(
-                opt => opt.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+                opt =>
+                {
+                    opt.UseSqlite("Filename=BebruberDatabase.db");
+                    opt.UseLazyLoadingProxies();
+                });
 
             // TODO: change
             services.AddSingleton(new DriverLocationServiceConfiguration(10, TimeSpan.Zero));
             services.AddSingleton(new RideQueueServiceConfiguration(TimeSpan.Zero));
 
-            services.AddDbContext<IdentityDatabaseContext>(opt => opt.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+            services.AddDbContext<IdentityDatabaseContext>(opt => opt.UseInMemoryDatabase("identity.db"));
             services.AddScoped<IdentityDatabaseSeeder>();
 
             services.AddIdentity<IdentityUser, IdentityRole>(m =>
@@ -82,8 +105,7 @@ namespace Bebruber.Endpoints.Server
                     m.Password.RequireNonAlphanumeric = false;
                 })
                 .AddEntityFrameworkStores<IdentityDatabaseContext>()
-                .AddSignInManager<SignInManager<IdentityUser>>()
-                .AddDefaultTokenProviders();
+                .AddSignInManager<SignInManager<IdentityUser>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

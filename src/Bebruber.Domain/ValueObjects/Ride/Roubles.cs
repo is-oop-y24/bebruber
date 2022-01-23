@@ -5,6 +5,8 @@ namespace Bebruber.Domain.ValueObjects.Ride;
 
 public class Roubles : ValueOf<decimal, Roubles>
 {
-    protected Roubles(decimal value)
+    public Roubles(decimal value)
         : base(value, d => d >= 0, new InvalidRoublesValueException(value)) { }
+
+    protected Roubles() { }
 }

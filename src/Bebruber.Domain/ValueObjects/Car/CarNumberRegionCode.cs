@@ -9,5 +9,7 @@ public class CarNumberRegionCode : ValueOf<string, CarNumberRegionCode>
     public CarNumberRegionCode(string value)
         : base(value, Regex.IsMatch, new InvalidRegionCodeException(value)) { }
 
+    protected CarNumberRegionCode() { }
+
     public static Regex Regex { get; } = new Regex("[0-9]{2,3}");
 }

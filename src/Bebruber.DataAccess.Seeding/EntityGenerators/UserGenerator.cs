@@ -19,20 +19,20 @@ public class UserGenerator
     {
         var admin = new IdentityUser()
         {
-            Email = "bebra@bebra.bebra",
-            UserName = "Bebra Admin"
+            Email = "a@a.a",
+            UserName = "BebraAdmin"
         };
 
         var driver = new IdentityUser()
         {
-            Email = "beeeeeeeeeebra@bebebe.bababa",
-            UserName = "Bebra Driver"
+            Email = "b@b.b",
+            UserName = "BebraDriver"
         };
 
         var user = new IdentityUser()
         {
-            Email = "bebebebebra@bebra.beb",
-            UserName = "Bebra User"
+            Email = "c@c.c",
+            UserName = "BebraUser"
         };
 
         var adminRole = new IdentityRole() { Name = "admin" };
@@ -49,6 +49,6 @@ public class UserGenerator
 
         _userManager.AddToRoleAsync(admin, adminRole.Name);
         _userManager.AddToRoleAsync(driver, driverRole.Name);
-        _userManager.AddToRoleAsync(driver, driverRole.Name);
+        _userManager.AddToRoleAsync(user, userRole.Name);
     }
 }

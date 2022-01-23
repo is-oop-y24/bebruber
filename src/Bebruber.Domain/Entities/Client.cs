@@ -21,12 +21,14 @@ public class Client : Entity<Client>
         PhoneNumber = phoneNumber.ThrowIfNull();
     }
 
+    protected Client() { }
+
     public Name Name { get; protected init; }
     public Rating Rating { get; set; }
     public PaymentAddress PaymentAddress { get; set; }
     public PhoneNumber PhoneNumber { get; set; }
-    public IReadOnlyCollection<CardInfo> PaymentInfos => _paymentInfos.AsReadOnly();
-    public IReadOnlyCollection<Ride> Rides => _rides.AsReadOnly();
+    public virtual IReadOnlyCollection<CardInfo> PaymentInfos => _paymentInfos.AsReadOnly();
+    public virtual IReadOnlyCollection<Ride> Rides => _rides.AsReadOnly();
 
     public void AddPaymentInfo(CardInfo cardInfo)
     {

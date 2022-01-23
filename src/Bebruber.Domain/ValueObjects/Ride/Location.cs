@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Bebruber.Domain.Tools;
-using Bebruber.Domain.ValueObjects.User;
 using Bebruber.Utility.Extensions;
 
 namespace Bebruber.Domain.ValueObjects.Ride;
@@ -12,6 +11,8 @@ public class Location : ValueObject<Location>
         Address = address.ThrowIfNull();
         Coordinate = coordinate.ThrowIfNull();
     }
+
+    protected Location() { }
 
     public Address Address { get; protected init; }
     public Coordinate Coordinate { get; protected init; }

@@ -11,21 +11,21 @@ namespace Bebruber.Application.Services;
 
 public class RideQueueService : IRideQueueService
 {
-    private readonly RideEntryDatabaseContext _context;
+    private readonly BebruberDatabaseContext _context;
     private readonly IDriverLocationService _locationService;
     private readonly IDriverNotificationService _driverNotificationService;
     private readonly RideQueueServiceConfiguration _configuration;
 
     public RideQueueService(
-        RideEntryDatabaseContext context,
         IDriverLocationService locationService,
         IDriverNotificationService driverNotificationService,
-        RideQueueServiceConfiguration configuration)
+        RideQueueServiceConfiguration configuration,
+        BebruberDatabaseContext context)
     {
+        _context = context;
         _driverNotificationService = driverNotificationService.ThrowIfNull();
         _configuration = configuration.ThrowIfNull();
         _locationService = locationService.ThrowIfNull();
-        _context = context.ThrowIfNull();
     }
 
     public async Task EnqueueRideEntryAsync(RideEntry rideEntry, CancellationToken cancellationToken)
@@ -78,7 +78,7 @@ public class RideQueueService : IRideQueueService
             IReadOnlyCollection<Driver> drivers = await _locationService
                 .GetDriversNearbyAsync(entry.Origin.Coordinate, cancellationToken);
 
-            drivers = drivers.Except(entry.DismissedDrives).ToList();
+            drivers = drivers.Except(entry.DismissedDrivers).ToList();
 
             Task[] tasks = drivers
                 .Select(d => _driverNotificationService.OfferRideToDriverAsync(

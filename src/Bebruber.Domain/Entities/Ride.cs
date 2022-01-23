@@ -32,8 +32,8 @@ public class Ride : Entity<Ride>
     protected Ride() { }
 
     public RideState State { get; set; }
-    public Client Client { get; private init; }
-    public Driver Driver { get; private init; }
+    public virtual Client Client { get; private init; }
+    public virtual Driver Driver { get; private init; }
     public Roubles Cost { get; private init; }
     public DateTime DateTime { get; private init; }
     public Location Origin { get; private init; }
