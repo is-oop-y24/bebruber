@@ -40,19 +40,19 @@ public class HttpService : IHttpService
 
     public async Task PostAsync(string uri, object value)
     {
-        var request = CreateRequest(HttpMethod.Post, uri, value);
+        HttpRequestMessage request = CreateRequest(HttpMethod.Post, uri, value);
         await SendRequest(request);
     }
 
     public async Task<T> PostAsync<T>(string uri, object value)
     {
-        var request = CreateRequest(HttpMethod.Post, uri, value);
+        HttpRequestMessage request = CreateRequest(HttpMethod.Post, uri, value);
         return await SendRequest<T>(request);
     }
 
     public async Task PutAsync(string uri, object value)
     {
-        var request = CreateRequest(HttpMethod.Put, uri, value);
+        HttpRequestMessage request = CreateRequest(HttpMethod.Put, uri, value);
         await SendRequest(request);
     }
 
