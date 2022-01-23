@@ -35,9 +35,9 @@ public class UserGenerator
             UserName = "BebraUser"
         };
 
-        var adminRole = new IdentityRole() { Name = "admin" };
-        var driverRole = new IdentityRole() { Name = "driver" };
-        var userRole = new IdentityRole() { Name = "user" };
+        var adminRole = new IdentityRole() { Name = "Admin" };
+        var driverRole = new IdentityRole() { Name = "Driver" };
+        var userRole = new IdentityRole() { Name = "User" };
 
         _userManager.CreateAsync(admin, "admin").GetAwaiter().GetResult();
         _userManager.CreateAsync(driver, "driver").GetAwaiter().GetResult();

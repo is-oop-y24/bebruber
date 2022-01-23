@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using Bebruber.Application.Common;
 using Bebruber.Application.Common.Behaviours;
 using Bebruber.Application.Requests;
@@ -11,6 +12,7 @@ using Bebruber.Domain.Services;
 using Bebruber.Identity.Tools;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -19,6 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace Bebruber.Endpoints.Server
@@ -111,6 +114,32 @@ namespace Bebruber.Endpoints.Server
                                                              })
                     .AddEntityFrameworkStores<IdentityDatabaseContext>()
                     .AddSignInManager<SignInManager<IdentityUser>>();
+
+            var signingConfigurations = new SigningConfigurations(Configuration["TokenKey"]);
+            services.AddSingleton(signingConfigurations);
+
+            var tokenOptions = new JwtTokenOptions()
+            {
+                Audience = "SampleAudience",
+                Issuer = "Bebruber",
+            };
+
+            services.AddSingleton(tokenOptions);
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+                opt =>
+                {
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = tokenOptions.Issuer,
+                        ValidAudience = tokenOptions.Audience,
+                        IssuerSigningKey = signingConfigurations.SecurityKey,
+                        ClockSkew = TimeSpan.Zero,
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -124,6 +153,7 @@ namespace Bebruber.Endpoints.Server
             }
 
             app.UseHttpsRedirection();
+            app.UseHttpLogging();
 
             app.UseRouting();
 

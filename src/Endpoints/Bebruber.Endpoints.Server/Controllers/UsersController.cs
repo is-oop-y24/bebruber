@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Bebruber.Application.Requests.Accounts;
 using Bebruber.Common.Dto;
 using Bebruber.DataAccess;
@@ -35,6 +38,19 @@ public class UsersController : ControllerBase
     {
         _seeder.Seed();
         await _context.SaveChangesAsync();
+        return Ok();
+    }
+
+    [HttpGet("auth")]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
+    public IActionResult Get()
+    {
+        var userIdentity = (ClaimsIdentity)User.Identity;
+        var claims = userIdentity.Claims;
+        var roleClaimType = userIdentity.RoleClaimType;
+        var roles = claims.Where(c => c.Type == ClaimTypes.Role).ToList();
+        roles.ForEach(Console.WriteLine);
+        Console.WriteLine("LOL");
         return Ok();
     }
 }
