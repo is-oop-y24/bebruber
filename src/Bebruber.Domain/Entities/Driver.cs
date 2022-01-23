@@ -46,4 +46,7 @@ public class Driver : Entity<Driver>
         if (!_rides.Remove(ride))
             throw new NonOwnedRideException<Driver>(this, ride);
     }
+
+    public override string ToString()
+    => $"[{Id}] {Name} {Rating} {PaymentAddress} {CardInfo}";
 }

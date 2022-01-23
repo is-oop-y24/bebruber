@@ -30,4 +30,7 @@ public class RideContext
     public Location Origin { get; }
     public Location Destination { get; }
     public IReadOnlyCollection<Location> IntermediatePoints { get; }
+
+    public override string ToString()
+        => $"ClientId:{Client.Id} DriverId:{Driver.Id} From:[{Origin}] To:[{Destination}]";
 }

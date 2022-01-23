@@ -17,4 +17,7 @@ public class DriverLocation : Entity<DriverLocation>
     public Driver Driver { get; private init; }
     public Coordinate Coordinate { get; set; }
     public DateTime LastUpdateTime { get; set; }
+
+    public override string ToString()
+        => $"[{Id}] {Driver} {Coordinate} {LastUpdateTime}";
 }
