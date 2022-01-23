@@ -1,16 +1,20 @@
 ﻿using Bebruber.DataAccess.Seeding;
 using Bebruber.Identity;
+using Bebruber.Utility.Tools;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bebruber.DataAccess;
 
-public class IdentityDatabaseContext : IdentityDbContext<ApplicationUser>
+public sealed class IdentityDatabaseContext : IdentityDbContext<IdentityUser>
 {
-    public IdentityDatabaseContext(DbContextOptions<IdentityDatabaseContext> options)
+    private readonly TypeLocator _typeLocator;
+
+    public IdentityDatabaseContext(DbContextOptions<IdentityDatabaseContext> options, TypeLocator typeLocator)
         : base(options)
     {
+        _typeLocator = typeLocator;
         Database.EnsureCreated();
     }
 }
