@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Bebruber.Endpoints.Shared.Models;
 using FisSst.BlazorMaps;
 using Microsoft.AspNetCore.Components;
-using Bebruber.Endpoints.Shared.Models;
 using Newtonsoft.Json;
 using Marker = Bebruber.Endpoints.Shared.Models.Marker;
 using Polyline = Bebruber.Endpoints.Shared.Models.Polyline;
@@ -22,7 +21,9 @@ namespace Bebruber.Endpoints.Shared.Components
     public partial class Map
     {
         private FisSst.BlazorMaps.Map _mapObject;
-        private MapOptions _options = new MapOptions() {
+
+        private MapOptions _options = new MapOptions()
+        {
             DivId = "Map",
             Center = new LatLng(59.956175868546254, 30.309461702204565),
             Zoom = 13,
@@ -33,64 +34,47 @@ namespace Bebruber.Endpoints.Shared.Components
                 TileSize = 512,
                 ZoomOffset = -1,
                 MaxZoom = 19,
-            }
+            },
         };
-        [Inject] private IMarkerFactory MarkerFactory { get; set; }
-        [Inject] public IPolylineFactory PolylineFactory { get; init; }
-        [Inject] private IIconFactory IconFactory { get; init; }
 
-        [Parameter] public string Height { get; set; }
-        [Parameter] public bool NeedGetMarkerAddress { get; set; }
+        [Inject]
+        public IPolylineFactory PolylineFactory { get; init; }
+        [Parameter]
+        public string Height { get; set; }
+        [Parameter]
+        public bool NeedGetMarkerAddress { get; set; }
+        [Parameter]
+        public bool AddMarkerOnClick { get; set; }
+        [Parameter]
+        public MakerConfig MarkerConfig { get; set; }
+        [Parameter]
+        public Action<Marker> OnMarkerAdded { get; set; }
+        [Inject]
+        private IMarkerFactory MarkerFactory { get; set; }
+        [Inject]
+        private IIconFactory IconFactory { get; init; }
 
-        [Parameter] public bool AddMarkerOnClick { get; set; }
-        [Parameter] public MakerConfig MarkerConfig { get; set; }
-        [Parameter] public Action<Marker> OnMarkerAdded { get; set; }
-
-        private async Task MapOnClick(MouseEvent mouseEvent)
+        public async Task<MapPoint> GetCenterAsync()
         {
-            if (AddMarkerOnClick)
-            {
-                string markerAddress = NeedGetMarkerAddress ? await GetAddress(mouseEvent.LatLng) : null;
-                FisSst.BlazorMaps.Marker marker = null;
-                if (MarkerConfig.IconUrl is not "")
-                {
-                    var iconOptions = new IconOptions()
-                    {
-                        IconUrl = MarkerConfig.IconUrl,
-                        IconSize =MarkerConfig.IconSize,
-                        IconAnchor = MarkerConfig.IconAnchor
-                    };
-                    var icon = await IconFactory.Create(iconOptions);
-                    var markerOptions = new MarkerOptions()
-                    {
-                        IconRef = icon
-                    };
-                    marker = await MarkerFactory.CreateAndAddToMap(mouseEvent.LatLng, _mapObject, markerOptions);
-                }
-                else
-                {
-                    marker = await MarkerFactory.CreateAndAddToMap(mouseEvent.LatLng, _mapObject);
-                }
-                var mapMarker = new Marker(new MapPoint(mouseEvent.LatLng), markerAddress, marker);
-                
-                OnMarkerAdded?.Invoke(mapMarker);
-            }
+            LatLng center = await _mapObject.GetCenter();
+            return new MapPoint(center);
         }
 
-        private async Task<string> GetAddress(LatLng point)
+        public async Task<Marker> CreateMarker(MapPoint point)
         {
-            HttpClient httpClient = new HttpClient();
-            var latitudeString = point.Lat.ToString(CultureInfo.InvariantCulture);
-            var longitudeString = point.Lng.ToString(CultureInfo.InvariantCulture);
-            var response = await httpClient.GetAsync($"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitudeString}&lon={longitudeString}");
-            var stringData = await response.Content.ReadAsStringAsync();
-            var location = JsonConvert.DeserializeObject<LocationInfo>(stringData);
-            return location.address.road is null ? null : $"{location.address.road} {location.address.house_number}";
+            FisSst.BlazorMaps.Marker marker = await MarkerFactory.CreateAndAddToMap(point.ToLatLng(), _mapObject);
+            return new Marker(point, marker);
+        }
+
+        public async Task<FisSst.BlazorMaps.Polyline> CreatePolyline(ICollection<MapPoint> points)
+        {
+            var latLngs = new List<LatLng>(new List<LatLng>(points.Select(p => new LatLng(p.Latitude, p.Longitude))));
+            return await PolylineFactory.CreateAndAddToMap(latLngs, _mapObject);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            base.OnAfterRender(firstRender);
+            OnAfterRender(firstRender);
             if (!firstRender)
                 return;
 
@@ -104,29 +88,55 @@ namespace Bebruber.Endpoints.Shared.Components
                     await _mapObject.OnClick(MapOnClick);
                     break;
                 }
-                catch (NullReferenceException e)
+                catch (NullReferenceException)
                 {
                     await Task.Delay(TimeSpan.FromMilliseconds(5));
                 }
             }
         }
 
-        public async Task<MapPoint> GetCenterAsync()
+        private async Task<string> GetAddress(LatLng point)
         {
-            var center = await _mapObject.GetCenter();
-            return new MapPoint(center);
+            var httpClient = new HttpClient();
+            string latitudeString = point.Lat.ToString(CultureInfo.InvariantCulture);
+            string longitudeString = point.Lng.ToString(CultureInfo.InvariantCulture);
+            HttpResponseMessage response = await httpClient.GetAsync(
+                $"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitudeString}&lon={longitudeString}");
+            string stringData = await response.Content.ReadAsStringAsync();
+            LocationInfo location = JsonConvert.DeserializeObject<LocationInfo>(stringData);
+            return location.Address.Road is null ? null : $"{location.Address.Road} {location.Address.HouseNumber}";
         }
 
-        public async Task<Marker> CreateMarker(MapPoint point)
+        private async Task MapOnClick(MouseEvent mouseEvent)
         {
-            var marker = await MarkerFactory.CreateAndAddToMap(point.ToLatLng(), _mapObject);
-            return new Marker(point, marker);
-        }
+            if (AddMarkerOnClick)
+            {
+                string markerAddress = NeedGetMarkerAddress ? await GetAddress(mouseEvent.LatLng) : null;
+                FisSst.BlazorMaps.Marker marker = null;
+                if (MarkerConfig.IconUrl is not "")
+                {
+                    var iconOptions = new IconOptions()
+                    {
+                        IconUrl = MarkerConfig.IconUrl,
+                        IconSize = MarkerConfig.IconSize,
+                        IconAnchor = MarkerConfig.IconAnchor,
+                    };
+                    Icon icon = await IconFactory.Create(iconOptions);
+                    var markerOptions = new MarkerOptions()
+                    {
+                        IconRef = icon,
+                    };
+                    marker = await MarkerFactory.CreateAndAddToMap(mouseEvent.LatLng, _mapObject, markerOptions);
+                }
+                else
+                {
+                    marker = await MarkerFactory.CreateAndAddToMap(mouseEvent.LatLng, _mapObject);
+                }
 
-        public async Task<FisSst.BlazorMaps.Polyline> CreatePolyline(ICollection<MapPoint> points)
-        {
-            var latLngs = new List<LatLng>(new List<LatLng>(points.Select(p => new LatLng(p.Latitude, p.Longitude))));
-            return await PolylineFactory.CreateAndAddToMap(latLngs, _mapObject);
+                var mapMarker = new Marker(new MapPoint(mouseEvent.LatLng), markerAddress, marker);
+
+                OnMarkerAdded?.Invoke(mapMarker);
+            }
         }
     }
 }

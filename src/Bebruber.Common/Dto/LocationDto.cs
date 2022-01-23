@@ -2,5 +2,4 @@
 
 public record LocationDto(
     AddressDto Address,
-    CoordinateDto CoordinateDto
-);
+    CoordinateDto CoordinateDto);

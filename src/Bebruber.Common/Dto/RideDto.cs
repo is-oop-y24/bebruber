@@ -6,5 +6,4 @@ public record RideDto(
     decimal Cost,
     LocationDto Origin,
     LocationDto Destination,
-    IReadOnlyCollection<LocationDto> IntermediatePoints
-);
+    IReadOnlyCollection<LocationDto> IntermediatePoints);

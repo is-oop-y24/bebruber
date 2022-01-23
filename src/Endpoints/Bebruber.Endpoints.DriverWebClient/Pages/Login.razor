@@ -1,5 +1,6 @@
 @page "/login"
 @using Bebruber.Endpoints.DriverWebClient.Models
+@using Bebruber.Endpoints.DriverWebClient.Services
 @inject IJSRuntime JS
 @inject NavigationManager _navigationManager
 
@@ -42,6 +43,8 @@
     private string _passwordFieldType = "password";
     private string _buttonText = "Показать пароль";
     private LoginModel _model = new();
+    [Inject]
+    public AccountService AccountService { get; set; }
     private bool _loading;
 
     private async Task OnValidSubmit()
@@ -50,7 +53,9 @@
         try
         {
             throw new NotImplementedException();
+#pragma warning disable CS0162
             _navigationManager.NavigateTo("/");
+#pragma warning restore CS0162
         }
         catch (Exception e)
         {
