@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Bebruber.Application.Requests.Rides.Commands;
 
-public static class DriverLocationUpdate
+public static class UpdateDriverLocation
 {
     public record Command(Guid DriverId, CoordinateDto Coord) : IRequest<Response>;
 
