@@ -8,10 +8,10 @@ namespace Bebruber.DataAccess.Seeding;
 public class IdentityDatabaseSeeder
 {
     private readonly UserGenerator _userGenerator;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
 
-    public IdentityDatabaseSeeder(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+    public IdentityDatabaseSeeder(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
     {
         _userManager = userManager;
         _roleManager = roleManager;

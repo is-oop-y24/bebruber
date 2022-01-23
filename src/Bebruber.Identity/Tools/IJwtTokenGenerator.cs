@@ -4,5 +4,5 @@ namespace Bebruber.Identity.Tools;
 
 public interface IJwtTokenGenerator
 {
-    string CreateToken(IdentityUser user);
+    string CreateToken(ApplicationUser user);
 }

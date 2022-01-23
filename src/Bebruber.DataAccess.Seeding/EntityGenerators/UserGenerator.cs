@@ -6,10 +6,10 @@ namespace Bebruber.DataAccess.Seeding.EntityGenerators;
 
 public class UserGenerator
 {
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
 
-    public UserGenerator(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+    public UserGenerator(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
     {
         _userManager = userManager;
         _roleManager = roleManager;
@@ -17,19 +17,19 @@ public class UserGenerator
 
     public void Seed()
     {
-        var admin = new IdentityUser()
+        var admin = new ApplicationUser()
         {
             Email = "a@a.a",
             UserName = "BebraAdmin"
         };
 
-        var driver = new IdentityUser()
+        var driver = new ApplicationUser()
         {
             Email = "b@b.b",
             UserName = "BebraDriver"
         };
 
-        var user = new IdentityUser()
+        var user = new ApplicationUser()
         {
             Email = "c@c.c",
             UserName = "BebraUser"
