@@ -36,7 +36,6 @@ namespace Bebruber.Endpoints.Server
             services.AddScoped<IDriverLocationService, DriverLocationService>();
             services.AddScoped<IDriverNotificationService, DriverNotificationService>();
             services.AddScoped<IPaymentService, PaymentService>();
-            services.AddScoped<IPricingService, PricingService>();
             services.AddScoped<IRideQueueService, RideQueueService>();
             services.AddScoped<IRideService, RideService>();
             services.AddScoped<IRouteService, RouteService>();
