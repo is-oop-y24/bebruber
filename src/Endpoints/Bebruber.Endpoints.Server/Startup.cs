@@ -9,17 +9,12 @@ using Bebruber.Identity.Tools;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Bebruber.Application.Common;
-using Bebruber.Application.Services;
 using Bebruber.Core.Services;
-using Bebruber.Domain.Services;
 
 namespace Bebruber.Endpoints.Server
 {
@@ -50,10 +45,10 @@ namespace Bebruber.Endpoints.Server
             services.AddSignalR();
             services.AddCoreModule();
             services.AddSwaggerGen(c =>
-                                   {
-                                       c.CustomSchemaIds(type => type.FullName);
-                                       c.SwaggerDoc("v1", new OpenApiInfo { Title = "Bebruber.Endpoints.Server", Version = "v1" });
-                                   });
+            {
+                c.CustomSchemaIds(type => type.FullName);
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Bebruber.Endpoints.Server", Version = "v1" });
+            });
 
             services.AddDbContext<BebruberDatabaseContext>(
                 opt => opt.UseInMemoryDatabase(Guid.NewGuid().ToString()));
@@ -71,18 +66,18 @@ namespace Bebruber.Endpoints.Server
             services.AddDbContext<IdentityDatabaseContext>(opt => opt.UseInMemoryDatabase(Guid.NewGuid().ToString()));
             services.AddScoped<IdentityDatabaseSeeder>();
 
-            var builder = services.AddIdentity<IdentityUser, IdentityRole>(m =>
-                                                                           {
-                                                                               m.Password.RequireDigit = false;
-                                                                               m.Password.RequiredLength = 0;
-                                                                               m.Password.RequireLowercase = false;
-                                                                               m.Password.RequireUppercase = false;
-                                                                               m.Password.RequiredUniqueChars = 0;
-                                                                               m.Password.RequireNonAlphanumeric = false;
-                                                                           })
-                                  .AddEntityFrameworkStores<IdentityDatabaseContext>()
-                                  .AddSignInManager<SignInManager<IdentityUser>>()
-                                  .AddDefaultTokenProviders();
+            services.AddIdentity<IdentityUser, IdentityRole>(m =>
+                {
+                    m.Password.RequireDigit = false;
+                    m.Password.RequiredLength = 0;
+                    m.Password.RequireLowercase = false;
+                    m.Password.RequireUppercase = false;
+                    m.Password.RequiredUniqueChars = 0;
+                    m.Password.RequireNonAlphanumeric = false;
+                })
+                .AddEntityFrameworkStores<IdentityDatabaseContext>()
+                .AddSignInManager<SignInManager<IdentityUser>>()
+                .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
