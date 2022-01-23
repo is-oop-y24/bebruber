@@ -48,6 +48,7 @@ namespace Bebruber.Endpoints.Server
             services.AddCoreModule();
             services.AddSwaggerGen(c =>
                                    {
+                                       c.CustomSchemaIds(type => type.FullName);
                                        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Bebruber.Endpoints.Server", Version = "v1" });
                                    });
 

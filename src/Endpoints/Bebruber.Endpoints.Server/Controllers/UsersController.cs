@@ -25,7 +25,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<LoginCommand.ResponseA>> LoginAsync([FromBody] LoginCommand.CommandA request)
+    public async Task<ActionResult<LoginCommand.Response>> LoginAsync([FromBody] LoginCommand.Command request)
     {
         return await _mediator.Send(request);
     }
@@ -34,7 +34,6 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> Seed()
     {
         _seeder.Seed();
-        await _context.SaveChangesAsync();
         return Ok();
     }
 }

@@ -4,7 +4,7 @@ using Serilog;
 
 namespace Bebruber.Endpoints.Server
 {
-    public class kProgram
+    public class Program
     {
         public static void Main(string[] args)
         {
