@@ -5,8 +5,11 @@ namespace Bebruber.DataAccess;
 
 public class BebruberDatabaseContext : DbContext
 {
-    public BebruberDatabaseContext(DbContextOptions options)
-        : base(options) { }
+    public BebruberDatabaseContext(DbContextOptions<BebruberDatabaseContext> options)
+        : base(options)
+    {
+        Database.EnsureCreated();
+    }
 
     public DbSet<Client> Clients { get; private set; } = null!;
     public DbSet<CardInfo> PaymentInfos { get; private set; } = null!;
