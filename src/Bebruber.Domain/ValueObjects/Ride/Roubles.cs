@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Bebruber.Domain.Tools;
 using Bebruber.Domain.ValueObjects.Exceptions;
 
