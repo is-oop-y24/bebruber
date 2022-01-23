@@ -14,7 +14,8 @@ internal class CarConfiguration : EntityConfiguration<Car>
         builder.OwnsOne(c => c.Name);
         builder.OwnsOne(c => c.Color)
             .Property(c => c.Value)
-            .HasConversion(c => c.ToArgb(),
+            .HasConversion(
+                c => c.ToArgb(),
                 i => Color.FromArgb(i));
         builder.OwnsOne(c => c.Category);
     }

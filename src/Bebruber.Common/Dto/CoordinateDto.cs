@@ -2,5 +2,4 @@
 
 public record CoordinateDto(
     double Latitude,
-    double Longitude
-);
+    double Longitude);

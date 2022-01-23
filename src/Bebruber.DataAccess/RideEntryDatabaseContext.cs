@@ -6,7 +6,8 @@ namespace Bebruber.DataAccess;
 
 public class RideEntryDatabaseContext : DbContext
 {
-    public RideEntryDatabaseContext(DbContextOptions options) : base(options) { }
+    public RideEntryDatabaseContext(DbContextOptions options)
+        : base(options) { }
 
     public DbSet<RideEntry> Entries { get; private set; } = null!;
 
