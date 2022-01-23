@@ -1,6 +1,5 @@
 using Bebruber.Application.Requests.Rides.Commands;
 using Bebruber.Common.Dto;
-using Bebruber.Utility.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 
@@ -17,8 +16,7 @@ public class DriverHub : Hub<IDriverClient>
 
     public async Task UpdateLocation(CoordinateDto coordinate)
     {
-        // TODO: Proper key obtaining
-        var driverId = Guid.Parse(Context.Items["DriverId"].ToString().ThrowIfNull());
+        var driverId = Guid.Parse(Context.UserIdentifier);
 
         var request = new UpdateDriverLocation.Command(driverId, coordinate);
         UpdateDriverLocation.Response response = await _mediator.Send(request);

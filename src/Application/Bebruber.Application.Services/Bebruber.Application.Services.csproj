@@ -11,6 +11,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Bebruber.DataAccess\Bebruber.DataAccess.csproj" />
       <ProjectReference Include="..\..\Bebruber.Domain\Bebruber.Domain.csproj" />
+      <ProjectReference Include="..\..\Endpoints\Bebruber.Endpoints.SignalR\Bebruber.Endpoints.SignalR.csproj" />
       <ProjectReference Include="..\Bebruber.Application.Common\Bebruber.Application.Common.csproj" />
     </ItemGroup>
 
