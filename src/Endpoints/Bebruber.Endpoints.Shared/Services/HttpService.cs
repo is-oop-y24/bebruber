@@ -13,7 +13,6 @@ using Bebruber.Endpoints.Shared.Interfaces;
 using Bebruber.Endpoints.Shared.Models;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Configuration;
 
 namespace Bebruber.Endpoints.Shared.Services;
 
@@ -22,18 +21,15 @@ public class HttpService : IHttpService
     private readonly HttpClient _httpClient;
     private readonly NavigationManager _navigationManager;
     private readonly ILocalStorageService _localStorageService;
-    private IConfiguration _configuration;
 
     public HttpService(
         HttpClient httpClient,
         NavigationManager navigationManager,
-        ILocalStorageService localStorageService,
-        IConfiguration configuration)
+        ILocalStorageService localStorageService)
     {
         _httpClient = httpClient;
         _navigationManager = navigationManager;
         _localStorageService = localStorageService;
-        _configuration = configuration;
     }
 
     public async Task<T> GetAsync<T>(string uri)
@@ -96,7 +92,7 @@ public class HttpService : IHttpService
         // auto logout on 401 response
         if (response.StatusCode == HttpStatusCode.Unauthorized)
         {
-            _navigationManager.NavigateTo("account/logout");
+            _navigationManager.NavigateTo("/logout");
             return;
         }
 
@@ -113,7 +109,7 @@ public class HttpService : IHttpService
         // auto logout on 401 response
         if (response.StatusCode == HttpStatusCode.Unauthorized)
         {
-            _navigationManager.NavigateTo("account/logout");
+            _navigationManager.NavigateTo("/logout");
             return default;
         }
 
