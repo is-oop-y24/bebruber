@@ -7,11 +7,11 @@ public class CarCategoryPricingServiceConfiguration : ICarCategoryPricingService
 {
     public double CalculatePriceMultiplier(CarCategory category)
     {
-        if (category.Value.Equals(CarCategory.Economy.Value))
+        if (category.Equals(CarCategory.Economy))
             return 1.0;
-        if (category.Value.Equals(CarCategory.Comfort.Value))
+        if (category.Equals(CarCategory.Comfort))
             return 2.0;
-        if (category.Value.Equals(CarCategory.Business.Value))
+        if (category.Equals(CarCategory.Business))
             return 3.0;
         throw new NonExistingCategoryException(category);
     }
