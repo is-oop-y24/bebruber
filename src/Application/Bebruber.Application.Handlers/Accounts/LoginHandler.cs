@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 
 namespace Bebruber.Application.Handlers.Accounts;
 
-public class LoginCommandHandler : IRequestHandler<Login.Command, Login.Response>
+public class LoginHandler : IRequestHandler<Login.Command, Login.Response>
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
     private readonly IJwtTokenGenerator _tokenGenerator;
-    private readonly ILogger<LoginCommandHandler> _logger;
+    private readonly ILogger<LoginHandler> _logger;
     private readonly IdentityDatabaseContext _context;
 
-    public LoginCommandHandler(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IJwtTokenGenerator tokenGenerator, ILogger<LoginCommandHandler> logger, IdentityDatabaseContext databaseContext, ILogger<LoginCommandHandler> logger1, IdentityDatabaseContext context)
+    public LoginHandler(
+        UserManager<IdentityUser> userManager,
+        SignInManager<IdentityUser> signInManager,
+        IJwtTokenGenerator tokenGenerator,
+        ILogger<LoginHandler> logger,
+        IdentityDatabaseContext databaseContext,
+        IdentityDatabaseContext context)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _tokenGenerator = tokenGenerator;
-        _logger = logger1;
+        _logger = logger;
         _context = context;
     }
 

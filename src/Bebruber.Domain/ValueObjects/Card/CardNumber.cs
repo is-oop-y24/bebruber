@@ -12,6 +12,8 @@ public class CardNumber : ValueOf<string, CardNumber>
     public CardNumber(string value)
         : base(value, Regex.IsMatch, new InvalidCardNumberException(value)) { }
 
+    protected CardNumber() { }
+
     public static Regex Regex { get; } = new Regex("[0-9]{16}", RegexOptions.Compiled);
 
     public override string ToString()

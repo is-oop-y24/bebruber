@@ -19,6 +19,8 @@ public class ValueOf<T, TObject> : ValueObject<TObject>
         Value = value;
     }
 
+    protected ValueOf() { }
+
     public T Value { get; private init; }
 
     public override string ToString()

@@ -2,7 +2,7 @@ using Bebruber.Domain.Tools;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Bebruber.DataAccess.Configurations;
+namespace Bebruber.DataAccess.Configurations.Entities;
 
 internal class EntityConfiguration<T> : IEntityTypeConfiguration<T>
     where T : Entity<T>

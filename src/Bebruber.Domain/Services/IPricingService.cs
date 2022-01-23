@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Bebruber.Domain.Models;
 using Bebruber.Domain.ValueObjects.Ride;
 

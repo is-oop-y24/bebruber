@@ -9,5 +9,8 @@ public class CarNumberRegistrationSeries : ValueOf<string, CarNumberRegistration
     public CarNumberRegistrationSeries(string value)
         : base(value.ToUpper(), Regex.IsMatch, new InvalidRegistrationSeriesException(value)) { }
 
-    public static Regex Regex { get; } = new Regex("[а-я]{1}[0-9]{3}[а-я]{2}", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+    protected CarNumberRegistrationSeries() { }
+
+    public static Regex Regex { get; } =
+        new Regex("[а-я]{1}[0-9]{3}[а-я]{2}", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 }

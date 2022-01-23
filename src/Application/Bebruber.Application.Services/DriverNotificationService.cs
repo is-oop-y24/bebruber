@@ -15,20 +15,14 @@ public class DriverNotificationService : IDriverNotificationService
         _hub = hub;
     }
 
-    public async Task OfferRideToDriverAsync(
+    public Task OfferRideToDriverAsync(
         Driver driver, RideEntry rideEntry, TimeSpan awaitingTimeSpan, CancellationToken cancellationToken)
-    {
-        await _hub.Clients.User(driver.Id.ToString()).OfferRideToDriverAsync(rideEntry.ToDto(), awaitingTimeSpan);
-    }
+        => _hub.Clients.User(driver.Id.ToString()).OfferRideToDriver(rideEntry.ToDto(), awaitingTimeSpan);
 
-    public async Task NotifySuccessfulAcceptanceAsync(
+    public Task NotifySuccessfulAcceptanceAsync(
         Driver driver, Ride rideEntry, CancellationToken cancellationToken)
-    {
-        await _hub.Clients.User(driver.Id.ToString()).NotifySuccessfulAcceptanceAsync(rideEntry.ToDto());
-    }
+        => _hub.Clients.User(driver.Id.ToString()).NotifySuccessfulAcceptance(rideEntry.ToDto());
 
-    public async Task NotifyFailedAcceptanceAsync(Driver driver, CancellationToken cancellationToken)
-    {
-        await _hub.Clients.User(driver.Id.ToString()).NotifyFailedAcceptanceAsync();
-    }
+    public Task NotifyFailedAcceptanceAsync(Driver driver, CancellationToken cancellationToken)
+        => _hub.Clients.User(driver.Id.ToString()).NotifyFailedAcceptance();
 }

@@ -5,7 +5,7 @@ using Bebruber.Domain.ValueObjects.Exceptions;
 
 namespace Bebruber.Domain.ValueObjects.User;
 
-public sealed class Name : ValueObject<Name>
+public class Name : ValueObject<Name>
 {
     public Name(string firstName, string? middleName, string lastName)
     {
@@ -22,6 +22,8 @@ public sealed class Name : ValueObject<Name>
         MiddleName = middleName ?? string.Empty;
         LastName = lastName;
     }
+
+    protected Name() { }
 
     public static Regex Regex { get; } = new Regex(@"[a-zа-я\-]+", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 

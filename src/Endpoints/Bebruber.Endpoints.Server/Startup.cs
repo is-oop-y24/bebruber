@@ -7,10 +7,13 @@ using Bebruber.Application.Services.Models;
 using Bebruber.Core.Services;
 using Bebruber.DataAccess;
 using Bebruber.DataAccess.Seeding;
+using Bebruber.Domain.Entities;
 using Bebruber.Domain.Services;
 using Bebruber.Identity.Tools;
+using Bebruber.Utility.Tools;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -19,6 +22,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace Bebruber.Endpoints.Server
@@ -35,16 +39,23 @@ namespace Bebruber.Endpoints.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var typeLocator = new TypeLocator();
+            typeLocator.RegisterType(typeof(Driver));
+            typeLocator.RegisterType(typeof(Client));
+            services.AddSingleton(typeLocator);
+
             services.AddScoped<IClientNotificationService, ClientNotificationService>();
             services.AddScoped<IDriverLocationService, DriverLocationService>();
             services.AddScoped<IDriverNotificationService, DriverNotificationService>();
             services.AddScoped<IPaymentService, PaymentService>();
-            services.AddScoped<IPricingService, PricingService>();
             services.AddScoped<IRideQueueService, RideQueueService>();
             services.AddScoped<IRideService, RideService>();
             services.AddScoped<IRouteService, RouteService>();
             services.AddScoped<ITimeProviderService, TimeProviderService>();
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+
+            services.AddScoped<IPricingService, RoutePricingService>();
+            services.Decorate<IPricingService, CarCategoryPricingService>();
 
             services.AddControllers();
             services.AddSignalR();
@@ -87,13 +98,11 @@ namespace Bebruber.Endpoints.Server
                 });
 
             services.AddDbContext<BebruberDatabaseContext>(
-                opt => opt.UseInMemoryDatabase("BebruberDatabase"));
-
-            services.AddDbContext<DriverLocationDatabaseContext>(
-                opt => opt.UseInMemoryDatabase("DriverLocationDatabase"));
-
-            services.AddDbContext<RideEntryDatabaseContext>(
-                opt => opt.UseInMemoryDatabase("RideEntryDatabase"));
+                opt =>
+                {
+                    opt.UseSqlite("Filename=BebruberDatabase.db");
+                    opt.UseLazyLoadingProxies();
+                });
 
             // TODO: change
             services.AddSingleton(new DriverLocationServiceConfiguration(10, TimeSpan.Zero));
@@ -103,16 +112,42 @@ namespace Bebruber.Endpoints.Server
             services.AddScoped<IdentityDatabaseSeeder>();
 
             services.AddIdentity<IdentityUser, IdentityRole>(m =>
-                                                             {
-                                                                 m.Password.RequireDigit = false;
-                                                                 m.Password.RequiredLength = 0;
-                                                                 m.Password.RequireLowercase = false;
-                                                                 m.Password.RequireUppercase = false;
-                                                                 m.Password.RequiredUniqueChars = 0;
-                                                                 m.Password.RequireNonAlphanumeric = false;
-                                                             })
-                    .AddEntityFrameworkStores<IdentityDatabaseContext>()
-                    .AddSignInManager<SignInManager<IdentityUser>>();
+                {
+                    m.Password.RequireDigit = false;
+                    m.Password.RequiredLength = 0;
+                    m.Password.RequireLowercase = false;
+                    m.Password.RequireUppercase = false;
+                    m.Password.RequiredUniqueChars = 0;
+                    m.Password.RequireNonAlphanumeric = false;
+                })
+                .AddEntityFrameworkStores<IdentityDatabaseContext>()
+                .AddSignInManager<SignInManager<IdentityUser>>();
+
+            var signingConfigurations = new SigningConfigurations(Configuration["TokenKey"]);
+            services.AddSingleton(signingConfigurations);
+
+            var tokenOptions = new JwtTokenOptions()
+            {
+                Audience = "SampleAudience",
+                Issuer = "Bebruber",
+            };
+
+            services.AddSingleton(tokenOptions);
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+                opt =>
+                {
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = tokenOptions.Issuer,
+                        ValidAudience = tokenOptions.Audience,
+                        IssuerSigningKey = signingConfigurations.SecurityKey,
+                        ClockSkew = TimeSpan.Zero,
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -130,6 +165,7 @@ namespace Bebruber.Endpoints.Server
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
+            app.UseHttpLogging();
 
             app.UseRouting();
 
@@ -137,9 +173,9 @@ namespace Bebruber.Endpoints.Server
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
-                             {
-                                 endpoints.MapControllers();
-                             });
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }
