@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Bebruber.Application.Rides.Commands;
+using Bebruber.Application.Requests.Rides.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +17,7 @@ public class RidesController : ControllerBase
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult<CreateRideCommand.Response>> CreateRide(CreateRideCommand.Command command)
+    public async Task<ActionResult<CreateRide.Response>> CreateRide(CreateRide.Command command)
     {
         return await _mediator.Send(command);
     }

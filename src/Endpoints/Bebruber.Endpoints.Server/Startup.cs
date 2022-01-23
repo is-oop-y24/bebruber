@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Bebruber.Application;
+using Bebruber.Application.Common;
 using Bebruber.Application.Services;
 using Bebruber.Domain.Services;
 
