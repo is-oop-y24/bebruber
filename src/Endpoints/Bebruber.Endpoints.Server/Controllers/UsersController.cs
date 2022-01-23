@@ -51,6 +51,7 @@ public class UsersController : ControllerBase
     public IActionResult Get()
     {
         var userIdentity = (ClaimsIdentity)User.Identity;
+        Console.WriteLine(userIdentity.Name);
         var claims = userIdentity.Claims;
         var roleClaimType = userIdentity.RoleClaimType;
         var roles = claims.Where(c => c.Type == ClaimTypes.Role).ToList();
