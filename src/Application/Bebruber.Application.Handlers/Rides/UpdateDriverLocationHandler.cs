@@ -5,17 +5,17 @@ using Bebruber.Domain.Entities;
 using Bebruber.Domain.Services;
 using Bebruber.Utility.Extensions;
 using MediatR;
-using Command = Bebruber.Application.Requests.Rides.Commands.DriverLocationUpdate.Command;
-using Response = Bebruber.Application.Requests.Rides.Commands.DriverLocationUpdate.Response;
+using Command = Bebruber.Application.Requests.Rides.Commands.UpdateDriverLocation.Command;
+using Response = Bebruber.Application.Requests.Rides.Commands.UpdateDriverLocation.Response;
 
 namespace Bebruber.Application.Handlers.Rides;
 
-public class DriverLocationUpdateHandler : IRequestHandler<Command, Response>
+public class UpdateDriverLocationHandler : IRequestHandler<Command, Response>
 {
     private readonly IDriverLocationService _driverLocationService;
     private readonly BebruberDatabaseContext _databaseContext;
 
-    public DriverLocationUpdateHandler(
+    public UpdateDriverLocationHandler(
         IDriverLocationService driverLocationService, BebruberDatabaseContext databaseContext)
     {
         _driverLocationService = driverLocationService;
