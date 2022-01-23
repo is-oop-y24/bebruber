@@ -1,4 +1,5 @@
-﻿using Bebruber.Identity;
+﻿using Bebruber.Domain.Entities;
+using Bebruber.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace Bebruber.DataAccess.Seeding.EntityGenerators;
@@ -19,19 +20,22 @@ public class UserGenerator
         var admin = new ApplicationUser()
         {
             Email = "a@a.a",
-            UserName = "BebraAdmin"
+            UserName = "BebraAdmin",
+            ModelType = typeof(Client),
         };
 
         var driver = new ApplicationUser()
         {
             Email = "b@b.b",
-            UserName = "BebraDriver"
+            UserName = "BebraDriver",
+            ModelType = typeof(Client),
         };
 
         var user = new ApplicationUser()
         {
             Email = "c@c.c",
-            UserName = "BebraUser"
+            UserName = "BebraUser",
+            ModelType = typeof(Client),
         };
 
         var adminRole = new IdentityRole() { Name = "Admin" };
