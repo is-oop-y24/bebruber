@@ -1,12 +1,12 @@
+using Bebruber.Application.Common;
+using Bebruber.Application.Services;
+using Bebruber.Domain.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Bebruber.Application.Common;
-using Bebruber.Application.Services;
-using Bebruber.Domain.Services;
 
 namespace Bebruber.Endpoints.Server
 {
@@ -31,7 +31,7 @@ namespace Bebruber.Endpoints.Server
             services.AddScoped<IRideService, RideService>();
             services.AddScoped<IRouteService, RouteService>();
             services.AddScoped<ITimeProviderService, TimeProviderService>();
-            
+
             services.AddControllers();
             services.AddSignalR();
             services.AddCoreModule();
