@@ -21,6 +21,6 @@ public class DriverHub : Hub<IDriverClient>
         var request = new UpdateDriverLocation.Command(driverId, coordinate);
         UpdateDriverLocation.Response response = await _mediator.Send(request);
 
-        await Clients.Caller.HandleUpdateLocationResponseAsync(response);
+        await Clients.Caller.HandleUpdateLocationResponse(response);
     }
 }

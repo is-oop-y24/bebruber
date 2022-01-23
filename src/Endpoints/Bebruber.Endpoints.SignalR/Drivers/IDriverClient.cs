@@ -5,9 +5,9 @@ namespace Bebruber.Endpoints.SignalR.Drivers;
 
 public interface IDriverClient
 {
-    Task OfferRideToDriverAsync(RideEntryDto rideEntry, TimeSpan awaitingTimeSpan);
-    Task NotifySuccessfulAcceptanceAsync(RideDto rideEntry);
-    Task NotifyFailedAcceptanceAsync();
+    Task OfferRideToDriver(RideEntryDto rideEntry, TimeSpan awaitingTimeSpan);
+    Task NotifySuccessfulAcceptance(RideDto rideEntry);
+    Task NotifyFailedAcceptance();
 
-    Task HandleUpdateLocationResponseAsync(UpdateDriverLocation.Response response);
+    Task HandleUpdateLocationResponse(UpdateDriverLocation.Response response);
 }
