@@ -63,8 +63,10 @@
         _loading = true;
         try
         {
-            await AccountService.Register(_model);
-            NavigationManager.NavigateTo("/");
+            throw new NotImplementedException();
+#pragma warning disable CS0162
+            _navigationManager.NavigateTo("/login");
+#pragma warning restore CS0162
         }
         catch (Exception e)
         {

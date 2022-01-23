@@ -63,4 +63,7 @@ public class Client : Entity<Client>
         if (!_rides.Remove(ride))
             throw new NonOwnedRideException<Client>(this, ride);
     }
+
+    public override string ToString()
+        => $"[{Id}] {Name}";
 }

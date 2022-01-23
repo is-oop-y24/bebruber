@@ -16,7 +16,15 @@
             </div>
             <div class="form-group">
                 <label>Пароль</label>
-                <InputText @bind-Value="_model.Password" class="form-control"/>
+                <Addons>    
+                    <Addon AddonType="AddonType.Body">
+                        <InputText type="@_passwordFieldType" @bind-Value="@_model.Password" class="form-control" />
+                    </Addon>
+                    <Addon AddonType="AddonType.End">
+                        <Button Color="Color.Primary" @onclick="UpdatePasswordVisibility">@_buttonText</Button>
+                    </Addon>
+                </Addons>
+                
                 <ValidationMessage For="@(() => _model.Password)"/>
             </div>
             <button disabled="@_loading" class="btn btn-primary">
@@ -32,6 +40,8 @@
 </div>
 
 @code {
+    private string _passwordFieldType = "password";
+    private string _buttonText = "Показать пароль";
     private LoginModel _model = new();
     [Inject]
     public AccountService AccountService { get; set; }
@@ -42,7 +52,10 @@
         _loading = true;
         try
         {
-            await AccountService.Login(_model);
+            throw new NotImplementedException();
+#pragma warning disable CS0162
+            _navigationManager.NavigateTo("/");
+#pragma warning restore CS0162
         }
         catch (Exception e)
         {
@@ -51,4 +64,9 @@
         _loading = false;
     }
 
+    private void UpdatePasswordVisibility()
+    {
+        _passwordFieldType = _passwordFieldType == "text" ? "password" : "text";
+        _buttonText = _passwordFieldType == "text" ? "Скрыть пароль" : "Показать пароль";
+    }
 }

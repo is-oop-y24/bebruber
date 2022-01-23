@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="9.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Application\Bebruber.Application.Requests\Bebruber.Application.Requests.csproj" />
+      <ProjectReference Include="..\..\Bebruber.Common\Bebruber.Common.csproj" />
+      <ProjectReference Include="..\..\Bebruber.Utility\Bebruber.Utility.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -36,4 +36,7 @@ public class RideEntry : Entity<RideEntry>
 
         _dismissedDrivers.Add(driver);
     }
+
+    public override string ToString()
+        => $"{Id}";
 }

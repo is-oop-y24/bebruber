@@ -7,37 +7,43 @@
     <h4 class="card-header" style="background-color: #ffffff">Регистрация</h4>
     <div class="card-body">
         <EditForm Model="@_model" OnValidSubmit="OnValidSubmit">
-            <DataAnnotationsValidator />
+            <DataAnnotationsValidator/>
             <div class="form-group">
                 <label>Номер телефона</label>
-                <InputText @bind-Value="_model.PhoneNumber" placeholder="+7 (800) 555-35-35" class="form-control" />
-                <ValidationMessage For="@(() => _model.PhoneNumber)" />
+                <InputText @bind-Value="_model.PhoneNumber" placeholder="+7 (800) 555-35-35" class="form-control"/>
+                <ValidationMessage For="@(() => _model.PhoneNumber)"/>
             </div>
 
             <div class="form-group">
                 <label>Электронная почта</label>
-                <InputText @bind-Value="_model.Email" placeholder="ivanov@Bebruber.bebra" class="form-control" />
-                <ValidationMessage For="@(() => _model.Email)" />
+                <InputText @bind-Value="_model.Email" placeholder="ivanov@Bebruber.bebra" class="form-control"/>
+                <ValidationMessage For="@(() => _model.Email)"/>
             </div>
 
             <div class="form-group">
                 <label>Имя</label>
-                <InputText @bind-Value="_model.Name" placeholder="Иван" class="form-control" />
-                <ValidationMessage For="@(() => _model.Name)" />
+                <InputText @bind-Value="_model.Name" placeholder="Иван" class="form-control"/>
+                <ValidationMessage For="@(() => _model.Name)"/>
             </div>
 
             <div class="form-group">
                 <label>Фамилия</label>
-                <InputText @bind-Value="_model.Surname" placeholder="Иванович" class="form-control" />
-                <ValidationMessage For="@(() => _model.Surname)" />
+                <InputText @bind-Value="_model.Surname" placeholder="Иванович" class="form-control"/>
+                <ValidationMessage For="@(() => _model.Surname)"/>
             </div>
 
             <div class="form-group">
                 <label>Пароль</label>
-                <PasswordFieldComponent @bind-Value="_model.Password" class="form-control"/>
+                <Addons>
+                    <Addon AddonType="AddonType.Body">
+                        <InputText type="@_passwordFieldType" @bind-Value="@_model.Password" class="form-control" />
+                    </Addon>
+                    <Addon AddonType="AddonType.End">
+                        <Button Color="Color.Primary" @onclick="UpdatePasswordVisibility">@_buttonText</Button>
+                    </Addon>
+                </Addons>
                 <Help>Пароль должен содержать минимум 8 и максимум 128 символов, включая как минимум одну заглавную букву, одну строчную букву, одну цифру и один специальный символ.</Help>
-                @_model.Password
-                <ValidationMessage For="@(() => _model.Password)" />
+                <ValidationMessage For="@(() => _model.Password)"/>
             </div>
             <button disabled="@_loading" class="btn btn-primary">
                 @if (_loading)
@@ -63,7 +69,9 @@
         try
         {
             throw new NotImplementedException();
+#pragma warning disable CS0162
             _navigationManager.NavigateTo("/login");
+#pragma warning restore CS0162
         }
         catch (Exception e)
         {

@@ -32,5 +32,11 @@ public abstract class ValueObject<TObject> : IEquatable<TObject>
             .Aggregate(HashCode.Combine);
     }
 
+    public override string ToString()
+    {
+        IEnumerable<string?> strings = GetEqualityComponents().Select(x => x?.ToString());
+        return string.Join(", ", strings);
+    }
+
     protected abstract IEnumerable<object?> GetEqualityComponents();
 }

@@ -39,4 +39,7 @@ public class Ride : Entity<Ride>
     public Location Origin { get; private init; }
     public Location Destination { get; private init; }
     public IReadOnlyCollection<Location> IntermediatePoints { get; private init; }
+
+    public override string ToString()
+        => $"[{Id}] ClientId:{Client.Id} DriverId:{Driver.Id} {DateTime}";
 }
