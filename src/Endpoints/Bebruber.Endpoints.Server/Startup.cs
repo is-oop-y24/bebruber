@@ -4,6 +4,7 @@ using Bebruber.Application.Common.Behaviours;
 using Bebruber.Application.Requests;
 using Bebruber.Application.Services;
 using Bebruber.Application.Services.Models;
+using Bebruber.Core.Services;
 using Bebruber.DataAccess;
 using Bebruber.DataAccess.Seeding;
 using Bebruber.Domain.Services;
@@ -13,12 +14,12 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Bebruber.Core.Services;
 
 namespace Bebruber.Endpoints.Server
 {
@@ -59,33 +60,32 @@ namespace Bebruber.Endpoints.Server
             });
 
             services.AddDbContext<BebruberDatabaseContext>(
-                opt => opt.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+                opt => opt.UseInMemoryDatabase("BebruberDatabase"));
 
             services.AddDbContext<DriverLocationDatabaseContext>(
-                opt => opt.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+                opt => opt.UseInMemoryDatabase("DriverLocationDatabase"));
 
             services.AddDbContext<RideEntryDatabaseContext>(
-                opt => opt.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+                opt => opt.UseInMemoryDatabase("RideEntryDatabase"));
 
             // TODO: change
             services.AddSingleton(new DriverLocationServiceConfiguration(10, TimeSpan.Zero));
             services.AddSingleton(new RideQueueServiceConfiguration(TimeSpan.Zero));
 
-            services.AddDbContext<IdentityDatabaseContext>(opt => opt.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+            services.AddDbContext<IdentityDatabaseContext>(opt => opt.UseInMemoryDatabase("identity.db"));
             services.AddScoped<IdentityDatabaseSeeder>();
 
             services.AddIdentity<IdentityUser, IdentityRole>(m =>
-                {
-                    m.Password.RequireDigit = false;
-                    m.Password.RequiredLength = 0;
-                    m.Password.RequireLowercase = false;
-                    m.Password.RequireUppercase = false;
-                    m.Password.RequiredUniqueChars = 0;
-                    m.Password.RequireNonAlphanumeric = false;
-                })
-                .AddEntityFrameworkStores<IdentityDatabaseContext>()
-                .AddSignInManager<SignInManager<IdentityUser>>()
-                .AddDefaultTokenProviders();
+                                                             {
+                                                                 m.Password.RequireDigit = false;
+                                                                 m.Password.RequiredLength = 0;
+                                                                 m.Password.RequireLowercase = false;
+                                                                 m.Password.RequireUppercase = false;
+                                                                 m.Password.RequiredUniqueChars = 0;
+                                                                 m.Password.RequireNonAlphanumeric = false;
+                                                             })
+                    .AddEntityFrameworkStores<IdentityDatabaseContext>()
+                    .AddSignInManager<SignInManager<IdentityUser>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -106,9 +106,9 @@ namespace Bebruber.Endpoints.Server
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+                             {
+                                 endpoints.MapControllers();
+                             });
         }
     }
 }

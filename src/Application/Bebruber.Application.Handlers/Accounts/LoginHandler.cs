@@ -8,34 +8,35 @@ using Microsoft.Extensions.Logging;
 
 namespace Bebruber.Application.Handlers.Accounts;
 
-public static class LoginCommand
+public class LoginCommandHandler : IRequestHandler<Login.Command, Login.Response>
 {
-    public class CommandHandler : IRequestHandler<Login.Command, Login.Response>
+    private readonly UserManager<IdentityUser> _userManager;
+    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly IJwtTokenGenerator _tokenGenerator;
+    private readonly ILogger<LoginCommandHandler> _logger;
+    private readonly IdentityDatabaseContext _context;
+
+    public LoginCommandHandler(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IJwtTokenGenerator tokenGenerator, ILogger<LoginCommandHandler> logger, IdentityDatabaseContext databaseContext, ILogger<LoginCommandHandler> logger1, IdentityDatabaseContext context)
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly IJwtTokenGenerator _tokenGenerator;
+        _userManager = userManager;
+        _signInManager = signInManager;
+        _tokenGenerator = tokenGenerator;
+        _logger = logger1;
+        _context = context;
+    }
 
-        public CommandHandler(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IJwtTokenGenerator tokenGenerator, ILogger<CommandHandler> logger, IdentityDatabaseContext databaseContext)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _tokenGenerator = tokenGenerator;
-        }
+    public async Task<Login.Response> Handle(Login.Command request, CancellationToken cancellationToken)
+    {
+        var user = await _userManager.FindByEmailAsync(request.Email);
 
-        public async Task<Login.Response> Handle(Login.Command request, CancellationToken cancellationToken)
-        {
-            var user = await _userManager.FindByEmailAsync(request.Email);
+        if (user is null)
+            throw new AuthenticationException("Wrong email");
 
-            if (user is null)
-                throw new AuthenticationException("Wrong email");
+        var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
+        if (result.Succeeded)
+            return new Login.Response(_tokenGenerator.CreateToken(user));
 
-            if (result.Succeeded)
-                return new Login.Response(_tokenGenerator.CreateToken(user));
-
-            throw new AuthenticationException("Wrong email or password");
-        }
+        throw new AuthenticationException("Wrong email or password");
     }
 }

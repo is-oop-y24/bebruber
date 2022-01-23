@@ -31,9 +31,10 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("seed")]
-    public Task<IActionResult> Seed()
+    public async Task<IActionResult> Seed()
     {
         _seeder.Seed();
-        return Task.FromResult<IActionResult>(Ok());
+        await _context.SaveChangesAsync();
+        return Ok();
     }
 }
