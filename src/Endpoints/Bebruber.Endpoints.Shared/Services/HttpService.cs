@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Net;
 using System.Net.Http;
@@ -58,19 +57,19 @@ public class HttpService : IHttpService
 
     public async Task<T> PutAsync<T>(string uri, object value)
     {
-        var request = CreateRequest(HttpMethod.Put, uri, value);
+        HttpRequestMessage request = CreateRequest(HttpMethod.Put, uri, value);
         return await SendRequest<T>(request);
     }
 
     public async Task DeleteAsync(string uri)
     {
-        var request = CreateRequest(HttpMethod.Delete, uri);
+        HttpRequestMessage request = CreateRequest(HttpMethod.Delete, uri);
         await SendRequest(request);
     }
 
     public async Task<T> DeleteAsync<T>(string uri)
     {
-        var request = CreateRequest(HttpMethod.Delete, uri);
+        HttpRequestMessage request = CreateRequest(HttpMethod.Delete, uri);
         return await SendRequest<T>(request);
     }
 
@@ -87,7 +86,7 @@ public class HttpService : IHttpService
         await AddJwtHeader(request);
 
         // send request
-        using var response = await _httpClient.SendAsync(request);
+        using HttpResponseMessage response = await _httpClient.SendAsync(request);
 
         // auto logout on 401 response
         if (response.StatusCode == HttpStatusCode.Unauthorized)
@@ -124,8 +123,8 @@ public class HttpService : IHttpService
     private async Task AddJwtHeader(HttpRequestMessage request)
     {
         // add jwt auth header if user is logged in and request is to the api url
-        var user = await _localStorageService.GetItemAsync<UserToken>("user");
-        var isApiUrl = !request.RequestUri?.IsAbsoluteUri ?? false;
+        UserToken user = await _localStorageService.GetItemAsync<UserToken>("user");
+        bool isApiUrl = !request.RequestUri?.IsAbsoluteUri ?? false;
         if (user is not null && isApiUrl)
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
     }
@@ -135,7 +134,7 @@ public class HttpService : IHttpService
         // throw exception on error response
         if (!response.IsSuccessStatusCode)
         {
-            var error = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+            Dictionary<string, string> error = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
             throw new DataException(error["message"]);
         }
     }
