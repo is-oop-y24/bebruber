@@ -14,5 +14,5 @@ public class Rating : ValueOf<double, Rating>
     protected Rating() { }
 
     private static bool Validate(double value)
-        => value is >= 0 and < 10;
+        => value is >= 0 and <= 10;
 }

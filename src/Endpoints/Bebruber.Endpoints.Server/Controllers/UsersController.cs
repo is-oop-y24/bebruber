@@ -41,6 +41,12 @@ public class UsersController : ControllerBase
         return Ok();
     }
 
+    [HttpPost("register-user")]
+    public async Task<ActionResult<RegisterUser.Response>> RegisterUser(RegisterUser.Command command)
+    {
+        return await _mediator.Send(command);
+    }
+
     [HttpGet("auth")]
     [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
     public IActionResult Get()
@@ -50,7 +56,6 @@ public class UsersController : ControllerBase
         var roleClaimType = userIdentity.RoleClaimType;
         var roles = claims.Where(c => c.Type == ClaimTypes.Role).ToList();
         roles.ForEach(Console.WriteLine);
-        Console.WriteLine("LOL");
         return Ok();
     }
 }
