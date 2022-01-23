@@ -40,7 +40,7 @@ dotnet_diagnostic.SA1101.severity = none
 # SA1600: Elements should be documented
 dotnet_diagnostic.SA1600.severity = none
 
-# SA1602: Enumeration elements should be documented 
+# SA1602: Enumeration elements should be documented
 dotnet_diagnostic.SA1602.severity = none
 
 # SA1516: Elements should be separated by blank line
@@ -92,4 +92,4 @@ dotnet_diagnostic.SA1500.severity = error
 dotnet_diagnostic.SA1601.severity = none
 
 #https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1716
-dotnet_code_quality.CA1716.severity = none 
+dotnet_code_quality.CA1716.analyzed_symbol_kinds = Method
