@@ -1,5 +1,4 @@
 using System;
-using System.Text;
 using Bebruber.Application.Common;
 using Bebruber.Application.Common.Behaviours;
 using Bebruber.Application.Requests;
@@ -42,19 +41,21 @@ namespace Bebruber.Endpoints.Server
             services.AddScoped<IDriverLocationService, DriverLocationService>();
             services.AddScoped<IDriverNotificationService, DriverNotificationService>();
             services.AddScoped<IPaymentService, PaymentService>();
-            services.AddScoped<IPricingService, PricingService>();
             services.AddScoped<IRideQueueService, RideQueueService>();
             services.AddScoped<IRideService, RideService>();
             services.AddScoped<IRouteService, RouteService>();
             services.AddScoped<ITimeProviderService, TimeProviderService>();
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+            services.AddScoped<IPricingService, RoutePricingService>();
+
+            services.Decorate<IPricingService, CarCategoryPricingService>();
 
             services.AddControllers();
             services.AddSignalR();
 
-            services.AddMediatR(typeof(Bebruber.Application.Handlers.IAssemblyMarker).Assembly);
-            AssemblyScanner.FindValidatorsInAssembly(typeof(Bebruber.Application.Handlers.IAssemblyMarker).Assembly)
-                           .ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
+            services.AddMediatR(typeof(Application.Handlers.IAssemblyMarker).Assembly);
+            AssemblyScanner.FindValidatorsInAssembly(typeof(Application.Handlers.IAssemblyMarker).Assembly)
+                .ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PipelineValidationBehavior<,>));
 
             services.AddSwaggerGen(
@@ -88,13 +89,11 @@ namespace Bebruber.Endpoints.Server
                 });
 
             services.AddDbContext<BebruberDatabaseContext>(
-                opt => opt.UseInMemoryDatabase("BebruberDatabase"));
-
-            services.AddDbContext<DriverLocationDatabaseContext>(
-                opt => opt.UseInMemoryDatabase("DriverLocationDatabase"));
-
-            services.AddDbContext<RideEntryDatabaseContext>(
-                opt => opt.UseInMemoryDatabase("RideEntryDatabase"));
+                opt =>
+                {
+                    opt.UseSqlite("Filename=BebruberDatabase.db");
+                    opt.UseLazyLoadingProxies();
+                });
 
             // TODO: change
             services.AddSingleton(new DriverLocationServiceConfiguration(10, TimeSpan.Zero));
@@ -161,9 +160,9 @@ namespace Bebruber.Endpoints.Server
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
-                             {
-                                 endpoints.MapControllers();
-                             });
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

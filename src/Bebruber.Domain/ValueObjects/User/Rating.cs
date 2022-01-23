@@ -11,6 +11,8 @@ public class Rating : ValueOf<double, Rating>
     public Rating(double value)
         : base(Math.Round(value, NumberOfDigits), Validate, new InvalidRatingValueException(value)) { }
 
+    protected Rating() { }
+
     private static bool Validate(double value)
         => value is >= 0 and < 10;
 }

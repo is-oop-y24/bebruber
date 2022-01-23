@@ -1,7 +1,7 @@
 using Bebruber.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Bebruber.DataAccess.Configurations;
+namespace Bebruber.DataAccess.Configurations.Entities;
 
 internal class DriverConfiguration : EntityConfiguration<Driver>
 {

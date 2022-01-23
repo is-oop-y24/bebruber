@@ -12,6 +12,8 @@ public class Coordinate : ValueObject<Coordinate>
         Longitude = longitude;
     }
 
+    protected Coordinate() { }
+
     public double Latitude { get; protected init; }
     public double Longitude { get; protected init; }
 

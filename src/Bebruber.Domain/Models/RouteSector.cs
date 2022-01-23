@@ -12,6 +12,8 @@ public class RouteSector
         LoadLevel = loadLevel;
     }
 
+    public double Length => Begin.DistanceBetween(End);
+
     public Coordinate Begin { get; }
     public Coordinate End { get; }
     public LoadLevel LoadLevel { get; }

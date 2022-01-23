@@ -10,7 +10,8 @@ public class Driver : Entity<Driver>
 {
     private readonly List<Ride> _rides;
 
-    public Driver(Name name, Rating rating, PaymentAddress paymentAddress, CardInfo cardInfo, Car car, PhoneNumber phoneNumber)
+    public Driver(
+        Name name, Rating rating, PaymentAddress paymentAddress, CardInfo cardInfo, Car car, PhoneNumber phoneNumber)
     {
         _rides = new List<Ride>();
         Name = name.ThrowIfNull();
@@ -21,13 +22,15 @@ public class Driver : Entity<Driver>
         PhoneNumber = phoneNumber.ThrowIfNull();
     }
 
+    protected Driver() { }
+
     public Name Name { get; private init; }
     public Rating Rating { get; set; }
     public PaymentAddress PaymentAddress { get; set; }
     public PhoneNumber PhoneNumber { get; set; }
-    public CardInfo CardInfo { get; set; }
-    public Car Car { get; set; }
-    public IReadOnlyCollection<Ride> Rides => _rides.AsReadOnly();
+    public virtual CardInfo CardInfo { get; set; }
+    public virtual Car Car { get; set; }
+    public virtual IReadOnlyCollection<Ride> Rides => _rides.AsReadOnly();
 
     public void AddRide(Ride ride)
     {
@@ -48,5 +51,5 @@ public class Driver : Entity<Driver>
     }
 
     public override string ToString()
-    => $"[{Id}] {Name}";
+        => $"[{Id}] {Name}";
 }

@@ -13,6 +13,8 @@ public class CardInfo : Entity<CardInfo>
         CvvCode = cvvCode.ThrowIfNull();
     }
 
+    protected CardInfo() { }
+
     public CardNumber CardNumber { get; private init; }
     public ExpirationDate ExpirationDate { get; private init; }
     public CvvCode CvvCode { get; private init; }
