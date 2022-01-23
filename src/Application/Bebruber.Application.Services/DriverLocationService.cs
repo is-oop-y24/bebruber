@@ -9,18 +9,18 @@ namespace Bebruber.Application.Services;
 
 public class DriverLocationService : IDriverLocationService
 {
-    private readonly DriverLocationDatabaseContext _context;
+    private readonly BebruberDatabaseContext _context;
     private readonly DriverLocationServiceConfiguration _configuration;
     private readonly ITimeProviderService _timeProviderService;
 
     public DriverLocationService(
-        DriverLocationDatabaseContext context,
         DriverLocationServiceConfiguration configuration,
-        ITimeProviderService timeProviderService)
+        ITimeProviderService timeProviderService,
+        BebruberDatabaseContext context)
     {
-        _context = context;
         _configuration = configuration;
         _timeProviderService = timeProviderService;
+        _context = context;
     }
 
     public async Task<IReadOnlyCollection<Driver>> GetDriversNearbyAsync(
@@ -39,7 +39,8 @@ public class DriverLocationService : IDriverLocationService
         return distanceFilteredDriverLocations.Select(l => l.Driver).ToList();
     }
 
-    public async Task UpdateDriverLocationAsync(Driver driver, Coordinate coordinate, CancellationToken cancellationToken)
+    public async Task UpdateDriverLocationAsync(
+        Driver driver, Coordinate coordinate, CancellationToken cancellationToken)
     {
         DriverLocation? foundDriverLocation = await _context.Locations
             .SingleOrDefaultAsync(l => l.Driver.Equals(driver), cancellationToken);
