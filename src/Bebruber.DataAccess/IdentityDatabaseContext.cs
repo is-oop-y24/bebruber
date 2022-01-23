@@ -1,6 +1,5 @@
 ﻿using Bebruber.Identity;
 using Bebruber.Utility.Tools;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
