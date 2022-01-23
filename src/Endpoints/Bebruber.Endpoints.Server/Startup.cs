@@ -1,5 +1,7 @@
 using System;
+using Bebruber.Application.Common;
 using Bebruber.Application.Common.Behaviours;
+using Bebruber.Application.Requests;
 using Bebruber.Application.Services;
 using Bebruber.Application.Services.Models;
 using Bebruber.Core.Services;
@@ -12,6 +14,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -98,16 +101,42 @@ namespace Bebruber.Endpoints.Server
             services.AddScoped<IdentityDatabaseSeeder>();
 
             services.AddIdentity<IdentityUser, IdentityRole>(m =>
+                                                             {
+                                                                 m.Password.RequireDigit = false;
+                                                                 m.Password.RequiredLength = 0;
+                                                                 m.Password.RequireLowercase = false;
+                                                                 m.Password.RequireUppercase = false;
+                                                                 m.Password.RequiredUniqueChars = 0;
+                                                                 m.Password.RequireNonAlphanumeric = false;
+                                                             })
+                    .AddEntityFrameworkStores<IdentityDatabaseContext>()
+                    .AddSignInManager<SignInManager<IdentityUser>>();
+
+            var signingConfigurations = new SigningConfigurations(Configuration["TokenKey"]);
+            services.AddSingleton(signingConfigurations);
+
+            var tokenOptions = new JwtTokenOptions()
+            {
+                Audience = "SampleAudience",
+                Issuer = "Bebruber",
+            };
+
+            services.AddSingleton(tokenOptions);
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+                opt =>
                 {
-                    m.Password.RequireDigit = false;
-                    m.Password.RequiredLength = 0;
-                    m.Password.RequireLowercase = false;
-                    m.Password.RequireUppercase = false;
-                    m.Password.RequiredUniqueChars = 0;
-                    m.Password.RequireNonAlphanumeric = false;
-                })
-                .AddEntityFrameworkStores<IdentityDatabaseContext>()
-                .AddSignInManager<SignInManager<IdentityUser>>();
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = tokenOptions.Issuer,
+                        ValidAudience = tokenOptions.Audience,
+                        IssuerSigningKey = signingConfigurations.SecurityKey,
+                        ClockSkew = TimeSpan.Zero,
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -121,6 +150,7 @@ namespace Bebruber.Endpoints.Server
             }
 
             app.UseHttpsRedirection();
+            app.UseHttpLogging();
 
             app.UseRouting();
 
