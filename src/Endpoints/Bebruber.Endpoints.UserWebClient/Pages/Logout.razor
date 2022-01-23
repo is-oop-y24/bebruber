@@ -1,0 +1,12 @@
+@page "/Logout"
+@using Bebruber.Endpoints.DriverWebClient.Interfaces
+@inject IAccountService AccountService
+@inject NavigationManager NavigationManager
+
+@code {
+    protected override async void OnInitialized()
+    {
+        await AccountService.Logout();
+        NavigationManager.NavigateTo("/");
+    }
+}

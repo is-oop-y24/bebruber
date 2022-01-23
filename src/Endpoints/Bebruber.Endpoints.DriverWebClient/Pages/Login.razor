@@ -1,8 +1,10 @@
 @page "/login"
 @using Bebruber.Endpoints.DriverWebClient.Models
-@using Bebruber.Endpoints.DriverWebClient.Services
+@using Bebruber.Endpoints.DriverWebClient.Interfaces
+@using Bebruber.Endpoints.Shared.Models
 @inject IJSRuntime JS
 @inject NavigationManager _navigationManager
+@inject IAccountService AccountService
 
 <div class="card">
     <h4 class="card-header" style="background-color: #ffffff">Вход</h4>
@@ -10,9 +12,9 @@
         <EditForm Model="@_model" OnValidSubmit="OnValidSubmit">
             <DataAnnotationsValidator/>
             <div class="form-group">
-                <label>Номер телефона</label>
-                <InputText @bind-Value="_model.PhoneNumber" class="form-control"/>
-                <ValidationMessage For="@(() => _model.PhoneNumber)"/>
+                <label>Адрес электронной почты</label>
+                <InputText @bind-Value="_model.Email" class="form-control"/>
+                <ValidationMessage For="@(() => _model.Email)"/>
             </div>
             <div class="form-group">
                 <label>Пароль</label>
@@ -43,8 +45,6 @@
     private string _passwordFieldType = "password";
     private string _buttonText = "Показать пароль";
     private LoginModel _model = new();
-    [Inject]
-    public AccountService AccountService { get; set; }
     private bool _loading;
 
     private async Task OnValidSubmit()
@@ -52,10 +52,8 @@
         _loading = true;
         try
         {
-            throw new NotImplementedException();
-#pragma warning disable CS0162
+            await AccountService.Login(_model);
             _navigationManager.NavigateTo("/");
-#pragma warning restore CS0162
         }
         catch (Exception e)
         {

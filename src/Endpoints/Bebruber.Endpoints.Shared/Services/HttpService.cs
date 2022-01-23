@@ -8,23 +8,25 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Bebruber.Endpoints.DriverWebClient.Models;
+using Bebruber.Endpoints.DriverWebClient.Interfaces;
+using Bebruber.Endpoints.Shared.Models;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Configuration;
 
-namespace Bebruber.Endpoints.DriverWebClient.Services;
+namespace Bebruber.Endpoints.Shared.Services;
 
-public class HttpService
+public class HttpService : IHttpService
 {
     private readonly HttpClient _httpClient;
     private readonly NavigationManager _navigationManager;
-    private readonly LocalStorageService _localStorageService;
+    private readonly ILocalStorageService _localStorageService;
     private IConfiguration _configuration;
 
     public HttpService(
         HttpClient httpClient,
         NavigationManager navigationManager,
-        LocalStorageService localStorageService,
+        ILocalStorageService localStorageService,
         IConfiguration configuration)
     {
         _httpClient = httpClient;
@@ -33,43 +35,43 @@ public class HttpService
         _configuration = configuration;
     }
 
-    public async Task<T> Get<T>(string uri)
+    public async Task<T> GetAsync<T>(string uri)
     {
         var request = new HttpRequestMessage(HttpMethod.Get, uri);
         return await SendRequest<T>(request);
     }
 
-    public async Task Post(string uri, object value)
+    public async Task PostAsync(string uri, object value)
     {
         var request = CreateRequest(HttpMethod.Post, uri, value);
         await SendRequest(request);
     }
 
-    public async Task<T> Post<T>(string uri, object value)
+    public async Task<T> PostAsync<T>(string uri, object value)
     {
         var request = CreateRequest(HttpMethod.Post, uri, value);
         return await SendRequest<T>(request);
     }
 
-    public async Task Put(string uri, object value)
+    public async Task PutAsync(string uri, object value)
     {
         var request = CreateRequest(HttpMethod.Put, uri, value);
         await SendRequest(request);
     }
 
-    public async Task<T> Put<T>(string uri, object value)
+    public async Task<T> PutAsync<T>(string uri, object value)
     {
         var request = CreateRequest(HttpMethod.Put, uri, value);
         return await SendRequest<T>(request);
     }
 
-    public async Task Delete(string uri)
+    public async Task DeleteAsync(string uri)
     {
         var request = CreateRequest(HttpMethod.Delete, uri);
         await SendRequest(request);
     }
 
-    public async Task<T> Delete<T>(string uri)
+    public async Task<T> DeleteAsync<T>(string uri)
     {
         var request = CreateRequest(HttpMethod.Delete, uri);
         return await SendRequest<T>(request);
@@ -105,7 +107,7 @@ public class HttpService
         await AddJwtHeader(request);
 
         // send request
-        using var response = await _httpClient.SendAsync(request);
+        using HttpResponseMessage response = await _httpClient.SendAsync(request);
 
         // auto logout on 401 response
         if (response.StatusCode == HttpStatusCode.Unauthorized)
@@ -125,7 +127,7 @@ public class HttpService
     private async Task AddJwtHeader(HttpRequestMessage request)
     {
         // add jwt auth header if user is logged in and request is to the api url
-        var user = await _localStorageService.GetItem<UserModel>("user");
+        var user = await _localStorageService.GetItemAsync<UserToken>("user");
         var isApiUrl = !request.RequestUri?.IsAbsoluteUri ?? false;
         if (user is not null && isApiUrl)
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);

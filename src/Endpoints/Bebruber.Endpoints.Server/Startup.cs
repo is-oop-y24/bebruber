@@ -49,6 +49,8 @@ namespace Bebruber.Endpoints.Server
             services.AddControllers();
             services.AddSignalR();
 
+            services.AddCors();
+
             services.AddMediatR(typeof(Bebruber.Application.Handlers.IAssemblyMarker).Assembly);
             AssemblyScanner.FindValidatorsInAssembly(typeof(Bebruber.Application.Handlers.IAssemblyMarker).Assembly)
                            .ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
@@ -124,6 +126,10 @@ namespace Bebruber.Endpoints.Server
             }
 
             app.UseHttpsRedirection();
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseRouting();
 
