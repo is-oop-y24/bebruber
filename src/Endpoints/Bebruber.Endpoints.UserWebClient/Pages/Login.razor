@@ -1,7 +1,9 @@
 @page "/login"
-@using Bebruber.Endpoints.UserWebClient.Models
-@inject IJSRuntime JS
+@using Bebruber.Endpoints.Shared.Interfaces
+@using Bebruber.Endpoints.Shared.Models
+@inject IJSRuntime _js
 @inject NavigationManager _navigationManager
+@inject IAccountService _accountService
 
 <div class="card">
     <h4 class="card-header" style="background-color: #ffffff">Вход</h4>
@@ -10,8 +12,8 @@
             <DataAnnotationsValidator/>
             <div class="form-group">
                 <label>Номер телефона или адрес электронной почты`</label>
-                <InputText @bind-Value="_model.Login" class="form-control"/>
-                <ValidationMessage For="@(() => _model.Login)"/>
+                <InputText @bind-Value="_model.Email" class="form-control"/>
+                <ValidationMessage For="@(() => _model.Email)"/>
             </div>
             <div class="form-group">
                 <label>Пароль</label>
@@ -48,14 +50,12 @@
         _loading = true;
         try
         {
-            throw new NotImplementedException();
-#pragma warning disable CS0162
+            await _accountService.Login(_model);
             _navigationManager.NavigateTo("/");
-#pragma warning restore CS0162
         }
         catch (Exception e)
         {
-            await JS.InvokeVoidAsync("alert", e.Message);
+            await _js.InvokeVoidAsync("alert", e.Message);
         }
         _loading = false;
     }

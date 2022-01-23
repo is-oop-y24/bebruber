@@ -1,7 +1,7 @@
 @page "/register"
 @using Bebruber.Endpoints.DriverWebClient.Models
-@using Bebruber.Endpoints.DriverWebClient.Services
-@inject IJSRuntime JS
+@using Bebruber.Endpoints.Shared.Services
+@inject IJSRuntime _js
 @inject NavigationManager _navigationManager
 
 <div class="card">
@@ -70,7 +70,7 @@
         }
         catch (Exception e)
         {
-            await JS.InvokeVoidAsync("alert", e.Message); //TODO: custom error handling
+            await _js.InvokeVoidAsync("alert", e.Message); //TODO: custom error handling
         }
         _loading = false;
     }
