@@ -8,11 +8,11 @@ public class PaymentService : IPaymentService
 {
     public Task WithdrawAsync(CardInfo cardInfo, Roubles amount, CancellationToken cancellationToken)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
     public Task AccrueAsync(CardInfo cardInfo, Roubles amount, CancellationToken cancellationToken)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 }
