@@ -50,7 +50,9 @@
         try
         {
             throw new NotImplementedException();
+#pragma warning disable CS0162
             _navigationManager.NavigateTo("/");
+#pragma warning restore CS0162
         }
         catch (Exception e)
         {

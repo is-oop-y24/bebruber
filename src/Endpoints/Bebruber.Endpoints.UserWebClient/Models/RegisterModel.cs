@@ -5,7 +5,8 @@ namespace Bebruber.Endpoints.UserWebClient.Models;
 public class RegisterModel
 {
     [Required]
-    [RegularExpression(@"^(\+?[0-9]{11})$",
+    [RegularExpression(
+        @"^(\+?[0-9]{11})$",
         ErrorMessage = "Неверный формат номера телефона")]
     public string PhoneNumber { get; set; }
 
@@ -22,7 +23,8 @@ public class RegisterModel
     public string Surname { get; set; }
 
     [Required]
-    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,128}$",
+    [RegularExpression(
+        @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,128}$",
         ErrorMessage = "Пароль не удовлетворяет требованиям")]
     public string Password { get; set; }
 }
