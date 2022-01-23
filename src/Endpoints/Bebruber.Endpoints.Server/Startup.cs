@@ -1,9 +1,8 @@
 using System;
-using Bebruber.Application.Common;
 using Bebruber.Application.Common.Behaviours;
-using Bebruber.Application.Requests;
 using Bebruber.Application.Services;
 using Bebruber.Application.Services.Models;
+using Bebruber.Core.Services;
 using Bebruber.DataAccess;
 using Bebruber.DataAccess.Seeding;
 using Bebruber.Domain.Services;
@@ -18,7 +17,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Bebruber.Core.Services;
 
 namespace Bebruber.Endpoints.Server
 {
