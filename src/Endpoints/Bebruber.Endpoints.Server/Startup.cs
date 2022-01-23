@@ -1,11 +1,15 @@
 using System;
 using Bebruber.Application.Common;
+using Bebruber.Application.Common.Behaviours;
+using Bebruber.Application.Requests;
 using Bebruber.Application.Services;
 using Bebruber.Application.Services.Models;
 using Bebruber.DataAccess;
 using Bebruber.DataAccess.Seeding;
 using Bebruber.Domain.Services;
 using Bebruber.Identity.Tools;
+using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -43,7 +47,11 @@ namespace Bebruber.Endpoints.Server
 
             services.AddControllers();
             services.AddSignalR();
-            services.AddCoreModule();
+
+            services.AddMediatR(typeof(Bebruber.Application.Handlers.IAssemblyMarker).Assembly);
+            AssemblyScanner.FindValidatorsInAssembly(typeof(Bebruber.Application.Handlers.IAssemblyMarker).Assembly)
+                           .ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PipelineValidationBehavior<,>));
             services.AddSwaggerGen(c =>
             {
                 c.CustomSchemaIds(type => type.FullName);

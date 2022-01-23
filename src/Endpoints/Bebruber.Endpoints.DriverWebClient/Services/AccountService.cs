@@ -13,8 +13,6 @@ public class AccountService
     private LocalStorageService _localStorageService;
     private string _userKey = "user";
 
-    public UserModel User { get; private set; }
-
     public AccountService(
         HttpService httpService,
         NavigationManager navigationManager,
@@ -24,6 +22,8 @@ public class AccountService
         _navigationManager = navigationManager;
         _localStorageService = localStorageService;
     }
+
+    public UserModel User { get; private set; }
 
     public async Task Initialize()
     {

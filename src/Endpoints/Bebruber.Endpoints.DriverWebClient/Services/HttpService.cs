@@ -41,43 +41,41 @@ public class HttpService
 
     public async Task Post(string uri, object value)
     {
-        var request = createRequest(HttpMethod.Post, uri, value);
+        var request = CreateRequest(HttpMethod.Post, uri, value);
         await SendRequest(request);
     }
 
     public async Task<T> Post<T>(string uri, object value)
     {
-        var request = createRequest(HttpMethod.Post, uri, value);
+        var request = CreateRequest(HttpMethod.Post, uri, value);
         return await SendRequest<T>(request);
     }
 
     public async Task Put(string uri, object value)
     {
-        var request = createRequest(HttpMethod.Put, uri, value);
+        var request = CreateRequest(HttpMethod.Put, uri, value);
         await SendRequest(request);
     }
 
     public async Task<T> Put<T>(string uri, object value)
     {
-        var request = createRequest(HttpMethod.Put, uri, value);
+        var request = CreateRequest(HttpMethod.Put, uri, value);
         return await SendRequest<T>(request);
     }
 
     public async Task Delete(string uri)
     {
-        var request = createRequest(HttpMethod.Delete, uri);
+        var request = CreateRequest(HttpMethod.Delete, uri);
         await SendRequest(request);
     }
 
     public async Task<T> Delete<T>(string uri)
     {
-        var request = createRequest(HttpMethod.Delete, uri);
+        var request = CreateRequest(HttpMethod.Delete, uri);
         return await SendRequest<T>(request);
     }
 
-    // helper methods
-
-    private HttpRequestMessage createRequest(HttpMethod method, string uri, object value = null)
+    private HttpRequestMessage CreateRequest(HttpMethod method, string uri, object value = null)
     {
         var request = new HttpRequestMessage(method, uri);
         if (value != null)

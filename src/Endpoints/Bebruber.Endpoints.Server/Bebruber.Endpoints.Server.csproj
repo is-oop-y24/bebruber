@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Application\Bebruber.Application.Common\Bebruber.Application.Common.csproj" />
+    <ProjectReference Include="..\..\Application\Bebruber.Application.Handlers\Bebruber.Application.Handlers.csproj" />
     <ProjectReference Include="..\..\Application\Bebruber.Application.Requests\Bebruber.Application.Requests.csproj" />
     <ProjectReference Include="..\..\Application\Bebruber.Application.Services\Bebruber.Application.Services.csproj" />
     <ProjectReference Include="..\..\Bebruber.Core\Bebruber.Core.csproj" />

@@ -2,7 +2,6 @@
 using Bebruber.Application.Requests.Accounts;
 using Bebruber.DataAccess;
 using Bebruber.Identity.Tools;
-using Bebruber.Application.Requests.Accounts;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
