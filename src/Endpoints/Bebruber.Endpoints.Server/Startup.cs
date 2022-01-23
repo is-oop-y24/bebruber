@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Bebruber.Application.Common;
 using Bebruber.Application.Services;
+using Bebruber.Core.Services;
 using Bebruber.Domain.Services;
 
 namespace Bebruber.Endpoints.Server
