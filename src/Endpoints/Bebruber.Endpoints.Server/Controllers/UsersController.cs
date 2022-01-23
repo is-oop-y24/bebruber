@@ -46,6 +46,12 @@ public class UsersController : ControllerBase
         return await _mediator.Send(command);
     }
 
+    [HttpPost("register-driver")]
+    public async Task<RegisterDriver.Response> RegisterDriver(RegisterDriver.Command command)
+    {
+        return await _mediator.Send(command);
+    }
+
     [HttpGet("auth")]
     [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
     public IActionResult Get()

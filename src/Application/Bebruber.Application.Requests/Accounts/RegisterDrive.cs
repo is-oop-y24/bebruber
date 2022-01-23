@@ -1,16 +1,21 @@
-﻿using FluentValidation;
+using FluentValidation;
 using MediatR;
 
 namespace Bebruber.Application.Requests.Accounts;
 
-public partial class RegisterUser
+public class RegisterDriver
 {
     public record Command(string FirstName,
         string MiddleName,
         string LastName,
         string Email,
         string PhoneNumber,
-        string Password) : IRequest<Response>;
+        string Password,
+        string CarName,
+        string CarNumber,
+        string CarBrand,
+        string CarColor,
+        string CarCategory) : IRequest<Response>;
 
     public class CommandValidator : AbstractValidator<Command>
     {
