@@ -14,7 +14,9 @@ public class DriverLocation : Entity<DriverLocation>
         LastUpdateTime = lastUpdateTime;
     }
 
-    public Driver Driver { get; private init; }
+    protected DriverLocation() { }
+
+    public virtual Driver Driver { get; private init; }
     public Coordinate Coordinate { get; set; }
     public DateTime LastUpdateTime { get; set; }
 

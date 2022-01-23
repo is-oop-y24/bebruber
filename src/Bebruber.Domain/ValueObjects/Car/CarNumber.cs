@@ -13,6 +13,8 @@ public class CarNumber : ValueObject<CarNumber>
         RegionCode = regionCode.ThrowIfNull();
     }
 
+    protected CarNumber() { }
+
     public CarNumberRegistrationSeries RegistrationSeries { get; private init; }
     public CarNumberRegionCode RegionCode { get; private init; }
 

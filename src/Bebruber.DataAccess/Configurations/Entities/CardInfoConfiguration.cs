@@ -2,7 +2,7 @@ using Bebruber.Domain.Entities;
 using Bebruber.Domain.ValueObjects.Card;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Bebruber.DataAccess.Configurations;
+namespace Bebruber.DataAccess.Configurations.Entities;
 
 internal class CardInfoConfiguration : EntityConfiguration<CardInfo>
 {

@@ -13,6 +13,8 @@ public class Address : ValueObject<Address>
         HouseNumber = houseNumber;
     }
 
+    protected Address() { }
+
     public string Country { get; protected init; }
     public string City { get; protected init; }
     public string Street { get; private init; }

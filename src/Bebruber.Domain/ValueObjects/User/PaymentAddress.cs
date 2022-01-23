@@ -13,6 +13,8 @@ public class PaymentAddress : ValueObject<PaymentAddress>
         ApartmentNumber = apartmentNumber;
     }
 
+    protected PaymentAddress() { }
+
     public string Country { get; private init; }
     public string Street { get; private init; }
     public int HouseNumber { get; private init; }
