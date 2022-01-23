@@ -10,4 +10,7 @@ public class CardNumber : ValueOf<string, CardNumber>
         : base(value, Regex.IsMatch, new InvalidCardNumberException(value)) { }
 
     public static Regex Regex { get; } = new Regex("[0-9]{16}", RegexOptions.Compiled);
+
+    public override string ToString()
+        => $"{Value.Replace(Value.Substring(4, 8), "********")}";
 }

@@ -48,5 +48,5 @@ public class Driver : Entity<Driver>
     }
 
     public override string ToString()
-    => $"[{Id}] {Name} {Rating} {PaymentAddress} {CardInfo}";
+    => $"[{Id}] {Name}";
 }

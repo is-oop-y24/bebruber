@@ -21,7 +21,7 @@ public class ValueOf<T, TObject> : ValueObject<TObject>
 
     public T Value { get; private init; }
 
-    public sealed override string ToString()
+    public override string ToString()
         => Value?.ToString() ?? string.Empty;
 
     protected sealed override IEnumerable<object?> GetEqualityComponents()

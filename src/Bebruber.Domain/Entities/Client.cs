@@ -65,5 +65,5 @@ public class Client : Entity<Client>
     }
 
     public override string ToString()
-        => $"[{Id}] {Name} {Rating} {PaymentAddress}";
+        => $"[{Id}] {Name}";
 }
