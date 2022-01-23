@@ -16,4 +16,7 @@ public class CardInfo : Entity<CardInfo>
     public CardNumber CardNumber { get; private init; }
     public ExpirationDate ExpirationDate { get; private init; }
     public CvvCode CvvCode { get; private init; }
+
+    public override string ToString()
+        => $"[{Id}] {CardNumber}";
 }

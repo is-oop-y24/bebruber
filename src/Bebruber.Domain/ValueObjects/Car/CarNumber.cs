@@ -5,7 +5,7 @@ using Bebruber.Utility.Extensions;
 
 namespace Bebruber.Domain.ValueObjects.Car;
 
-public class CarNumber : ValueObject<CardNumber>
+public class CarNumber : ValueObject<CarNumber>
 {
     public CarNumber(CarNumberRegistrationSeries series, CarNumberRegionCode regionCode)
     {

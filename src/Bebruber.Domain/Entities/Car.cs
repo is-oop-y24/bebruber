@@ -24,4 +24,7 @@ public class Car : Entity<Car>
     public CarName Name { get; private init; }
     public CarColor Color { get; private init; }
     public CarCategory Category { get; private init; }
+
+    public override string ToString()
+        => $"[{Id}] [{CarNumber}] {Category} {Brand} {Name} ({Color})";
 }
