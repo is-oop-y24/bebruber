@@ -53,11 +53,36 @@ namespace Bebruber.Endpoints.Server
             AssemblyScanner.FindValidatorsInAssembly(typeof(Bebruber.Application.Handlers.IAssemblyMarker).Assembly)
                            .ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PipelineValidationBehavior<,>));
-            services.AddSwaggerGen(c =>
-            {
-                c.CustomSchemaIds(type => type.FullName);
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Bebruber.Endpoints.Server", Version = "v1" });
-            });
+
+            services.AddSwaggerGen(
+                c =>
+                {
+                    c.CustomSchemaIds(type => type.FullName);
+
+                    c.SwaggerDoc(
+                        "v1",
+                        new OpenApiInfo { Title = "Bebruber.Endpoints.Server", Version = "v1" });
+
+                    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                    {
+                        In = ParameterLocation.Header,
+                        Description = "JSON Web Token to access resources. Example: Bearer {token}",
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.ApiKey,
+                    });
+
+                    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                    { Type = ReferenceType.SecurityScheme, Id = "Bearer" },
+                            },
+                            new[] { string.Empty }
+                        },
+                    });
+                });
 
             services.AddDbContext<BebruberDatabaseContext>(
                 opt => opt.UseInMemoryDatabase("BebruberDatabase"));
