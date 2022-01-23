@@ -34,9 +34,9 @@ public class DriverController : ControllerBase
     {
         return await _mediator.Send(command);
     }
-    
+
     [HttpPost("finishRide")]
-    public async Task<ActionResult<FinishRide.Response>> StartRide(FinishRide.Command command)
+    public async Task<ActionResult<FinishRide.Response>> FinishRide(FinishRide.Command command)
     {
         return await _mediator.Send(command);
     }
@@ -46,7 +46,7 @@ public class DriverController : ControllerBase
     {
         return await _mediator.Send(command);
     }
-    
+
     [HttpPut("cancel")]
     public async Task<ActionResult<CancelSearch.Response>> Arrived(CancelSearch.Command command)
     {

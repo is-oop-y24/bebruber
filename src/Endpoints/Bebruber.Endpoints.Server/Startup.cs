@@ -58,6 +58,8 @@ namespace Bebruber.Endpoints.Server
             services.AddScoped<IPricingService, RoutePricingService>();
             services.Decorate<IPricingService, CarCategoryPricingService>();
 
+            services.AddControllers(options => options.Filters.Add(new GlobalExceptionFilter()));
+
             services.AddControllers();
             services.AddSignalR();
 
