@@ -8,6 +8,7 @@ using Bebruber.Core.Services;
 using Bebruber.DataAccess;
 using Bebruber.DataAccess.Seeding;
 using Bebruber.Domain.Services;
+using Bebruber.Identity;
 using Bebruber.Identity.Tools;
 using FluentValidation;
 using MediatR;
@@ -99,10 +100,10 @@ namespace Bebruber.Endpoints.Server
             services.AddSingleton(new DriverLocationServiceConfiguration(10, TimeSpan.Zero));
             services.AddSingleton(new RideQueueServiceConfiguration(TimeSpan.Zero));
 
-            services.AddDbContext<IdentityDatabaseContext>(opt => opt.UseInMemoryDatabase("identity.db"));
+            services.AddDbContext<IdentityDatabaseContext>(opt => opt.UseSqlite("Filename=identity.db"));
             services.AddScoped<IdentityDatabaseSeeder>();
 
-            services.AddIdentity<IdentityUser, IdentityRole>(m =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(m =>
                                                              {
                                                                  m.Password.RequireDigit = false;
                                                                  m.Password.RequiredLength = 0;
@@ -112,7 +113,7 @@ namespace Bebruber.Endpoints.Server
                                                                  m.Password.RequireNonAlphanumeric = false;
                                                              })
                     .AddEntityFrameworkStores<IdentityDatabaseContext>()
-                    .AddSignInManager<SignInManager<IdentityUser>>();
+                    .AddSignInManager<SignInManager<ApplicationUser>>();
 
             var signingConfigurations = new SigningConfigurations(Configuration["TokenKey"]);
             services.AddSingleton(signingConfigurations);

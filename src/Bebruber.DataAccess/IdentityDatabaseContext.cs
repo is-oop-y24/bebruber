@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bebruber.DataAccess;
 
-public class IdentityDatabaseContext : IdentityDbContext<IdentityUser>
+public class IdentityDatabaseContext : IdentityDbContext<ApplicationUser>
 {
     public IdentityDatabaseContext(DbContextOptions<IdentityDatabaseContext> options)
         : base(options)

@@ -10,7 +10,6 @@ internal class ClientConfiguration : EntityConfiguration<Client>
     {
         builder.OwnsOne(c => c.Name);
         builder.OwnsOne(nameof(Rating), c => c.Rating);
-        builder.OwnsOne(c => c.PaymentAddress);
         builder.OwnsOne(c => c.PhoneNumber);
         builder.Navigation(c => c.PaymentInfos).HasField("_paymentInfos");
         builder.Navigation(c => c.Rides).HasField("_rides");

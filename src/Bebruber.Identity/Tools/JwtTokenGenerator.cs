@@ -11,11 +11,11 @@ namespace Bebruber.Identity.Tools;
 public class JwtTokenGenerator : IJwtTokenGenerator
 {
     private readonly SymmetricSecurityKey _key;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
     private readonly SigningConfigurations _signingConfigurations;
     private readonly JwtTokenOptions _tokenOptions;
 
-    public JwtTokenGenerator(IConfiguration config, UserManager<IdentityUser> userManager, SigningConfigurations signingConfigurations, JwtTokenOptions tokenOptions)
+    public JwtTokenGenerator(IConfiguration config, UserManager<ApplicationUser> userManager, SigningConfigurations signingConfigurations, JwtTokenOptions tokenOptions)
     {
         _userManager = userManager;
         _signingConfigurations = signingConfigurations;
@@ -23,7 +23,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
     }
 
-    public string CreateToken(IdentityUser user)
+    public string CreateToken(ApplicationUser user)
     {
         var claims = new List<Claim> { new Claim(JwtRegisteredClaimNames.NameId, user.UserName) };
 
@@ -42,7 +42,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         return tokenHandler.WriteToken(securityToken);
     }
 
-    private async Task<IEnumerable<Claim>> GetClaims(IdentityUser user)
+    private async Task<IEnumerable<Claim>> GetClaims(ApplicationUser user)
     {
         var claims = new List<Claim>
         {

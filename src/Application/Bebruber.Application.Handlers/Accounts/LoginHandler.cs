@@ -1,6 +1,7 @@
 ﻿using System.Security.Authentication;
 using Bebruber.Application.Requests.Accounts;
 using Bebruber.DataAccess;
+using Bebruber.Identity;
 using Bebruber.Identity.Tools;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -10,15 +11,15 @@ namespace Bebruber.Application.Handlers.Accounts;
 
 public class LoginHandler : IRequestHandler<Login.Command, Login.Response>
 {
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IJwtTokenGenerator _tokenGenerator;
     private readonly ILogger<LoginHandler> _logger;
     private readonly IdentityDatabaseContext _context;
 
     public LoginHandler(
-        UserManager<IdentityUser> userManager,
-        SignInManager<IdentityUser> signInManager,
+        UserManager<ApplicationUser> userManager,
+        SignInManager<ApplicationUser> signInManager,
         IJwtTokenGenerator tokenGenerator,
         ILogger<LoginHandler> logger,
         IdentityDatabaseContext databaseContext,
@@ -33,6 +34,7 @@ public class LoginHandler : IRequestHandler<Login.Command, Login.Response>
 
     public async Task<Login.Response> Handle(Login.Command request, CancellationToken cancellationToken)
     {
+        Console.WriteLine(request.Email);
         var user = await _userManager.FindByEmailAsync(request.Email);
 
         if (user is null)
