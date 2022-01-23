@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Bebruber.Application.Accounts.Commands;
+using Bebruber.Application.Requests.Accounts;
 using Bebruber.Common.Dto;
 using Bebruber.DataAccess;
 using Bebruber.DataAccess.Seeding;
@@ -25,15 +25,15 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<LoginCommand.Response>> LoginAsync([FromBody] LoginCommand.Command request)
+    public async Task<ActionResult<Login.Response>> LoginAsync([FromBody] Login.Command request)
     {
         return await _mediator.Send(request);
     }
 
     [HttpPost("seed")]
-    public async Task<IActionResult> Seed()
+    public Task<IActionResult> Seed()
     {
         _seeder.Seed();
-        return Ok();
+        return Task.FromResult<IActionResult>(Ok());
     }
 }

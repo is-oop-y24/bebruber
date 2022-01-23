@@ -1,25 +1,21 @@
+using System;
 using Bebruber.Application.Common;
 using Bebruber.Application.Services;
-using Bebruber.Domain.Services;
-using System;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using Bebruber.Application;
-using Bebruber.Application.Models;
-using Bebruber.Application.Services;
+using Bebruber.Application.Services.Models;
 using Bebruber.DataAccess;
 using Bebruber.DataAccess.Seeding;
 using Bebruber.Domain.Services;
-using Bebruber.Identity;
 using Bebruber.Identity.Tools;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace Bebruber.Endpoints.Server
 {
@@ -64,7 +60,7 @@ namespace Bebruber.Endpoints.Server
             services.AddDbContext<RideEntryDatabaseContext>(
                 opt => opt.UseInMemoryDatabase(Guid.NewGuid().ToString()));
 
-            //TODO: change
+            // TODO: change
             services.AddSingleton(new DriverLocationServiceConfiguration(10, TimeSpan.Zero));
             services.AddSingleton(new RideQueueServiceConfiguration(TimeSpan.Zero));
 
