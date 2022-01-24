@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Bebruber.Endpoints.Shared.Interfaces;
 using Bebruber.Endpoints.Shared.Models;
+using Bebruber.Endpoints.Shared.Services;
 using FisSst.BlazorMaps;
 using Microsoft.AspNetCore.Components;
 using Marker = Bebruber.Endpoints.Shared.Models.Marker;
@@ -18,6 +21,13 @@ namespace Bebruber.Endpoints.UserWebClient.Pages
         ExtraPoint,
     }
 
+    public enum RideState
+    {
+        Selecting = 0,
+        WaitingDriver = 1,
+        Riding = 2,
+    }
+
     public partial class Index
     {
         private static readonly string _bebraGreenPath = "/_content/Bebruber.Endpoints.Shared/img/bebra-green.png";
@@ -25,7 +35,11 @@ namespace Bebruber.Endpoints.UserWebClient.Pages
         private static readonly string _bebraBluePath = "/_content/Bebruber.Endpoints.Shared/img/bebra-blue.png";
         private static readonly Point _bebraSize = new(54 / 2, 95 / 2);
         private static readonly Point _bebraAnchor = new(54 / 4, 95 / 2);
+        private List<string> _taxiCategories;
         private MarkerConfig _markerConfig = new MarkerConfig();
+#pragma warning disable CS0414
+        private RideState _currentRideState = RideState.Selecting;
+#pragma warning restore CS0414
         private Marker _startPointMarker;
         private Marker _endPointMarker;
         private Bebruber.Endpoints.Shared.Components.Map _mapRef;
@@ -37,6 +51,9 @@ namespace Bebruber.Endpoints.UserWebClient.Pages
 
         [Inject]
         public IIconFactory IconFactory { get; init; }
+
+        [Inject]
+        public IHttpService HttpService { get; init; }
         public async Task OnMarkerAddedAsync(Marker marker)
         {
             CanAddMarker = false;
@@ -94,6 +111,11 @@ namespace Bebruber.Endpoints.UserWebClient.Pages
             await _extraPointsMarkers[pointNumber].DeleteAsync();
             _extraPointsMarkers.RemoveAt(pointNumber);
             await UpdateLine();
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
+             _taxiCategories = await HttpService.GetAsync<List<string>>("/cars/categories");
         }
 
         private async Task UpdateLine()

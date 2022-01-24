@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Bebruber.Endpoints.Server.Controllers;
 
 [ApiController]
-[Route("carCategory")]
-public class CarCategoryController : ControllerBase
+[Route("cars")]
+public class CarsController : ControllerBase
 {
     [HttpGet("categories")]
     public ActionResult<List<string>> GetCarCategories()
