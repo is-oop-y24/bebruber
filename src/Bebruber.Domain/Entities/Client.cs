@@ -22,9 +22,9 @@ public class Client : Entity<Client>
 
     protected Client() { }
 
-    public Name Name { get; protected init; }
-    public Rating Rating { get; set; }
-    public PhoneNumber PhoneNumber { get; set; }
+    public virtual Name Name { get; protected init; }
+    public virtual Rating Rating { get; set; }
+    public virtual PhoneNumber PhoneNumber { get; set; }
     public virtual IReadOnlyCollection<CardInfo> PaymentInfos => _paymentInfos.AsReadOnly();
     public virtual IReadOnlyCollection<Ride> Rides => _rides.AsReadOnly();
 

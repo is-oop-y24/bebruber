@@ -37,9 +37,7 @@ namespace Bebruber.Endpoints.UserWebClient.Pages
         private static readonly Point _bebraAnchor = new(54 / 4, 95 / 2);
         private List<string> _taxiCategories;
         private MarkerConfig _markerConfig = new MarkerConfig();
-#pragma warning disable CS0414
         private RideState _currentRideState = RideState.Selecting;
-#pragma warning restore CS0414
         private Marker _startPointMarker;
         private Marker _endPointMarker;
         private Bebruber.Endpoints.Shared.Components.Map _mapRef;

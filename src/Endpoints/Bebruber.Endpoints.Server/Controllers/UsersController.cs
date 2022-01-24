@@ -20,13 +20,11 @@ namespace Bebruber.Endpoints.Server.Controllers;
 public class UsersController : ControllerBase
 {
     private IMediator _mediator;
-    private IdentityDatabaseSeeder _seeder;
     private IdentityDatabaseContext _context;
 
-    public UsersController(IMediator mediator, IdentityDatabaseSeeder seeder, IdentityDatabaseContext context)
+    public UsersController(IMediator mediator, IdentityDatabaseContext context)
     {
         _mediator = mediator;
-        _seeder = seeder;
         _context = context;
     }
 
@@ -34,14 +32,6 @@ public class UsersController : ControllerBase
     public async Task<ActionResult<Login.Response>> LoginAsync([FromBody] Login.Command request)
     {
         return await _mediator.Send(request);
-    }
-
-    [HttpPost("seed")]
-    public async Task<IActionResult> Seed()
-    {
-        _seeder.Seed();
-        await _context.SaveChangesAsync();
-        return Ok();
     }
 
     [HttpPost("register-user")]
@@ -56,8 +46,7 @@ public class UsersController : ControllerBase
         return await _mediator.Send(command);
     }
 
-    [HttpGet("auth")]
-    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
+    [HttpGet("seed")]
     public IActionResult Get()
     {
         var userIdentity = (ClaimsIdentity)User.Identity;

@@ -23,10 +23,10 @@ public class RideEntry : Entity<RideEntry>
 
     protected RideEntry() { }
 
-    public Location Origin { get; private init; }
-    public Location Destination { get; private init; }
+    public virtual Location Origin { get; private init; }
+    public virtual Location Destination { get; private init; }
     public RideEntryState State { get; set; }
-    public IReadOnlyCollection<Location> IntermediatePoints { get; private init; }
+    public virtual IReadOnlyCollection<Location> IntermediatePoints { get; private init; }
     public virtual IReadOnlyCollection<Driver> DismissedDrivers => _dismissedDrivers.AsReadOnly();
 
     public void Dismiss(Driver driver)

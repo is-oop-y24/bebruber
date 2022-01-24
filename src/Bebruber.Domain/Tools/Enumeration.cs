@@ -12,6 +12,8 @@ public abstract class Enumeration<TValue, TEnumeration> : IEquatable<TEnumeratio
         Value = value;
     }
 
+    protected Enumeration() { }
+
     public string Name { get; private init; }
     public TValue Value { get; private init; }
 

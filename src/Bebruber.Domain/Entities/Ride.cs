@@ -34,11 +34,11 @@ public class Ride : Entity<Ride>
     public RideState State { get; set; }
     public virtual Client Client { get; private init; }
     public virtual Driver Driver { get; private init; }
-    public Roubles Cost { get; private init; }
+    public virtual Roubles Cost { get; private init; }
     public DateTime DateTime { get; private init; }
-    public Location Origin { get; private init; }
-    public Location Destination { get; private init; }
-    public IReadOnlyCollection<Location> IntermediatePoints { get; private init; }
+    public virtual Location Origin { get; private init; }
+    public virtual Location Destination { get; private init; }
+    public virtual IReadOnlyCollection<Location> IntermediatePoints { get; private init; }
 
     public override string ToString()
         => $"[{Id}] ClientId:{Client.Id} DriverId:{Driver.Id} {DateTime}";

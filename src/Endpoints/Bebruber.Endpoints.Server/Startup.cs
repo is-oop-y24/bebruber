@@ -45,6 +45,8 @@ namespace Bebruber.Endpoints.Server
             typeLocator.RegisterType(typeof(Client));
             services.AddSingleton(typeLocator);
 
+            services.AddScoped<BebruberDatabaseSeeder>();
+
             services.AddScoped<IClientNotificationService, ClientNotificationService>();
             services.AddScoped<IDriverLocationService, DriverLocationService>();
             services.AddScoped<IDriverNotificationService, DriverNotificationService>();
@@ -67,7 +69,7 @@ namespace Bebruber.Endpoints.Server
 
             services.AddMediatR(typeof(Bebruber.Application.Handlers.IAssemblyMarker).Assembly);
             AssemblyScanner.FindValidatorsInAssembly(typeof(Bebruber.Application.Handlers.IAssemblyMarker).Assembly)
-                           .ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
+                .ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PipelineValidationBehavior<,>));
 
             services.AddSwaggerGen(
@@ -104,15 +106,14 @@ namespace Bebruber.Endpoints.Server
                 opt =>
                 {
                     opt.UseSqlite("Filename=BebruberDatabase.db");
+                    opt.EnableSensitiveDataLogging();
                     opt.UseLazyLoadingProxies();
                 });
 
             // TODO: change
             services.AddSingleton(new DriverLocationServiceConfiguration(10, TimeSpan.Zero));
             services.AddSingleton(new RideQueueServiceConfiguration(TimeSpan.Zero));
-
             services.AddDbContext<IdentityDatabaseContext>(opt => opt.UseSqlite("Filename=identity.db"));
-            services.AddScoped<IdentityDatabaseSeeder>();
 
             services.AddIdentity<ApplicationUser, IdentityRole>(m =>
                 {
@@ -151,6 +152,13 @@ namespace Bebruber.Endpoints.Server
                         ClockSkew = TimeSpan.Zero,
                     };
                 });
+
+#pragma warning disable ASP0000
+            var provider = services.BuildServiceProvider();
+            provider
+                .GetRequiredService<BebruberDatabaseSeeder>()
+                .Seed(provider.GetRequiredService<BebruberDatabaseContext>());
+#pragma warning restore ASP0000
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

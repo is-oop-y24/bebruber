@@ -1,3 +1,4 @@
+using Bebruber.DataAccess.Configurations.ValueObjects;
 using Bebruber.Domain.Entities;
 using Bebruber.Domain.ValueObjects.User;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

@@ -11,20 +11,22 @@ public class Driver : Entity<Driver>
     private readonly List<Ride> _rides;
 
     public Driver(
-        Name name, Rating rating, Car car, PhoneNumber phoneNumber)
+        Name name, Rating rating, CardInfo cardInfo, Car car, PhoneNumber phoneNumber)
     {
         _rides = new List<Ride>();
         Name = name.ThrowIfNull();
         Rating = rating.ThrowIfNull();
-        Car = car;
+        CardInfo = cardInfo.ThrowIfNull();
+        Car = car.ThrowIfNull();
         PhoneNumber = phoneNumber.ThrowIfNull();
     }
 
     protected Driver() { }
 
-    public Name Name { get; private init; }
-    public Rating Rating { get; set; }
-    public PhoneNumber PhoneNumber { get; set; }
+    public virtual Name Name { get; private init; }
+    public virtual Rating Rating { get; set; }
+    public virtual PhoneNumber PhoneNumber { get; set; }
+    public virtual CardInfo CardInfo { get; set; }
     public virtual Car Car { get; set; }
     public virtual IReadOnlyCollection<Ride> Rides => _rides.AsReadOnly();
 
