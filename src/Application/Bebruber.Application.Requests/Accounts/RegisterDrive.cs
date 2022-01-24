@@ -5,7 +5,8 @@ namespace Bebruber.Application.Requests.Accounts;
 
 public class RegisterDriver
 {
-    public record Command(string FirstName,
+    public record Command(
+        string FirstName,
         string MiddleName,
         string LastName,
         string Email,
@@ -13,8 +14,8 @@ public class RegisterDriver
         string Password,
         string Cvv,
         string CardNumber,
-        int ExpirationDateYear,
-        int ExpirationDateMonth,
+        string ExpirationDateYear,
+        string ExpirationDateMonth,
         string CarName,
         string CarNumber,
         string CarBrand,
