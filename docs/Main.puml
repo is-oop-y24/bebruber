@@ -5,5 +5,6 @@
 !include Bebruber.Identity.puml
 !include Bebruber.Core.puml
 !include Bebruber.Endpoints.Shared.puml
+!include Bebruber.Application.Services.puml
 
 @enduml
