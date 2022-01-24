@@ -9,10 +9,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.376">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client.Core" Version="6.0.1" />
+    <PackageReference Include="SignalR.Strong" Version="0.3.0" />
     <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
   </ItemGroup>
 
@@ -21,7 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Application\Bebruber.Application.Requests\Bebruber.Application.Requests.csproj" />
+    <ProjectReference Include="..\..\Bebruber.Common\Bebruber.Common.csproj" />
     <ProjectReference Include="..\Bebruber.Endpoints.Shared\Bebruber.Endpoints.Shared.csproj" />
+    <ProjectReference Include="..\Bebruber.Endpoints.SignalR\Bebruber.Endpoints.SignalR.csproj" />
   </ItemGroup>
 
   <ItemGroup>

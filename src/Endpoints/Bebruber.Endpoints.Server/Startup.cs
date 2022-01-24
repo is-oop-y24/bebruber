@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Bebruber.Application.Common;
 using Bebruber.Application.Common.Behaviours;
 using Bebruber.Application.Requests;
@@ -9,6 +10,7 @@ using Bebruber.DataAccess;
 using Bebruber.DataAccess.Seeding;
 using Bebruber.Domain.Entities;
 using Bebruber.Domain.Services;
+using Bebruber.Endpoints.SignalR.Users;
 using Bebruber.Identity;
 using Bebruber.Identity.Tools;
 using Bebruber.Utility.Tools;
@@ -19,6 +21,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -108,12 +111,13 @@ namespace Bebruber.Endpoints.Server
                     opt.UseSqlite("Filename=BebruberDatabase.db");
                     opt.EnableSensitiveDataLogging();
                     opt.UseLazyLoadingProxies();
+                    opt.EnableSensitiveDataLogging();
                 });
 
             // TODO: change
             services.AddSingleton(new DriverLocationServiceConfiguration(10, TimeSpan.Zero));
             services.AddSingleton(new RideQueueServiceConfiguration(TimeSpan.Zero));
-            services.AddDbContext<IdentityDatabaseContext>(opt => opt.UseSqlite("Filename=identity.db"));
+            services.AddDbContext<IdentityDatabaseContext>(opt => opt.UseSqlite("Filename=identity.db").EnableSensitiveDataLogging());
 
             services.AddIdentity<ApplicationUser, IdentityRole>(m =>
                 {
@@ -153,6 +157,12 @@ namespace Bebruber.Endpoints.Server
                     };
                 });
 
+            services.AddResponseCompression(opts =>
+                        {
+                            opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                                new[] { "application/octet-stream" });
+                        });
+
 #pragma warning disable ASP0000
             var provider = services.BuildServiceProvider();
             provider
@@ -173,9 +183,9 @@ namespace Bebruber.Endpoints.Server
 
             app.UseHttpsRedirection();
             app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+                             .AllowAnyOrigin()
+                             .AllowAnyMethod()
+                             .AllowAnyHeader());
             app.UseHttpLogging();
 
             app.UseRouting();
@@ -186,6 +196,7 @@ namespace Bebruber.Endpoints.Server
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<UserHub>("/hubs/client");
             });
         }
     }
