@@ -16,7 +16,7 @@ public class AdminGenerator : IEntityGenerator
 
         var adminRole = new IdentityRole { Name = "Admin" };
 
-        userManager.CreateAsync(admin).GetAwaiter().GetResult();
+        userManager.CreateAsync(admin, "admin").GetAwaiter().GetResult();
         roleManager.CreateAsync(adminRole).GetAwaiter().GetResult();
         userManager.AddToRoleAsync(admin, adminRole.Id).GetAwaiter().GetResult();
     }

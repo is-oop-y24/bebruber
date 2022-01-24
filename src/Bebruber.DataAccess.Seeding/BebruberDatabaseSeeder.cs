@@ -13,7 +13,7 @@ public class BebruberDatabaseSeeder
     private readonly IReadOnlyCollection<IEntityGenerator> _generators;
 
     public BebruberDatabaseSeeder(
-        IServiceCollection collection, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
     {
         _generators = EntityGeneratorScanner
             .GetEntityGeneratorsFromAssembly(userManager, roleManager, typeof(IAssemblyMarker));
