@@ -3,134 +3,89 @@
 
 package Bebruber.Domain
 {
-    class Client
+    class Car
     {
-        + Name Name
-        + Rating Rating
-        + Address Address
-        + CardInfo[] CardInfos
-        + Ride[] Rides[]
-    }
-
-    class Driver
-    {
-        + Name Name
-        + Rating Rating
-        + Address Address
-        + CardInfo CardInfo
-        + Car[] Cars
-        + Ride[] Rides
+        +Number : Number
+        +Brand : CarBrand
+        +Name : CarName
+        +Color : CarColor
+        +CarCategory : CarCategory
     }
 
     class CardInfo
     {
-        + CardNumber CardNumber
-        + ExpirationDate ExpirationDate
-        + CvvCode CvvCode
-    }
-    
-    interface IPaymentVisitor
-    {
-        --
-        + PayWithCard(CardInfo info, Roubles amount)
+        +CardNumber : CardNumber
+        +ExpirationDate : ExpirationDate
+        +CvvCode : CvvCode
     }
 
-    abstract class PaymentMethod
+    class Client
     {
-        --
-        + void Visit(IPaymentVisitor visitor, Roubles amount)
+        -_paymentMethods : CardInfo[]
+        -_rides : Ride[]
+        +Name : Name
+        +Rating : Rating
+        +PhoneNumber : PhoneNumber
+        +PaymentInfos : CardInfo[]
+        +Rides : Ride[]
+        
+        RemovePaymentInfo(CardInfo cardInfo) : void
+        AddRide(Ride ride) : void
+        RemoveRide(Ride ride)
     }
 
-    PaymentMethod <|-- CashPaymentMethod
-    class CashPaymentMethod
-
-    PaymentMethod <|-- CardPaymentMethod
-    class CardPaymentMethod
+    class Driver
     {
-        + CardInfo Card
+        -_rides : Ride[]
+        +Name : Name
+        +Rating : Rating
+        +PhoneNumber : PhoneNumber
+        +CardInfo : CardInfo
+        +Car : Car
+        +Rides : Ride[]
     }
 
-    class Car
+    class DriverLocation
     {
-        + Driver Owner
-        + CarNumber Number
-        + CarBrand Brand
-        + CarName Name
-        + CarColor Color
-        + CarCategory Category
+        +Driver: Driver
+        +Coordinate: Coordinate
+        +LastUpdateTime: DateTime
     }
 
     class Ride
     {
-        + Client Client
-        + Car Car
-        + RideStatus Status
-        + Roubles Cost
-        + DateTime DateTime
-        + Location Origin
-        + Location Destination
-        + Location[] IntermediatePoints
+        +State : RideState
+        +Client : Client
+        +Driver : Driver
+        +Cost : Roubles
+        +DateTime : DateTime
+        +Origin : Location
+        +Destination : Location
+        +IntermediatePoints : Location[] 
     }
 
-    class Location
+    class RideEntry
     {
-        + Coordinate Coordinate
-        + Address Address
+        +Origin : Location
+        +Destination : Location
+        +State : RideEntryState
+        +IntermediatePoints : Location[]
+        +DismissedDrivers : Driver[]
     }
 
-    class Route
-    {
-        + RouteSector[] Sectors
-    }
-
-    class RouteSector
-    {
-        + Coordinate Begin
-        + Coordinate End
-        + LoadLevel LoadLevel
-    }
+    Driver --o DriverLocation
+    Driver --o Ride
+    Driver --o DismissedDrivers
+    Client --o Ride
 
     class RideContext
     {
-        + Client Client
-        + Driver Driver
-        + Route Route
-        + Location Origin
-        + Location Destination 
-        + Location[] IntermediatePoints
+        +Client : Client
+        +Driver : Driver
+        +Route : Route
+        +Origin : Location
+        +Destination : Location
     }
-
-    interface IRideService
-    {
-        --
-        + Ride StartRide(RideContext context)
-    }
-
-    interface IPriceCalculator
-    {
-        + Roubles Calculate(Route route)
-    }
-
-    interface IPricingService
-    {
-        + IPriceCalculator GetCalculator(RideContext context)
-    }
-
-    IPricingService <|.. CarCategoryBasedPricingService
-    class CarCategoryBasedPricingService
-
-    IPricingService <|.. RouteBasedPricingService
-    class RouteBasedPricingService
-
-    Client --> "0..n" CardInfo
-    Client "1" <--> "0..n" Ride
-
-    Driver "1" <--> "0..n" Car
-    Driver "1" <--> "0..n" Ride
-
-    Ride --> "2..n" Location
-
-    Route --> "1..n" RouteSector
 }
 
 @enduml
