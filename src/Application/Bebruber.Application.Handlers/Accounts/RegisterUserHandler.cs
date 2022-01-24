@@ -35,7 +35,8 @@ public class RegisterUserHandler : IRequestHandler<RegisterUser.Command, Registe
                                 request.MiddleName,
                                 request.LastName),
                             new Rating(10),
-                            new PhoneNumber(request.PhoneNumber));
+                            new PhoneNumber(request.PhoneNumber),
+                            new Email(request.Email));
 
         await _databaseContext.Clients.AddAsync(client, cancellationToken);
 

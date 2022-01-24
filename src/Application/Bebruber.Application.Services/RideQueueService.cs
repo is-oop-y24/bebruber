@@ -41,6 +41,7 @@ public class RideQueueService : IRideQueueService
         FindDriverForRideEntryAsync(rideEntry, cancellationToken);
 #pragma warning restore CS4014
         await _context.Entries.AddAsync(rideEntry, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task<Result<RideEntry>> DequeueRideEntryAsync(Guid entryId, CancellationToken cancellationToken)

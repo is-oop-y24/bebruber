@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-md-8">
         @* Note: temporary disable address feauter to not reach api limit *@
-        <Map Height="550px" @ref="_mapRef" MarkerConfig="_markerConfig" NeedGetMarkerAddress="false" OnMarkerAdded="async (marker) => { await OnMarkerAddedAsync(marker); }" AddMarkerOnClick="CanAddMarker"></Map>
+        <Map Height="550px" @ref="_mapRef" MarkerConfig="_markerConfig" NeedGetMarkerAddress="true" OnMarkerAdded="async (marker) => { await OnMarkerAddedAsync(marker); }" AddMarkerOnClick="CanAddMarker"></Map>
     </div>
     <div class="col-md-4">
         @if (_currentRideState == RideState.Selecting) {
@@ -34,13 +34,12 @@
             <div class="mt-2">
                 @if (_taxiCategories is not null)
                 {
-                    <div class="btn-group btn-group-toggle d-flex" role="group" data-toggle="buttons">
+                    <label for="paymentMethod">Класс такси:</label>
+                    <RadioGroup Color="Color.Primary" Class="d-flex" TValue="string" Name="colors" Buttons="true" @bind-CheckedValue="@SelectedCategory">
                         @foreach (var category in _taxiCategories) {
-                            <label class="btn btn-outline-primary">
-                                <input type="radio" name="options" id="tariff-economy"> @category
-                            </label>
+                            <Radio TValue="string" Value="@(category)">@category</Radio>
                         }
-                    </div>
+                    </RadioGroup>
                 }
                 <div class="mt-2 form-group">
                     <label for="paymentMethod">Метод оплаты:</label>
@@ -50,7 +49,7 @@
                     </select>
                 </div>
 
-                <button class="btn btn-success btn-block">Заказать</button>
+                <button class="btn btn-success btn-block" @onclick="@(async () => await StartDriverSearchAsync())">Заказать</button>
             </div>
         </div>
         } else if (_currentRideState == RideState.WaitingDriver) {

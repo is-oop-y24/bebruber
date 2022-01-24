@@ -55,7 +55,8 @@ public class RegisterDriverHandler : IRequestHandler<RegisterDriver.Command, Reg
                 new CarNumber(
                     new CarNumberRegistrationSeries(request.CarNumber.Substring(0, 6)),
                     new CarNumberRegionCode(request.CarNumber.Substring(6)))),
-            new PhoneNumber(request.PhoneNumber));
+            new PhoneNumber(request.PhoneNumber),
+            new Email(request.Email));
 
         await _databaseContext.Drivers.AddAsync(newDriver, cancellationToken);
 

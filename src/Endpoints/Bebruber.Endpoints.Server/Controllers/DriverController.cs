@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using Bebruber.Application.Requests.Rides.Commands;
+using Bebruber.Utility.Extensions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 
@@ -24,9 +27,19 @@ public class DriverController : ControllerBase
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult<CreateRide.Response>> CreateRide(CreateRide.Command command)
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    public async Task<ActionResult<CreateRide.Response>> CreateRide([FromBody]CreateRide.ExternalCommand command)
     {
-        return await _mediator.Send(command);
+        var email = ((ClaimsIdentity)User.Identity)?.Claims.GetEmail();
+
+        var newCommand = new CreateRide.Command(
+            email,
+            command.Origin,
+            command.Destination,
+            command.TaxiCategory,
+            command.PaymentMethod,
+            command.IntermediatePoints);
+        return await _mediator.Send(newCommand);
     }
 
     [HttpPost("startRide")]

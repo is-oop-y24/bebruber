@@ -19,6 +19,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Bebruber.Common\Bebruber.Common.csproj" />
+      <ProjectReference Include="..\..\Bebruber.Domain\Bebruber.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -5,12 +5,14 @@ package Bebruber.Core
 {
     interface ICarCategoryPricingServiceConfiguration
     {
-        CalculatePriceMultiplier(CarCategory category) : double
+        ---
+        + CalculatePriceMultiplier(CarCategory category) : double
     }
 
     class CarCategoryPricingServiceConfiguration
     {
-        CalculatePriceMultiplier(CarCategory category) : double
+        ---
+        + CalculatePriceMultiplier(CarCategory category) : double
     }
 
     class RoutePricingServiceConfiguration
@@ -18,6 +20,7 @@ package Bebruber.Core
         +LandingPrice : decimal,
         +PricePerKilometer : decimal,
         +LoadMultiplier : decimal
+        ---
     }
 
     CarCategoryPricingServiceConfiguration <|-- ICarCategoryPricingServiceConfiguration
@@ -26,7 +29,8 @@ package Bebruber.Core
     {
         -_configuration : ICarCategoryPricingServiceConfiguration
         -_routePricingService : IPricingService
-        Calculate(RideContext context) : Roubles
+        ---
+        +Calculate(RideContext context) : Roubles
     }
 
     class RideService
@@ -34,6 +38,7 @@ package Bebruber.Core
         -_pricingService IPricingService
         -_timeProviderService ITimeProviderService
         -_clientNotificationService IClientNotificationService
+        ---
         +RegisterRide(RideContext context, CancellationToken cancellationToken) : void
         +SetRideDriverArrived(Ride ride, CancellationToken cancellationToken) : void
         +StartRideAsync(Ride ride, CancellationToken cancellationToken) : void
@@ -43,10 +48,12 @@ package Bebruber.Core
     class RoutePricingService
     {
         -_configuration : RoutePricingServiceConfiguration
+        ---
     }
 
     class RouteService
     {
+        ---
         +CreateRoute(Location origin, Location destination, IReadOnlyCollection<Location> intermediatePoints) : void
     }
 

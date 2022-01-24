@@ -17,17 +17,17 @@ public class ClientNotificationService : IClientNotificationService
     }
 
     public Task PostDriverCoordinatesAsync(Client client, Coordinate coordinate, CancellationToken cancellationToken)
-        => _hub.Clients.User(client.Id.ToString()).PostDriverCoordinates(coordinate.ToDto());
+        => _hub.Clients.User(client.Email.Value).PostDriverCoordinates(coordinate.ToDto());
 
     public Task NotifyDriverFoundAsync(Client client, CancellationToken cancellationToken)
-        => _hub.Clients.User(client.Id.ToString()).NotifyDriverFound();
+        => _hub.Clients.User(client.Email.Value).NotifyDriverFound();
 
     public Task NotifyDriverArrivedAsync(Client client, CancellationToken cancellationToken)
-        => _hub.Clients.User(client.Id.ToString()).NotifyDriverArrived();
+        => _hub.Clients.User(client.Email.Value).NotifyDriverArrived();
 
     public Task NotifyRideStartedAsync(Client client, CancellationToken cancellationToken)
-        => _hub.Clients.User(client.Id.ToString()).NotifyRideStarted();
+        => _hub.Clients.User(client.Email.Value).NotifyRideStarted();
 
     public Task NotifyRideFinishedAsync(Client client, CancellationToken cancellationToken)
-        => _hub.Clients.User(client.Id.ToString()).NotifyRideFinished();
+        => _hub.Clients.User(client.Email.Value).NotifyRideFinished();
 }

@@ -24,7 +24,7 @@ public class DriverLocation : Entity<DriverLocation>
     public virtual Driver Driver { get; private init; }
     public virtual Coordinate Coordinate { get; set; }
     public DateTime LastUpdateTime { get; set; }
-    public IReadOnlyCollection<Client> Subscribers => _subscribers.AsReadOnly();
+    public virtual IReadOnlyCollection<Client> Subscribers => _subscribers.AsReadOnly();
 
     public override string ToString()
         => $"[{Id}] {Driver} {Coordinate} {LastUpdateTime}";

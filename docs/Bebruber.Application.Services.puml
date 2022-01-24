@@ -5,19 +5,22 @@ package Bebruber.Application.Services
 {
     class DriverLocationServiceConfiguration
     {
-        NearbyDistance : double
-        DistancePrecision : double
-        DeprecationTime : TimeSpan
+        +NearbyDistance : double
+        +DistancePrecision : double
+        +DeprecationTime : TimeSpan
+        ---
     }
 
     class RideQueueServiceConfiguration
     {
-        AwaitingTimeSpan : TimeSpan
+        +AwaitingTimeSpan : TimeSpan
+        ---
     }
 
     class ClientNotificationService
     {
         -_hub : IHubContext<UserHub, IUserClient>
+        ---
         +PostDriverCoordinates(Client client, Coordinate coordinate, CancellationToken cancellationToken) : void
         +NotifyDriverFound(Client client, CancellationToken cancellationToken) : void
         +NotifyDriverArrived(Client client, CancellationToken cancellationToken) : void
@@ -31,7 +34,7 @@ package Bebruber.Application.Services
         -_configuration : DriverLocationServiceConfiguration
         -_timeProviderService : ITimeProviderService
         -_clientNotificationService : IClientNotificationService
-
+        ---
         +GetDriversNearby(Coordinate coordinate, CancellationToken cancellationToken) : Driver[]
         +UpdateDriverLocation(Driver driver, Coordinate coordinate, CancellationToken cancellationToken) : void
         +SubscribeToLocationUpdates(Driver driver, Client client, CancellationToken cancellationToken) : void
@@ -41,6 +44,7 @@ package Bebruber.Application.Services
     class DriverNotificationService
     {
         -_hub : IHubContext<UserHub, IUserClient>
+        ---
         +OfferRideToDriver(Driver driver, RideEntry rideEntry, TimeSpan awaitingTimeSpan, CancellationToken cancellationToken) : void
         +NotifySuccessfulAcceptance(Driver driver, Ride rideEntry, CancellationToken cancellationToken) : void
         +NotifyFailedAcceptance(Driver driver, CancellationToken cancellationToken) : void
@@ -52,6 +56,7 @@ package Bebruber.Application.Services
         -_locationService IDriverLocationService : IDriverLocationService
         -_driverNotificationService : IDriverNotificationService
         -_configuration : RideQueueServiceConfiguration
+        ---
     }
 
     class PaymentService
