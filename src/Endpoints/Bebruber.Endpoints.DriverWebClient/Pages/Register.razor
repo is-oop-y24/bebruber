@@ -1,8 +1,9 @@
 @page "/register"
 @using Bebruber.Endpoints.DriverWebClient.Models
-@using Bebruber.Endpoints.Shared.Services
+@using Bebruber.Endpoints.Shared.Interfaces
 @inject IJSRuntime _js
 @inject NavigationManager _navigationManager
+@inject IAccountService _accountService
 
 <div class="card">
     <h4 class="card-header" style="background-color: #ffffff">Регистрация</h4>
@@ -11,11 +12,23 @@
             <DataAnnotationsValidator/>
 
             <div class="form-group">
-                <label>ФИО</label>
-                <InputText @bind-Value="_model.Name" placeholder="Иванов Иван Иванович" class="form-control"/>
-                <ValidationMessage For="@(() => _model.Name)" />
+                <label>Имя</label>
+                <InputText @bind-Value="_model.FirstName" placeholder="Иван" class="form-control"/>
+                <ValidationMessage For="@(() => _model.FirstName)" />
             </div>
 
+            <div class="form-group">
+                <label>Фамилия</label>
+                <InputText @bind-Value="_model.LastName" placeholder="Иванов" class="form-control"/>
+                <ValidationMessage For="@(() => _model.LastName)" />
+            </div>
+
+            <div class="form-group">
+                <label>Отчество</label>
+                <InputText @bind-Value="_model.MiddleName" placeholder="Иванович" class="form-control"/>
+                <ValidationMessage For="@(() => _model.MiddleName)" />
+            </div>
+            
             <div class="form-group">
                 <label>Номер телефона</label>
                 <InputText @bind-Value="_model.PhoneNumber" placeholder="+7 (800) 555-35-35" class="form-control"/>
@@ -23,15 +36,28 @@
             </div>
 
             <div class="form-group">
-                <label>Номер водительского удостоверения</label>
-                <InputText @bind-Value="_model.DriverLicense" placeholder="12 34 567890" class="form-control"/>
-                <ValidationMessage For="@(() => _model.DriverLicense)" />
+                <label>Адрес электронной почты</label>
+                <InputText @bind-Value="_model.Email" placeholder="bebruber@smell.bebra" class="form-control"/>
+                <ValidationMessage For="@(() => _model.Email)" />
             </div>
 
             <div class="form-group">
-                <label>Марка, модель и цвет автомобиля</label>
-                <InputText @bind-Value="_model.CarType" placeholder="Bebromobil A1, черный" class="form-control"/>
-                <ValidationMessage For="@(() => _model.CarType)" />
+                <label>Марка автомобиля</label>
+                <InputText @bind-Value="_model.CarBrand" placeholder="Bebromobil" class="form-control"/>
+                <ValidationMessage For="@(() => _model.CarBrand)" />
+            </div>
+
+            <div class="form-group">
+                <label>Модель автомобиля</label>
+                <InputText @bind-Value="_model.CarName" placeholder="A1" class="form-control"/>
+                <ValidationMessage For="@(() => _model.CarName)" />
+            </div>
+            
+            @* TODO: fix this shit(maybe dropdownlist)*@
+            <div class="form-group">
+                <label>Цвет автомобиля</label>
+                <InputText @bind-Value="_model.CarColor" placeholder="Black" class="form-control"/>
+                <ValidationMessage For="@(() => _model.CarColor)" />
             </div>
 
             <div class="form-group">
@@ -39,6 +65,28 @@
                 <InputText @bind-Value="_model.CarNumber" placeholder="A001AA198"  class="form-control"/>
                 <ValidationMessage For="@(() => _model.CarNumber)" />
             </div>
+
+            @* TODO: fix this shit(maybe dropdownlist)*@
+            <div class="form-group">
+                <label>Категория автомобиля</label>
+                <InputText @bind-Value="_model.CarCategory" placeholder="Business" class="form-control"/>
+                <ValidationMessage For="@(() => _model.CarCategory)" />
+            </div>
+            
+            <div class="form-group">
+                <label>Пароль</label>
+                <Addons>
+                    <Addon AddonType="AddonType.Body">
+                        <InputText type="@_passwordFieldType" @bind-Value="@_model.Password" class="form-control" />
+                    </Addon>
+                    <Addon AddonType="AddonType.End">
+                        <Button Color="Color.Primary" @onclick="UpdatePasswordVisibility">@_buttonText</Button>
+                    </Addon>
+                </Addons>
+                <Help>Пароль должен содержать минимум 8 и максимум 128 символов, включая как минимум одну заглавную букву, одну строчную букву, одну цифру и один специальный символ.</Help>
+                <ValidationMessage For="@(() => _model.Password)"/>
+            </div>
+            
 
             <button disabled="@_loading" class="btn btn-primary">
                 @if (_loading)
@@ -54,24 +102,28 @@
 
 @code {
     private RegisterModel _model = new();
-    [Inject] public AccountService AccountService { get; set; }
-    [Inject] public NavigationManager NavigationManager { get; set; }
     private bool _loading;
+    private string _passwordFieldType = "password";
+    private string _buttonText = "Показать пароль";
 
     private async Task OnValidSubmit()
     {
         _loading = true;
         try
         {
-            throw new NotImplementedException();
-#pragma warning disable CS0162
+            await _accountService.RegisterDriver(_model);
             _navigationManager.NavigateTo("/login");
-#pragma warning restore CS0162
         }
         catch (Exception e)
         {
             await _js.InvokeVoidAsync("alert", e.Message); //TODO: custom error handling
         }
         _loading = false;
+    }
+
+    private void UpdatePasswordVisibility()
+    {
+        _passwordFieldType = _passwordFieldType == "text" ? "password" : "text";
+        _buttonText = _passwordFieldType == "text" ? "Скрыть пароль" : "Показать пароль";
     }
 }

@@ -45,9 +45,14 @@ public class AccountService : IAccountService
         _navigationManager.NavigateTo("users/login");
     }
 
-    public async Task Register<TRegister>(TRegister model)
+    public async Task RegisterDriver<TRegister>(TRegister model)
     {
-        await _httpService.PostAsync("/users/register", model);
+        await _httpService.PostAsync("/users/register-driver", model);
+    }
+
+    public async Task RegisterClient<TRegister>(TRegister model)
+    {
+        await _httpService.PostAsync("/users/register-client", model);
     }
 
     public async Task<bool> CheckRole(string role)

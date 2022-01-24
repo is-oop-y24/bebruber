@@ -9,6 +9,7 @@ public interface IAccountService
     Task Initialize();
     Task Login(LoginModel model);
     Task Logout();
-    Task Register<TRegister>(TRegister model);
+    Task RegisterDriver<TRegister>(TRegister model);
+    Task RegisterClient<TRegister>(TRegister model);
     Task<bool> CheckRole(string role);
 }
