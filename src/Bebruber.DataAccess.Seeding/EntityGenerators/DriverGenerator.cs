@@ -35,14 +35,14 @@ public class DriverGenerator : IEntityGenerator
             new Name("Bebra", "Vodila", "Sestra-Rodila"),
             new Rating(10),
             new CardInfo(new CardNumber("0000000000000000"), new ExpirationDate(2023, 10), new CvvCode("123")),
-            carGenerator.Cars[0],
+            carGenerator.Cars[1],
             new PhoneNumber("88005553535"));
 
         var thirdDriver = new Driver(
             new Name("Bebra", "Vodila", "Rossia-Pobedila"),
             new Rating(10),
             new CardInfo(new CardNumber("0000000000000000"), new ExpirationDate(2023, 10), new CvvCode("123")),
-            carGenerator.Cars[0],
+            carGenerator.Cars[2],
             new PhoneNumber("88005553535"));
 
         var firstUser = new ApplicationUser

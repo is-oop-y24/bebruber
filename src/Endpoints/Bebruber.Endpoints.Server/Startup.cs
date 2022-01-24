@@ -45,7 +45,7 @@ namespace Bebruber.Endpoints.Server
             typeLocator.RegisterType(typeof(Client));
             services.AddSingleton(typeLocator);
 
-            services.AddSingleton<BebruberDatabaseSeeder>();
+            services.AddScoped<BebruberDatabaseSeeder>();
 
             services.AddScoped<IClientNotificationService, ClientNotificationService>();
             services.AddScoped<IDriverLocationService, DriverLocationService>();
