@@ -4,6 +4,7 @@ using Bebruber.DataAccess;
 using Bebruber.Domain.Entities;
 using Bebruber.Domain.Enumerations;
 using Bebruber.Domain.ValueObjects.Car;
+using Bebruber.Domain.ValueObjects.Card;
 using Bebruber.Domain.ValueObjects.User;
 using Bebruber.Identity;
 using MediatR;
@@ -42,6 +43,10 @@ public class RegisterDriverHandler : IRequestHandler<RegisterDriver.Command, Reg
                 request.MiddleName,
                 request.LastName),
             new Rating(10),
+            new CardInfo(
+                new CardNumber(request.CardNumber),
+                new ExpirationDate(request.ExpirationDateYear, request.ExpirationDateMonth),
+                new CvvCode(request.Cvv)),
             new Car(
                 new CarBrand(request.CarBrand),
                 new CarName(request.CarName),
