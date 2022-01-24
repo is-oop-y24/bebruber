@@ -3,8 +3,8 @@
 
 class DriverLocationServiceConfiguration
 {
-    NearbyDistance : double
-    DistancePrecision : double
+    + NearbyDistance : double
+    + DistancePrecision : double
 }
 
 @enduml
