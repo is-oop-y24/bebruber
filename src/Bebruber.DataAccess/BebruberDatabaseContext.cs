@@ -10,11 +10,6 @@ public sealed class BebruberDatabaseContext : DbContext
     {
         Database.EnsureCreated();
     }
-    
-    public override void Dispose()
-    {
-        Database.EnsureDeleted();
-    }
 
     public DbSet<Client> Clients { get; private set; } = null!;
     public DbSet<CardInfo> PaymentInfos { get; private set; } = null!;
@@ -23,6 +18,11 @@ public sealed class BebruberDatabaseContext : DbContext
     public DbSet<Car> Cars { get; private set; } = null!;
     public DbSet<DriverLocation> Locations { get; private set; } = null!;
     public DbSet<RideEntry> Entries { get; private set; } = null!;
+
+    public override void Dispose()
+    {
+        Database.EnsureDeleted();
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
