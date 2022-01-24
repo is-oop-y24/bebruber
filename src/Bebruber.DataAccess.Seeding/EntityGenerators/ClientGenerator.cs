@@ -6,21 +6,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bebruber.DataAccess.Seeding.EntityGenerators;
 
-public class ClientEntityGenerator : IEntityGenerator
+public class ClientGenerator : IEntityGenerator
 {
-    public ClientEntityGenerator(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+    public ClientGenerator(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
     {
         Clients = CreateClients(userManager, roleManager);
     }
 
-    public IReadOnlyCollection<Client> Clients { get; }
+    public IReadOnlyList<Client> Clients { get; }
 
     public void Seed(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Client>().HasData(Clients);
     }
 
-    private static IReadOnlyCollection<Client> CreateClients(
+    private static IReadOnlyList<Client> CreateClients(
         UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
     {
         var firstClient = new Client(

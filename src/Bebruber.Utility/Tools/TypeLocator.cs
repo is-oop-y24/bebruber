@@ -9,8 +9,8 @@ public class TypeLocator
         _dictionary = new Dictionary<string, Type>();
     }
 
-    public string GetKey(Type type)
-        => type.Name;
+    public string GetKey(Type? type)
+        => type?.Name ?? string.Empty;
 
     public TypeLocator RegisterType(Type type)
     {

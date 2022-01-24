@@ -9,16 +9,14 @@ namespace Bebruber.DataAccess.Seeding;
 public class BebruberDatabaseSeeder
 {
     private readonly IReadOnlyCollection<IEntityGenerator> _generators;
-    private readonly ModelBuilder _modelBuilder;
 
-    public BebruberDatabaseSeeder(ModelBuilder modelBuilder, IServiceCollection collection)
+    public BebruberDatabaseSeeder(IServiceCollection collection)
     {
-        _modelBuilder = modelBuilder;
         _generators = EntityGeneratorScanner.GetEntityGeneratorsFromAssembly(collection, typeof(IAssemblyMarker));
     }
 
-    public void Seed()
+    public void Seed(ModelBuilder modelBuilder)
     {
-        _generators.ForEach(g => g.Seed(_modelBuilder));
+        _generators.ForEach(g => g.Seed(modelBuilder));
     }
 }
