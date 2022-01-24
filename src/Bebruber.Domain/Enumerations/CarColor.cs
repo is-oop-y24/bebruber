@@ -11,8 +11,8 @@ public class CarColor : Enumeration<Color, CarColor>
 
     protected CarColor() { }
 
-    public static CarColor White { get; } = new CarColor(nameof(White), Color.White);
-    public static CarColor Black { get; } = new CarColor(nameof(Black), Color.Black);
+    public static CarColor White => new CarColor(nameof(White), Color.White);
+    public static CarColor Black => new CarColor(nameof(Black), Color.Black);
 
     public static CarColor Parse(string name)
     {

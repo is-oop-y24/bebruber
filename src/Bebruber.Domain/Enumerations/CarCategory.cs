@@ -10,9 +10,9 @@ public class CarCategory : Enumeration<int, CarCategory>
 
     protected CarCategory() { }
 
-    public static CarCategory Economy { get; } = new CarCategory(nameof(Economy), 1);
-    public static CarCategory Comfort { get; } = new CarCategory(nameof(Comfort), 2);
-    public static CarCategory Business { get; } = new CarCategory(nameof(Business), 3);
+    public static CarCategory Economy => new CarCategory(nameof(Economy), 1);
+    public static CarCategory Comfort => new CarCategory(nameof(Comfort), 2);
+    public static CarCategory Business => new CarCategory(nameof(Business), 3);
 
     public static CarCategory Parse(string name)
     {
