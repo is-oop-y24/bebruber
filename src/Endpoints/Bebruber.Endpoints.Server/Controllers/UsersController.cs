@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Bebruber.Application.Requests.Accounts;
 using Bebruber.DataAccess;
@@ -9,6 +11,7 @@ using Bebruber.DataAccess.Seeding;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace Bebruber.Endpoints.Server.Controllers;
 
@@ -32,13 +35,13 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("register-user")]
-    public async Task<ActionResult<RegisterUser.Response>> RegisterUser(RegisterUser.Command command)
+    public async Task<ActionResult<RegisterUser.Response>> RegisterUser([FromBody] RegisterUser.Command command)
     {
         return await _mediator.Send(command);
     }
 
     [HttpPost("register-driver")]
-    public async Task<RegisterDriver.Response> RegisterDriver(RegisterDriver.Command command)
+    public async Task<RegisterDriver.Response> RegisterDriver([FromBody] RegisterDriver.Command command)
     {
         return await _mediator.Send(command);
     }

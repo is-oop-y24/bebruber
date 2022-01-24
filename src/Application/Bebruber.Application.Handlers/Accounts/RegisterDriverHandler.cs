@@ -45,7 +45,7 @@ public class RegisterDriverHandler : IRequestHandler<RegisterDriver.Command, Reg
             new Rating(10),
             new CardInfo(
                 new CardNumber(request.CardNumber),
-                new ExpirationDate(request.ExpirationDateYear, request.ExpirationDateMonth),
+                new ExpirationDate(int.Parse(request.ExpirationDateYear), int.Parse(request.ExpirationDateMonth)), // TODO: fix Parce
                 new CvvCode(request.Cvv)),
             new Car(
                 new CarBrand(request.CarBrand),

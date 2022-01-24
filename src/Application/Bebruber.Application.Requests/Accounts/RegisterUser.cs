@@ -5,7 +5,8 @@ namespace Bebruber.Application.Requests.Accounts;
 
 public class RegisterUser
 {
-    public record Command(string FirstName,
+    public record Command(
+        string FirstName,
         string MiddleName,
         string LastName,
         string Email,
