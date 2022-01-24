@@ -43,10 +43,35 @@ package Bebruber.Application.Services
         -_hub : IHubContext<UserHub, IUserClient>
         +OfferRideToDriver(Driver driver, RideEntry rideEntry, TimeSpan awaitingTimeSpan, CancellationToken cancellationToken) : void
         +NotifySuccessfulAcceptance(Driver driver, Ride rideEntry, CancellationToken cancellationToken) : void
+        +NotifyFailedAcceptance(Driver driver, CancellationToken cancellationToken) : void
+    }
+
+    class RideQueueService
+    {
+        -_context BebruberDatabaseContext : BebruberDatabaseContext
+        -_locationService IDriverLocationService : IDriverLocationService
+        -_driverNotificationService : IDriverNotificationService
+        -_configuration : RideQueueServiceConfiguration
+    }
+
+    class PaymentService
+    {
+    }
+
+    class TimeProviderService
+    {
     }
 }
 
+TimeProviderService <|-- ITimeProviderService
 ClientNotificationService <|-- IClientNotificationService
 DriverLocationService <|-- IDriverLocationService
+RideQueueService <|-- IRideQueueService
+PaymentService <|-- IPaymentService
+
+DriverLocationServicev *-- BebruberDatabaseContext
+DriverLocationServicev *-- DriverLocationServiceConfiguration
+DriverLocationServicev *-- ITimeProviderService
+DriverLocationServicev *-- IClientNotificationService
 
 @enduml
