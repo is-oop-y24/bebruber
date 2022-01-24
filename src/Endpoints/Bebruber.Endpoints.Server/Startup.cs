@@ -172,7 +172,7 @@ namespace Bebruber.Endpoints.Server
                 .Seed(provider.GetRequiredService<BebruberDatabaseContext>());
 #pragma warning restore ASP0000
 
-            services.AddScoped<IUserIdProvider, ClientIdProvider>();
+            services.AddSingleton<IUserIdProvider, ClientIdProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
