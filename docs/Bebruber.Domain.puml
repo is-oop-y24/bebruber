@@ -3,6 +3,13 @@
 
 package Bebruber.Domain
 {
+    Driver *-- Car
+    Client *-- CardInfo : 0..*
+    Driver *-- CardInfo : 0..*
+
+    RideContext o-- Client
+    RideContext o-- Driver
+
     class Car
     {
         +Number : Number
@@ -79,10 +86,9 @@ package Bebruber.Domain
         ---
     }
 
-    Driver --o DriverLocation
-    Driver --o Ride
-    Driver --o DismissedDrivers
-    Client --o Ride
+    Driver o-- DriverLocation
+    Driver o-- Ride
+    Client o-- Ride
 
     class RideContext
     {
@@ -110,7 +116,7 @@ package Bebruber.Domain
         +LoadLevel : LoadLevel
     }
 
-    RouteSector --o Route
+    RouteSector --* Route
 
     interface IClientNotificationService
     {
