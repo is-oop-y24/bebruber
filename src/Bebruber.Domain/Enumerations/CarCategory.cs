@@ -19,7 +19,7 @@ public class CarCategory : Enumeration<int, CarCategory>
             nameof(Economy) => Economy,
             nameof(Comfort) => Comfort,
             nameof(Business) => Business,
-            _ => throw new Exception(name)
+            _ => throw new Exception(name),
         };
     }
 }
