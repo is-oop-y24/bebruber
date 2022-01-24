@@ -26,11 +26,12 @@ public class FindClientPaymentMethodsByEmailHandler : IRequestHandler<Command, R
     public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
     {
         ApplicationUser? applicationUser = await _userManager.FindByEmailAsync(request.Email);
-        Client? user = await _context.FindAsync(
-            applicationUser.ModelType,
-            applicationUser.ModelId) as Client;
+        applicationUser = applicationUser.ThrowIfNull();
+        Type type = applicationUser.ModelType.ThrowIfNull();
+
+        var user = await _context.FindAsync(type, applicationUser.ModelId) as Client;
         user = user.ThrowIfNull();
-        return new Response(
-            user.PaymentInfos.Select(i => i.ToString()).ToList());
+
+        return new Response(user.PaymentInfos.Select(i => i.ToString()).ToList());
     }
 }
