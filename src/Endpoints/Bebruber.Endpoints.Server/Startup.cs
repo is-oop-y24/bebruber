@@ -150,6 +150,10 @@ namespace Bebruber.Endpoints.Server
                         ClockSkew = TimeSpan.Zero,
                     };
                 });
+
+#pragma warning disable ASP0000
+            services.BuildServiceProvider().GetRequiredService<BebruberDatabaseContext>();
+#pragma warning restore ASP0000
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

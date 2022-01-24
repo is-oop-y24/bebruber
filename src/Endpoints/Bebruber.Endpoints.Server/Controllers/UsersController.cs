@@ -43,8 +43,7 @@ public class UsersController : ControllerBase
         return await _mediator.Send(command);
     }
 
-    [HttpGet("auth")]
-    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
+    [HttpGet("seed")]
     public IActionResult Get()
     {
         var userIdentity = (ClaimsIdentity)User.Identity;

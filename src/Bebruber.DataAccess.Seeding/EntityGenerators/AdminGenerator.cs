@@ -18,7 +18,7 @@ public class AdminGenerator : IEntityGenerator
 
         userManager.CreateAsync(admin, "admin").GetAwaiter().GetResult();
         roleManager.CreateAsync(adminRole).GetAwaiter().GetResult();
-        userManager.AddToRoleAsync(admin, adminRole.Id).GetAwaiter().GetResult();
+        userManager.AddToRoleAsync(admin, adminRole.Name).GetAwaiter().GetResult();
     }
 
     public void Seed(ModelBuilder modelBuilder) { }
