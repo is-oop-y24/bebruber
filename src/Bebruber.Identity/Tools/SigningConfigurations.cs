@@ -10,7 +10,7 @@ public class SigningConfigurations
 
     public SigningConfigurations(string key)
     {
-        var keyBytes = Encoding.ASCII.GetBytes(key);
+        byte[] keyBytes = Encoding.ASCII.GetBytes(key);
 
         SecurityKey = new SymmetricSecurityKey(keyBytes);
         SigningCredentials = new SigningCredentials(SecurityKey, SecurityAlgorithms.HmacSha256Signature);

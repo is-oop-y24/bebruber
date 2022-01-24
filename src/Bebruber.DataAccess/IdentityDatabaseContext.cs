@@ -1,5 +1,6 @@
 ﻿using Bebruber.Identity;
 using Bebruber.Utility.Tools;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,11 @@ public sealed class IdentityDatabaseContext : IdentityDbContext<ApplicationUser>
     {
         _typeLocator = typeLocator;
         Database.EnsureCreated();
+    }
+
+    public override void Dispose()
+    {
+        Database.EnsureDeleted();
     }
 
     protected override void OnModelCreating(ModelBuilder builder)

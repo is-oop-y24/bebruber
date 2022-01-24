@@ -10,6 +10,11 @@ public sealed class BebruberDatabaseContext : DbContext
     {
         Database.EnsureCreated();
     }
+    
+    public override void Dispose()
+    {
+        Database.EnsureDeleted();
+    }
 
     public DbSet<Client> Clients { get; private set; } = null!;
     public DbSet<CardInfo> PaymentInfos { get; private set; } = null!;

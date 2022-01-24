@@ -3,6 +3,8 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Bebruber.Endpoints.Shared.Interfaces;
+using Bebruber.Endpoints.Shared.Services;
 using Blazored.LocalStorage;
 using Blazorise;
 using Blazorise.Bootstrap;
@@ -20,7 +22,7 @@ namespace Bebruber.Endpoints.UserWebClient
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5001") });
             builder.Services.AddBlazorise( options =>
                                            {
                                                options.ChangeTextOnKeyPress = true;
@@ -40,6 +42,8 @@ namespace Bebruber.Endpoints.UserWebClient
                 config.JsonSerializerOptions.WriteIndented = false;
             });
 
+            builder.Services.AddScoped<IAccountService, AccountService>();
+            builder.Services.AddScoped<IHttpService, HttpService>();
             await builder.Build().RunAsync();
         }
     }
