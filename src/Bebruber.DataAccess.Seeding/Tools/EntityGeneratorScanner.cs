@@ -1,6 +1,8 @@
 using System.Reflection;
 using Bebruber.DataAccess.Seeding.EntityGenerators;
+using Bebruber.Identity;
 using Bebruber.Utility.Extensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -9,14 +11,15 @@ namespace Bebruber.DataAccess.Seeding.Tools;
 public static class EntityGeneratorScanner
 {
     public static IReadOnlyCollection<IEntityGenerator> GetEntityGeneratorsFromAssembly(
-        IServiceCollection services, params Type[] types)
-        => GetEntityGeneratorsFromAssembly(services, types.Select(t => t.Assembly).ToArray());
+        UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, params Type[] types)
+        => GetEntityGeneratorsFromAssembly(userManager, roleManager, types.Select(t => t.Assembly).ToArray());
 
     public static IReadOnlyCollection<IEntityGenerator> GetEntityGeneratorsFromAssembly(
-        IServiceCollection services, params Assembly[] assemblies)
+        UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, params Assembly[] assemblies)
     {
         var collection = new ServiceCollection();
-        services.ForEach(s => collection.Add(s));
+        collection.AddSingleton(userManager);
+        collection.AddSingleton(roleManager);
 
         var types = assemblies
             .SelectMany(a => a.DefinedTypes)
