@@ -9,5 +9,6 @@ internal class DriverLocationConfiguration : EntityConfiguration<DriverLocation>
     protected override void ConfigureEntity(EntityTypeBuilder<DriverLocation> builder)
     {
         builder.OwnsOne(l => l.Coordinate);
+        builder.Navigation(l => l.Subscribers).HasField("_subscribers");
     }
 }

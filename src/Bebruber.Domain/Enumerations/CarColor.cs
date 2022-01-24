@@ -1,5 +1,5 @@
-using System;
 using System.Drawing;
+using Bebruber.Domain.Enumerations.Exceptions;
 using Bebruber.Domain.Tools;
 
 namespace Bebruber.Domain.Enumerations;
@@ -14,16 +14,13 @@ public class CarColor : Enumeration<Color, CarColor>
     public static CarColor White => new CarColor(nameof(White), Color.White);
     public static CarColor Black => new CarColor(nameof(Black), Color.Black);
 
-    public static CarColor Parse(string value)
+    public static CarColor Parse(string name)
     {
-        switch (value.ToLower())
+        return name switch
         {
-            case "white":
-                return White;
-            case "black":
-                return Black;
-            default:
-                throw new ArgumentOutOfRangeException(value);
-        }
+            nameof(White) => White,
+            nameof(Black) => Black,
+            _ => throw new EnumerationParseException<string>(nameof(CarColor), name),
+        };
     }
 }

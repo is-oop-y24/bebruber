@@ -16,17 +16,20 @@ public class AcceptRideHandler : IRequestHandler<Command, Response>
     private readonly IRideQueueService _rideQueueService;
     private readonly IRideService _rideService;
     private readonly IRouteService _routeService;
+    private readonly IDriverLocationService _driverLocationService;
 
     public AcceptRideHandler(
         IRideQueueService rideQueueService,
         IRideService rideService,
         BebruberDatabaseContext databaseContext,
-        IRouteService routeService)
+        IRouteService routeService,
+        IDriverLocationService driverLocationService)
     {
         _rideQueueService = rideQueueService;
         _rideService = rideService;
         _databaseContext = databaseContext;
         _routeService = routeService;
+        _driverLocationService = driverLocationService;
     }
 
     public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
@@ -58,6 +61,7 @@ public class AcceptRideHandler : IRequestHandler<Command, Response>
             rideEntry.IntermediatePoints);
 
         Ride ride = await _rideService.RegisterRideAsync(rideContext, cancellationToken);
+        await _driverLocationService.SubscribeToLocationUpdatesAsync(driver, client, cancellationToken);
         return new Response(ride.Id);
     }
 }
