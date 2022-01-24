@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using Bebruber.Domain.Tools;
 
@@ -10,4 +11,14 @@ public class CarColor : Enumeration<Color, CarColor>
 
     public static CarColor White { get; } = new CarColor(nameof(White), Color.White);
     public static CarColor Black { get; } = new CarColor(nameof(Black), Color.Black);
+    
+    public static CarColor Parse(string name)
+    {
+        return name switch
+        {
+            nameof(White) => White,
+            nameof(Black) => Black,
+            _ => throw new Exception(name)
+        };
+    }
 }
