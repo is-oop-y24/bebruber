@@ -17,7 +17,7 @@ public class Driver : Entity<Driver>
         Name = name.ThrowIfNull();
         Rating = rating.ThrowIfNull();
         CardInfo = cardInfo.ThrowIfNull();
-        Car = car;
+        Car = car.ThrowIfNull();
         PhoneNumber = phoneNumber.ThrowIfNull();
     }
 
@@ -26,6 +26,7 @@ public class Driver : Entity<Driver>
     public Name Name { get; private init; }
     public Rating Rating { get; set; }
     public PhoneNumber PhoneNumber { get; set; }
+    public CardInfo CardInfo { get; set; }
     public virtual Car Car { get; set; }
     public virtual IReadOnlyCollection<Ride> Rides => _rides.AsReadOnly();
 
