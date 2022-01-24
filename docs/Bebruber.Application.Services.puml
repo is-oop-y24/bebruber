@@ -52,8 +52,8 @@ package Bebruber.Application.Services
 
     class RideQueueService
     {
-        -_context BebruberDatabaseContext : BebruberDatabaseContext
-        -_locationService IDriverLocationService : IDriverLocationService
+        -_context : BebruberDatabaseContext
+        -_locationService : IDriverLocationService
         -_driverNotificationService : IDriverNotificationService
         -_configuration : RideQueueServiceConfiguration
         ---
@@ -68,15 +68,23 @@ package Bebruber.Application.Services
     }
 }
 
-TimeProviderService <|-- ITimeProviderService
-ClientNotificationService <|-- IClientNotificationService
-DriverLocationService <|-- IDriverLocationService
-RideQueueService <|-- IRideQueueService
-PaymentService <|-- IPaymentService
+TimeProviderService --|> ITimeProviderService
+ClientNotificationService --|> IClientNotificationService
+DriverLocationService --|> IDriverLocationService
+RideQueueService --|> IRideQueueService
+PaymentService --|> IPaymentService
 
 DriverLocationServicev *-- BebruberDatabaseContext
 DriverLocationServicev *-- DriverLocationServiceConfiguration
 DriverLocationServicev *-- ITimeProviderService
 DriverLocationServicev *-- IClientNotificationService
+
+RideQueueService *-- BebruberDatabaseContext
+RideQueueService *-- IDriverLocationService
+RideQueueService *-- IDriverNotificationService
+RideQueueService *-- RideQueueServiceConfiguration
+
+DriverNotificationService *-- IHubContext
+ClientNotificationService *-- IHubContext
 
 @enduml

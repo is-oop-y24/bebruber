@@ -23,7 +23,7 @@ package Bebruber.Core
         ---
     }
 
-    CarCategoryPricingServiceConfiguration <|-- ICarCategoryPricingServiceConfiguration
+    CarCategoryPricingServiceConfiguration --|> ICarCategoryPricingServiceConfiguration
 
     class CarCategoryPricingService
     {
@@ -58,12 +58,16 @@ package Bebruber.Core
     }
 
     CarCategoryPricingService *-- ICarCategoryPricingServiceConfiguration
+    CarCategoryPricingService *-- IPricingService
     RoutePricingService *-- RoutePricingServiceConfiguration
 
-    RideService <|-- IRideService 
-    RoutePricingService <|-- IPricingService
-    CarCategoryPricingService <|-- IPricingService
-    RouteService <|-- IRouteService
+    RideService --|> IRideService
+    RideService --|> ITimeProviderService
+    RideService --|> IClientNotificationService
+
+    RoutePricingService --|> IPricingService
+    CarCategoryPricingService --|> IPricingService
+    RouteService --|> IRouteService
 }
 
 @enduml
