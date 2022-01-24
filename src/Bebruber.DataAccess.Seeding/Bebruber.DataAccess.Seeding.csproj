@@ -13,6 +13,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Bebruber.Domain\Bebruber.Domain.csproj" />
       <ProjectReference Include="..\Bebruber.Identity\Bebruber.Identity.csproj" />
+      <ProjectReference Include="..\Bebruber.Utility\Bebruber.Utility.csproj" />
     </ItemGroup>
 
 </Project>

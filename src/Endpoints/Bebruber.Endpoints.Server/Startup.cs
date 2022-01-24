@@ -100,6 +100,7 @@ namespace Bebruber.Endpoints.Server
                     });
                 });
 
+            services.AddScoped<BebruberDatabaseSeeder>();
             services.AddDbContext<BebruberDatabaseContext>(
                 opt =>
                 {
@@ -110,9 +111,7 @@ namespace Bebruber.Endpoints.Server
             // TODO: change
             services.AddSingleton(new DriverLocationServiceConfiguration(10, TimeSpan.Zero));
             services.AddSingleton(new RideQueueServiceConfiguration(TimeSpan.Zero));
-
             services.AddDbContext<IdentityDatabaseContext>(opt => opt.UseSqlite("Filename=identity.db"));
-            services.AddScoped<IdentityDatabaseSeeder>();
 
             services.AddIdentity<ApplicationUser, IdentityRole>(m =>
                 {

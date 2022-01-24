@@ -11,11 +11,12 @@ public class Driver : Entity<Driver>
     private readonly List<Ride> _rides;
 
     public Driver(
-        Name name, Rating rating, Car car, PhoneNumber phoneNumber)
+        Name name, Rating rating, CardInfo cardInfo, Car car, PhoneNumber phoneNumber)
     {
         _rides = new List<Ride>();
         Name = name.ThrowIfNull();
         Rating = rating.ThrowIfNull();
+        CardInfo = cardInfo.ThrowIfNull();
         Car = car;
         PhoneNumber = phoneNumber.ThrowIfNull();
     }

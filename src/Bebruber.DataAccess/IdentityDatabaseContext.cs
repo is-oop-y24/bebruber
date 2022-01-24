@@ -25,10 +25,10 @@ public sealed class IdentityDatabaseContext : IdentityDbContext<ApplicationUser>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<ApplicationUser>()
-               .Property(u => u.ModelType)
-               .HasConversion(
-                   t => _typeLocator.GetKey(t),
-                   s => _typeLocator.Resolve(s));
+            .Property(u => u.ModelType)
+            .HasConversion(
+                t => _typeLocator.GetKey(t),
+                s => _typeLocator.Resolve(s));
         base.OnModelCreating(builder);
     }
 }
