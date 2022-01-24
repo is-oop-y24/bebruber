@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace Bebruber.Endpoints.DriverWebClient.Models;
 
@@ -51,4 +52,17 @@ public class RegisterModel
         @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,128}$",
         ErrorMessage = "Пароль не удовлетворяет требованиям")]
     public string Password { get; set; }
+
+    // TODO: Validations
+    [Required]
+    public string Cvv { get; set;  }
+
+    [Required]
+    public string CardNumber { get; set; }
+
+    [Required]
+    public string ExpirationDateYear { get; set; }
+
+    [Required]
+    public string ExpirationDateMonth { get; set; }
 }
