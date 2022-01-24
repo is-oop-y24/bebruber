@@ -23,9 +23,12 @@ public class CarGenerator : IEntityGenerator
     {
         Car[] cars =
         {
-            new Car(new CarBrand("Bently"), new CarName("Huently"), CarColor.Black, CarCategory.Business),
-            new Car(new CarBrand("Lada"), new CarName("Calina"), CarColor.White, CarCategory.Economy),
-            new Car(new CarBrand("Reno"), new CarName("Logan"), CarColor.Black, CarCategory.Comfort),
+            new Car(new CarBrand("Bently"), new CarName("Huently"), CarColor.Black, CarCategory.Business,
+                new CarNumber(new CarNumberRegistrationSeries("А000АБ"), new CarNumberRegionCode("18"))),
+            new Car(new CarBrand("Lada"), new CarName("Calina"), CarColor.White, CarCategory.Economy,
+                new CarNumber(new CarNumberRegistrationSeries("А000АБ"), new CarNumberRegionCode("18"))),
+            new Car(new CarBrand("Reno"), new CarName("Logan"), CarColor.Black, CarCategory.Comfort,
+                new CarNumber(new CarNumberRegistrationSeries("А000АБ"), new CarNumberRegionCode("18"))),
         };
 
         return cars;
