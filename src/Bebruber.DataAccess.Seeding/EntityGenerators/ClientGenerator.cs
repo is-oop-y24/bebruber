@@ -41,7 +41,7 @@ public class ClientGenerator : IEntityGenerator
         var firstUser = new ApplicationUser
         {
             Email = "Giant@bebra.love",
-            UserName = "Giant Bebra",
+            UserName = "GiantBebra",
             ModelId = firstClient.Id,
             ModelType = typeof(Client),
         };
@@ -49,7 +49,7 @@ public class ClientGenerator : IEntityGenerator
         var secondUser = new ApplicationUser
         {
             Email = "Mega@bebra.love",
-            UserName = "Mega Bebra",
+            UserName = "MegaBebra",
             ModelId = secondClient.Id,
             ModelType = typeof(Client),
         };
@@ -57,7 +57,7 @@ public class ClientGenerator : IEntityGenerator
         var thirdUser = new ApplicationUser
         {
             Email = "Omega@bebra.love",
-            UserName = "Omega Bebra",
+            UserName = "OmegaBebra",
             ModelId = thirdClient.Id,
             ModelType = typeof(Client),
         };
