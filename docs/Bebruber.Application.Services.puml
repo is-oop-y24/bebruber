@@ -1,0 +1,10 @@
+@startuml Structure
+'https://plantuml.com/class-diagram
+
+class DriverLocationServiceConfiguration
+{
+    NearbyDistance : double
+    DistancePrecision : double
+}
+
+@enduml

@@ -1,0 +1,62 @@
+@startuml Structure
+'https://plantuml.com/class-diagram
+
+package Bebruber.Core
+{
+    interface ICarCategoryPricingServiceConfiguration
+    {
+        CalculatePriceMultiplier(CarCategory category) : double
+    }
+
+    class CarCategoryPricingServiceConfiguration
+    {
+        CalculatePriceMultiplier(CarCategory category) : double
+    }
+
+    class RoutePricingServiceConfiguration
+    {
+        +LandingPrice : decimal,
+        +PricePerKilometer : decimal,
+        +LoadMultiplier : decimal
+    }
+
+    CarCategoryPricingServiceConfiguration <|-- ICarCategoryPricingServiceConfiguration
+
+    class CarCategoryPricingService
+    {
+        -_configuration : ICarCategoryPricingServiceConfiguration
+        -_routePricingService : IPricingService
+        Calculate(RideContext context) : Roubles
+    }
+
+    class RideService
+    {
+        -_pricingService IPricingService
+        -_timeProviderService ITimeProviderService
+        -_clientNotificationService IClientNotificationService
+        +RegisterRide(RideContext context, CancellationToken cancellationToken) : void
+        +SetRideDriverArrived(Ride ride, CancellationToken cancellationToken) : void
+        +StartRideAsync(Ride ride, CancellationToken cancellationToken) : void
+        +FinishRideAsync(Ride ride, CancellationToken cancellationToken) : void
+    }
+
+    class RoutePricingService
+    {
+        -_configuration : RoutePricingServiceConfiguration
+    }
+
+    class RouteService
+    {
+        +CreateRoute(Location origin, Location destination, IReadOnlyCollection<Location> intermediatePoints) : void
+    }
+
+    CarCategoryPricingService *-- ICarCategoryPricingServiceConfiguration
+    RoutePricingService *-- RoutePricingServiceConfiguration
+
+    RideService <|-- IRideService 
+    RoutePricingService <|-- IPricingService
+    CarCategoryPricingService <|-- IPricingService
+    RouteService <|-- IRouteService
+}
+
+@enduml
