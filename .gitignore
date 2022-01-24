@@ -541,3 +541,4 @@ FodyWeavers.xsd
 
 Bebruber.sln.DotSettings
 .DS_Store
+*.db

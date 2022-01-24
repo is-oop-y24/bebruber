@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -32,6 +33,12 @@ public class UsersController : ControllerBase
 
     [HttpPost("register-user")]
     public async Task<ActionResult<RegisterUser.Response>> RegisterUser(RegisterUser.Command command)
+    {
+        return await _mediator.Send(command);
+    }
+
+    [HttpPost("register-driver")]
+    public async Task<RegisterDriver.Response> RegisterDriver(RegisterDriver.Command command)
     {
         return await _mediator.Send(command);
     }

@@ -23,6 +23,11 @@ public sealed class BebruberDatabaseContext : DbContext
     public DbSet<DriverLocation> Locations { get; private set; } = null!;
     public DbSet<RideEntry> Entries { get; private set; } = null!;
 
+    public override void Dispose()
+    {
+        Database.EnsureDeleted();
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(IAssemblyMarker).Assembly);

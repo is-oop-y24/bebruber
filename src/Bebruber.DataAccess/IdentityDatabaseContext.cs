@@ -17,6 +17,11 @@ public sealed class IdentityDatabaseContext : IdentityDbContext<ApplicationUser>
         Database.EnsureCreated();
     }
 
+    public override void Dispose()
+    {
+        Database.EnsureDeleted();
+    }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<ApplicationUser>()
