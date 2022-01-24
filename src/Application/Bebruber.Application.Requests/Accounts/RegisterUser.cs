@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Bebruber.Application.Requests.Accounts;
 
-public partial class RegisterUser
+public class RegisterUser
 {
     public record Command(string FirstName,
         string MiddleName,
