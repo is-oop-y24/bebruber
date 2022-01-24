@@ -17,10 +17,13 @@ public class RegisterModel
     public string Email { get; set; }
 
     [Required]
-    public string Name { get; set; }
+    public string FirstName { get; set; }
 
     [Required]
-    public string Surname { get; set; }
+    public string MiddleName { get; set; }
+
+    [Required]
+    public string LastName { get; set; }
 
     [Required]
     [RegularExpression(

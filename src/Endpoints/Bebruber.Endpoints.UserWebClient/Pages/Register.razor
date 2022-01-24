@@ -1,7 +1,9 @@
 @page "/register"
 @using Bebruber.Endpoints.UserWebClient.Models
+@using Bebruber.Endpoints.Shared.Interfaces
 @inject IJSRuntime _js
 @inject NavigationManager _navigationManager
+@inject IAccountService _accountService
 
 <div class="card">
     <h4 class="card-header" style="background-color: #ffffff">Регистрация</h4>
@@ -22,14 +24,20 @@
 
             <div class="form-group">
                 <label>Имя</label>
-                <InputText @bind-Value="_model.Name" placeholder="Иван" class="form-control"/>
-                <ValidationMessage For="@(() => _model.Name)"/>
+                <InputText @bind-Value="_model.FirstName" placeholder="Иван" class="form-control"/>
+                <ValidationMessage For="@(() => _model.FirstName)"/>
             </div>
 
             <div class="form-group">
                 <label>Фамилия</label>
-                <InputText @bind-Value="_model.Surname" placeholder="Иванович" class="form-control"/>
-                <ValidationMessage For="@(() => _model.Surname)"/>
+                <InputText @bind-Value="_model.LastName" placeholder="Иванов" class="form-control"/>
+                <ValidationMessage For="@(() => _model.LastName)"/>
+            </div>
+
+            <div class="form-group">
+                <label>Отчество</label>
+                <InputText @bind-Value="_model.MiddleName" placeholder="Иванович" class="form-control"/>
+                <ValidationMessage For="@(() => _model.MiddleName)"/>
             </div>
 
             <div class="form-group">
@@ -68,10 +76,8 @@
         _loading = true;
         try
         {
-            throw new NotImplementedException();
-#pragma warning disable CS0162
+            await _accountService.RegisterClient(_model);
             _navigationManager.NavigateTo("/login");
-#pragma warning restore CS0162
         }
         catch (Exception e)
         {

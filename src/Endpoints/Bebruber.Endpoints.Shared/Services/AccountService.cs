@@ -52,7 +52,7 @@ public class AccountService : IAccountService
 
     public async Task RegisterClient<TRegister>(TRegister model)
     {
-        await _httpService.PostAsync("/users/register-client", model);
+        await _httpService.PostAsync("/users/register-user", model);
     }
 
     public async Task<bool> CheckRole(string role)
