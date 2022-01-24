@@ -10,4 +10,7 @@ public interface IDriverLocationService
 {
     Task<IReadOnlyCollection<Driver>> GetDriversNearbyAsync(Coordinate coordinate, CancellationToken cancellationToken);
     Task UpdateDriverLocationAsync(Driver driver, Coordinate coordinate, CancellationToken cancellationToken);
+
+    Task SubscribeToLocationUpdatesAsync(Driver driver, Client client, CancellationToken cancellationToken);
+    Task UnsubscribeFromLocationUpdatedAsync(Driver driver, Client client, CancellationToken cancellationToken);
 }
