@@ -10,12 +10,15 @@ namespace Bebruber.Application.Handlers.Rides;
 public class FinishRideHandler : IRequestHandler<Command, Response>
 {
     private readonly IRideService _rideService;
+    private readonly IDriverLocationService _driverLocationService;
     private readonly BebruberDatabaseContext _databaseContext;
 
-    public FinishRideHandler(IRideService rideService, BebruberDatabaseContext context)
+    public FinishRideHandler(
+        IRideService rideService, BebruberDatabaseContext context, IDriverLocationService driverLocationService)
     {
         _rideService = rideService;
         _databaseContext = context;
+        _driverLocationService = driverLocationService;
     }
 
     public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
@@ -25,6 +28,8 @@ public class FinishRideHandler : IRequestHandler<Command, Response>
         if (ride is not null)
         {
             await _rideService.FinishRideAsync(ride, cancellationToken);
+            await _driverLocationService
+                .UnsubscribeFromLocationUpdatedAsync(ride.Driver, ride.Client, cancellationToken);
         }
 
         return new Response(ride is not null);
