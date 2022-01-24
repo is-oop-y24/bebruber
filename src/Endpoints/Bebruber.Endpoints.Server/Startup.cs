@@ -105,6 +105,7 @@ namespace Bebruber.Endpoints.Server
                 opt =>
                 {
                     opt.UseSqlite("Filename=BebruberDatabase.db");
+                    opt.EnableSensitiveDataLogging();
                     opt.UseLazyLoadingProxies();
                 });
 

@@ -11,6 +11,7 @@ public static class LocationConfiguration
     {
         builder.OwnsOne(l => l.Address);
         builder.OwnsOne(l => l.Coordinate);
+        builder.ConfigureShadowProperties();
 
         return builder;
     }

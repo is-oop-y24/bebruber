@@ -9,15 +9,15 @@ internal class CarConfiguration : EntityConfiguration<Car>
 {
     protected override void ConfigureEntity(EntityTypeBuilder<Car> builder)
     {
-        // builder.HasOne(c => c.Owner);
         builder.OwnsOne(d => d.Number).ConfigureCarNumber();
-        builder.OwnsOne(c => c.Brand);
-        builder.OwnsOne(c => c.Name);
+        builder.OwnsOne(c => c.Brand).ConfigureShadowProperties();
+        builder.OwnsOne(c => c.Name).ConfigureShadowProperties();
         builder.OwnsOne(c => c.Color)
+            .ConfigureShadowProperties()
             .Property(c => c.Value)
             .HasConversion(
                 c => c.ToArgb(),
                 i => Color.FromArgb(i));
-        builder.OwnsOne(c => c.Category);
+        builder.OwnsOne(c => c.Category).ConfigureShadowProperties();
     }
 }
