@@ -18,11 +18,11 @@ public class Car : Entity<Car>
 
     private Car() { }
 
-    public CarNumber Number { get; set; }
-    public CarBrand Brand { get; private init; }
-    public CarName Name { get; private init; }
-    public CarColor Color { get; private init; }
-    public CarCategory Category { get; private init; }
+    public virtual CarNumber Number { get; set; }
+    public virtual CarBrand Brand { get; private init; }
+    public virtual CarName Name { get; private init; }
+    public virtual CarColor Color { get; private init; }
+    public virtual CarCategory Category { get; private init; }
 
     public override string ToString()
         => $"[{Id}] [{Number}] {Category} {Brand} {Name} ({Color})";

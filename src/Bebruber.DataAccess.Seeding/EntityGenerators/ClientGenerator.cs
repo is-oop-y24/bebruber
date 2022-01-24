@@ -15,9 +15,9 @@ public class ClientGenerator : IEntityGenerator
 
     public IReadOnlyList<Client> Clients { get; }
 
-    public void Seed(ModelBuilder modelBuilder)
+    public void Seed(BebruberDatabaseContext context)
     {
-        modelBuilder.Entity<Client>().HasData(Clients);
+        context.Clients.AddRange(Clients);
     }
 
     private static IReadOnlyList<Client> CreateClients(

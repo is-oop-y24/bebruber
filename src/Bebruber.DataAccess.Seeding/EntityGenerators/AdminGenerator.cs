@@ -21,5 +21,5 @@ public class AdminGenerator : IEntityGenerator
         userManager.AddToRoleAsync(admin, adminRole.Name).GetAwaiter().GetResult();
     }
 
-    public void Seed(ModelBuilder modelBuilder) { }
+    public void Seed(BebruberDatabaseContext context) { }
 }

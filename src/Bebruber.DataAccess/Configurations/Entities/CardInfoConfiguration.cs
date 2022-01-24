@@ -9,8 +9,8 @@ internal class CardInfoConfiguration : EntityConfiguration<CardInfo>
 {
     protected override void ConfigureEntity(EntityTypeBuilder<CardInfo> builder)
     {
-        builder.OwnsOne(nameof(CardNumber), i => i.CardNumber).ConfigureShadowProperties();
-        builder.OwnsOne(nameof(CvvCode), i => i.CvvCode).ConfigureShadowProperties();
-        builder.OwnsOne(i => i.ExpirationDate).ConfigureShadowProperties();
+        builder.OwnsOne(nameof(CardNumber), i => i.CardNumber);
+        builder.OwnsOne(nameof(CvvCode), i => i.CvvCode);
+        builder.OwnsOne(i => i.ExpirationDate);
     }
 }

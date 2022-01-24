@@ -11,7 +11,6 @@ public static class CarNumberConfiguration
     {
         builder.OwnsOne(l => l.RegionCode);
         builder.OwnsOne(l => l.RegistrationSeries);
-        builder.ConfigureShadowProperties();
 
         return builder;
     }

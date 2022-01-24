@@ -1,4 +1,3 @@
-using Bebruber.DataAccess.Seeding;
 using Bebruber.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,12 +5,9 @@ namespace Bebruber.DataAccess;
 
 public sealed class BebruberDatabaseContext : DbContext
 {
-    private readonly BebruberDatabaseSeeder _seeder;
-
-    public BebruberDatabaseContext(DbContextOptions<BebruberDatabaseContext> options, BebruberDatabaseSeeder seeder)
+    public BebruberDatabaseContext(DbContextOptions<BebruberDatabaseContext> options)
         : base(options)
     {
-        _seeder = seeder;
         Database.EnsureCreated();
     }
 
@@ -31,6 +27,5 @@ public sealed class BebruberDatabaseContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(IAssemblyMarker).Assembly);
-        _seeder.Seed(modelBuilder);
     }
 }

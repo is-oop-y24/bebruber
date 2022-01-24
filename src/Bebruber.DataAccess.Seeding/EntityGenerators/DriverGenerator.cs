@@ -3,7 +3,6 @@ using Bebruber.Domain.ValueObjects.Card;
 using Bebruber.Domain.ValueObjects.User;
 using Bebruber.Identity;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace Bebruber.DataAccess.Seeding.EntityGenerators;
 
@@ -17,9 +16,9 @@ public class DriverGenerator : IEntityGenerator
 
     public IReadOnlyList<Driver> Drivers { get; }
 
-    public void Seed(ModelBuilder modelBuilder)
+    public void Seed(BebruberDatabaseContext context)
     {
-        modelBuilder.Entity<Driver>().HasData(Drivers);
+        context.Drivers.AddRange(Drivers);
     }
 
     private static IReadOnlyList<Driver> CreateDrivers(

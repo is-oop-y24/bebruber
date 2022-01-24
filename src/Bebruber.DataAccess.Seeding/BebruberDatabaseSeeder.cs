@@ -3,8 +3,6 @@ using Bebruber.DataAccess.Seeding.Tools;
 using Bebruber.Identity;
 using Bebruber.Utility.Extensions;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Bebruber.DataAccess.Seeding;
 
@@ -18,8 +16,9 @@ public class BebruberDatabaseSeeder
             .GetEntityGeneratorsFromAssembly(userManager, roleManager, typeof(IAssemblyMarker));
     }
 
-    public void Seed(ModelBuilder modelBuilder)
+    public void Seed(BebruberDatabaseContext context)
     {
-        _generators.ForEach(g => g.Seed(modelBuilder));
+        _generators.ForEach(g => g.Seed(context));
+        context.SaveChanges();
     }
 }

@@ -14,9 +14,9 @@ public class CarGenerator : IEntityGenerator
 
     public IReadOnlyList<Car> Cars { get; }
 
-    public void Seed(ModelBuilder modelBuilder)
+    public void Seed(BebruberDatabaseContext context)
     {
-        modelBuilder.Entity<Car>().HasData(Cars);
+        context.Cars.AddRange(Cars);
     }
 
     private static IReadOnlyList<Car> CreateCars()

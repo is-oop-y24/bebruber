@@ -12,7 +12,9 @@ internal class RideEntryConfiguration : EntityConfiguration<RideEntry>
         builder.OwnsOne(e => e.Destination).ConfigureLocation();
         builder.OwnsMany(r => r.IntermediatePoints, p =>
         {
-            p.ConfigureShadowProperties();
+            p.WithOwner().HasForeignKey("OwnerId");
+            p.Property<int>("Id");
+            p.HasKey("Id");
             p.ConfigureLocation();
         });
     }

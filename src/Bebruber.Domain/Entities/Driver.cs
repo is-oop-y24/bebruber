@@ -23,9 +23,9 @@ public class Driver : Entity<Driver>
 
     protected Driver() { }
 
-    public Name Name { get; private init; }
-    public Rating Rating { get; set; }
-    public PhoneNumber PhoneNumber { get; set; }
+    public virtual Name Name { get; private init; }
+    public virtual Rating Rating { get; set; }
+    public virtual PhoneNumber PhoneNumber { get; set; }
     public virtual CardInfo CardInfo { get; set; }
     public virtual Car Car { get; set; }
     public virtual IReadOnlyCollection<Ride> Rides => _rides.AsReadOnly();

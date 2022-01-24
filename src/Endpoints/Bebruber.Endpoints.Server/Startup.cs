@@ -45,6 +45,8 @@ namespace Bebruber.Endpoints.Server
             typeLocator.RegisterType(typeof(Client));
             services.AddSingleton(typeLocator);
 
+            services.AddSingleton<BebruberDatabaseSeeder>();
+
             services.AddScoped<IClientNotificationService, ClientNotificationService>();
             services.AddScoped<IDriverLocationService, DriverLocationService>();
             services.AddScoped<IDriverNotificationService, DriverNotificationService>();
@@ -67,7 +69,7 @@ namespace Bebruber.Endpoints.Server
 
             services.AddMediatR(typeof(Bebruber.Application.Handlers.IAssemblyMarker).Assembly);
             AssemblyScanner.FindValidatorsInAssembly(typeof(Bebruber.Application.Handlers.IAssemblyMarker).Assembly)
-                           .ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
+                .ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PipelineValidationBehavior<,>));
 
             services.AddSwaggerGen(
@@ -100,7 +102,6 @@ namespace Bebruber.Endpoints.Server
                     });
                 });
 
-            services.AddScoped<BebruberDatabaseSeeder>();
             services.AddDbContext<BebruberDatabaseContext>(
                 opt =>
                 {
@@ -153,7 +154,10 @@ namespace Bebruber.Endpoints.Server
                 });
 
 #pragma warning disable ASP0000
-            services.BuildServiceProvider().GetRequiredService<BebruberDatabaseContext>();
+            var provider = services.BuildServiceProvider();
+            provider
+                .GetRequiredService<BebruberDatabaseSeeder>()
+                .Seed(provider.GetRequiredService<BebruberDatabaseContext>());
 #pragma warning restore ASP0000
         }
 
