@@ -7,12 +7,13 @@ namespace Bebruber.Domain.Entities;
 
 public class Car : Entity<Car>
 {
-    public Car(CarBrand brand, CarName name, CarColor color, CarCategory category)
+    public Car(CarBrand brand, CarName name, CarColor color, CarCategory category, CarNumber carNumber)
     {
         Brand = brand.ThrowIfNull();
         Name = name.ThrowIfNull();
         Color = color.ThrowIfNull();
         Category = category.ThrowIfNull();
+        Number = carNumber.ThrowIfNull();
     }
 
     private Car() { }
