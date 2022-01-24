@@ -1,0 +1,82 @@
+@startuml Structure
+'https://plantuml.com/class-diagram
+
+package Bebruber.Application.Services
+{
+    class DriverLocationServiceConfiguration
+    {
+        +NearbyDistance : double
+        +DistancePrecision : double
+        +DeprecationTime : TimeSpan
+        ---
+    }
+
+    class RideQueueServiceConfiguration
+    {
+        +AwaitingTimeSpan : TimeSpan
+        ---
+    }
+
+    class ClientNotificationService
+    {
+        -_hub : IHubContext<UserHub, IUserClient>
+        ---
+        +PostDriverCoordinates(Client client, Coordinate coordinate, CancellationToken cancellationToken) : void
+        +NotifyDriverFound(Client client, CancellationToken cancellationToken) : void
+        +NotifyDriverArrived(Client client, CancellationToken cancellationToken) : void
+        +NotifyRideStarted(Client client, CancellationToken cancellationToken) : void
+        +NotifyRideFinished(Client client, CancellationToken cancellationToken) : void
+    }
+
+    class DriverLocationService
+    {
+        -_context : BebruberDatabaseContext
+        -_configuration : DriverLocationServiceConfiguration
+        -_timeProviderService : ITimeProviderService
+        -_clientNotificationService : IClientNotificationService
+        ---
+        +GetDriversNearby(Coordinate coordinate, CancellationToken cancellationToken) : Driver[]
+        +UpdateDriverLocation(Driver driver, Coordinate coordinate, CancellationToken cancellationToken) : void
+        +SubscribeToLocationUpdates(Driver driver, Client client, CancellationToken cancellationToken) : void
+        +UnsubscribeFromLocationUpdatedAsync(Driver driver, Client client, CancellationToken cancellationToken) : void
+    }
+
+    class DriverNotificationService
+    {
+        -_hub : IHubContext<UserHub, IUserClient>
+        ---
+        +OfferRideToDriver(Driver driver, RideEntry rideEntry, TimeSpan awaitingTimeSpan, CancellationToken cancellationToken) : void
+        +NotifySuccessfulAcceptance(Driver driver, Ride rideEntry, CancellationToken cancellationToken) : void
+        +NotifyFailedAcceptance(Driver driver, CancellationToken cancellationToken) : void
+    }
+
+    class RideQueueService
+    {
+        -_context BebruberDatabaseContext : BebruberDatabaseContext
+        -_locationService IDriverLocationService : IDriverLocationService
+        -_driverNotificationService : IDriverNotificationService
+        -_configuration : RideQueueServiceConfiguration
+        ---
+    }
+
+    class PaymentService
+    {
+    }
+
+    class TimeProviderService
+    {
+    }
+}
+
+TimeProviderService <|-- ITimeProviderService
+ClientNotificationService <|-- IClientNotificationService
+DriverLocationService <|-- IDriverLocationService
+RideQueueService <|-- IRideQueueService
+PaymentService <|-- IPaymentService
+
+DriverLocationServicev *-- BebruberDatabaseContext
+DriverLocationServicev *-- DriverLocationServiceConfiguration
+DriverLocationServicev *-- ITimeProviderService
+DriverLocationServicev *-- IClientNotificationService
+
+@enduml

@@ -1,0 +1,10 @@
+@startuml Structure
+'https://plantuml.com/class-diagram
+
+!include Bebruber.Domain.puml
+!include Bebruber.Identity.puml
+!include Bebruber.Core.puml
+!include Bebruber.Endpoints.Shared.puml
+!include Bebruber.Application.Services.puml
+
+@enduml

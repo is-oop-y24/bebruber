@@ -1,0 +1,74 @@
+@startuml Structure
+'https://plantuml.com/class-diagram
+interface IActionService
+{
+    +User : UserToken
+    ---
+    +Initialize() : void
+    +Login(LoginModel model) : void
+    +Logout() : void
+    +RegisterDriver<TRegister>(TRegister model) : void
+    +RegisterClient<TRegister>(TRegister model) : void
+    +CheckRole(string role) : bool
+}
+
+interface IHttpService
+{
+    ---
+    +Get<T>(string uri) : T;
+    +Post(string uri, object value) : void;
+    +T Post<T>(string uri, object value) : T;
+    +Put(string uri, object value) : void;
+    +Put<T>(string uri, object value) : T;
+    +DeleteAsync(string uri) : void;
+    +DeleteAsync<T>(string uri) : T;
+}
+
+class LocationInfo
+{
+    +PlaceId : string
+    +Licence : string
+    +OsmType : string 
+    +OsmId : string
+    +Lat : string
+    +Lon : string
+    +DisplayName : string
+    +Address : Address
+    ---
+}
+
+class LoginModel
+{
+    +Email : string
+    +Password : string 
+    ---
+}
+
+class MapPoint
+{
+    +Latitude : double
+    +Longitude : double
+    ---
+}
+
+class Marker
+{
+    -_marker : FisSst.BlazorMaps.Marker
+    +Address : string
+    +Coordinates : MapPoint
+    +Tooltip : string
+    ---
+    +SetTooltip(string tooltip) : void
+    +RemoveTooltip() : void
+    +Delete() : void
+}
+
+class MarkerConfig
+{
+    +IconUrl : string
+    +IconSize : Point
+    +IconAnchor : Point
+    ---
+}
+
+@enduml

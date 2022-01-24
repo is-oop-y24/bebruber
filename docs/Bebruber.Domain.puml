@@ -1,0 +1,176 @@
+@startuml Structure
+'https://plantuml.com/class-diagram
+
+package Bebruber.Domain
+{
+    class Car
+    {
+        +Number : Number
+        +Brand : CarBrand
+        +Name : CarName
+        +Color : CarColor
+        +CarCategory : CarCategory
+        ---
+    }
+
+    class CardInfo
+    {
+        +CardNumber : CardNumber
+        +ExpirationDate : ExpirationDate
+        +CvvCode : CvvCode
+        ---
+    }
+
+    class Client
+    {
+        -_paymentMethods : CardInfo[]
+        -_rides : Ride[]
+        +Name : Name
+        +Rating : Rating
+        +PhoneNumber : PhoneNumber
+        +PaymentInfos : CardInfo[]
+        +Rides : Ride[]
+        ---
+        + RemovePaymentInfo(CardInfo cardInfo) : void
+        + AddRide(Ride ride) : void
+        + RemoveRide(Ride ride)
+    }
+
+    class Driver
+    {
+        -_rides : Ride[]
+        +Name : Name
+        +Rating : Rating
+        +PhoneNumber : PhoneNumber
+        +CardInfo : CardInfo
+        +Car : Car
+        +Rides : Ride[]
+        ---
+    }
+
+    class DriverLocation
+    {
+        +Driver: Driver
+        +Coordinate: Coordinate
+        +LastUpdateTime: DateTime
+        ---
+    }
+
+    class Ride
+    {
+        +State : RideState
+        +Client : Client
+        +Driver : Driver
+        +Cost : Roubles
+        +DateTime : DateTime
+        +Origin : Location
+        +Destination : Location
+        +IntermediatePoints : Location[]
+        ---
+    }
+
+    class RideEntry
+    {
+        +Origin : Location
+        +Destination : Location
+        +State : RideEntryState
+        +IntermediatePoints : Location[]
+        +DismissedDrivers : Driver[]
+        ---
+    }
+
+    Driver --o DriverLocation
+    Driver --o Ride
+    Driver --o DismissedDrivers
+    Client --o Ride
+
+    class RideContext
+    {
+        +Client : Client
+        +Driver : Driver
+        +Route : Route
+        +Origin : Location
+        +Destination : Location
+        +IntermediatePoints : Location[]
+        ---
+    }
+
+    class Route
+    {
+        -_sectors : RouteSector[]
+        +Count : int
+        ---
+    }
+
+    class RouteSector
+    {
+        +Length : double
+        +Begin : Coordinate
+        +End : Coordinate
+        +LoadLevel : LoadLevel
+    }
+
+    RouteSector --o Route
+
+    interface IClientNotificationService
+    {
+        ---
+        +PostDriverCoordinates(Client client, Coordinate coordinate, CancellationToken cancellationToken) : void
+        +NotifyDriverFound(Client client, CancellationToken cancellationToken) : void
+        +NotifyDriverArrived(Client client, CancellationToken cancellationToken) : void
+        +NotifyRideStarted(Client client, CancellationToken cancellationToken) : void
+        +NotifyRideFinished(Client client,   CancellationToken cancellationToken) : void
+    }
+
+    interface IDriverLocationService
+    {
+        ---
+        +GetDriversNearby(Coordinate coordinate, CancellationToken cancellationToken) : Driver[]
+        +UpdateDriverLocation(Driver driver, Coordinate coordinate, CancellationToken cancellationToken) : void
+        +SubscribeToLocationUpdatesAsync(Driver driver, Client client, CancellationToken cancellationToken) : void
+        +UnsubscribeFromLocationUpdatedAsync(Driver driver, Client client, CancellationToken cancellationToken) : void
+    }
+
+    interface IDriverNotificationService
+    {
+        ---
+        +OfferRideToDriver(Driver driver, RideEntry rideEntry, TimeSpan awaitingTimeSpan, CancellationToken cancellationToken) : void
+        +NotifySuccessfulAcceptance(Driver driver, Ride rideEntry, CancellationToken cancellationToken) : void
+        +NotifyFailedAcceptance(Driver driver, CancellationToken cancellationToken) : void
+    }
+
+    interface IPaymentService
+    {
+        ---
+        +Withdraw(CardInfo cardInfo, Roubles amount, CancellationToken cancellationToken) : void
+        +Accrue(CardInfo cardInfo, Roubles amount, CancellationToken cancellationToken) : void
+    }
+
+    interface IPricingService
+    {
+        ---
+        +Calculate(RideContext context) : Roubles
+    }
+
+    interface IRideQueueService
+    {
+        +EnqueueRideEntry(RideEntry rideEntry, CancellationToken cancellationToken) : void
+        +DequeueRideEntryAsync(Guid entryId, CancellationToken cancellationToken) : RideEntry
+        +DismissRideEntryAsync(Guid entryId, Driver driver, CancellationToken cancellationToken) : void
+    }
+
+    interface IRideService
+    {
+        +RegisterRideAsync(RideContext context, CancellationToken cancellationToken) : Ride
+        +SetRideDriverArrivedAsync(Ride ride, CancellationToken cancellationToken) : void
+        +StartRideAsync(Ride ride, CancellationToken cancellationToken) : void
+        +FinishRideAsync(Ride ride, CancellationToken cancellationToken) : void
+    }
+
+    interface IRouteService
+    {
+        +CreateRouteAsync(Location origin, Location destination, IReadOnlyCollection<Location> intermediatePoints) : Route
+    }
+}
+
+@enduml

@@ -1,0 +1,29 @@
+package Bebruber.Identity{
+    package Tools{
+        interface IJwtTokenGenerator{
+            ---
+            + CreateToken(user : ApplicationUser) : string
+        }
+        class JwtTokenGenerator{
+            ---
+            + JwtTokenGenerator(config : IConfiguration , userManager : UserManager<ApplicationUser>, signingConfigurations : SigningConfigurations , tokenOptions : JwtTokenOptions)
+        }
+        class JwtTokenOptions{
+            + Issuer : string
+            + Audience : string
+            ---
+        }
+        class SigningConfigurations{
+            + SecurityKey : SecurityKey
+            +  SigningCredentials : SigningCredentials
+            ---
+            + SigningConfigurations(key : string)
+        }
+    }
+    class ApplicationUser{
+        + ModelType : Type?
+        + ModelId : Guid
+        ---
+    }
+}
+JwtTokenGenerator--|>IJwtTokenGenerator
