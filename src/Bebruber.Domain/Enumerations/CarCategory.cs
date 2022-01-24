@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Bebruber.Domain.Enumerations.Exceptions;
 using Bebruber.Domain.Tools;
 
 namespace Bebruber.Domain.Enumerations;
@@ -14,18 +14,14 @@ public class CarCategory : Enumeration<int, CarCategory>
     public static CarCategory Comfort => new CarCategory(nameof(Comfort), 2);
     public static CarCategory Business => new CarCategory(nameof(Business), 3);
 
-    public static CarCategory Parse(string value)
+    public static CarCategory Parse(string name)
     {
-        switch (value.ToLower())
+        return name switch
         {
-            case "economy":
-                return Economy;
-            case "comfort":
-                return Comfort;
-            case "business":
-                return Business;
-            default:
-                throw new ArgumentOutOfRangeException(value);
-        }
+            nameof(Economy) => Economy,
+            nameof(Comfort) => Comfort,
+            nameof(Business) => Business,
+            _ => throw new EnumerationParseException<string>(nameof(CarCategory), name),
+        };
     }
 }

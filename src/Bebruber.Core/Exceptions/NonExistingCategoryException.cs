@@ -6,7 +6,5 @@ namespace Bebruber.Core.Exceptions;
 public class NonExistingCategoryException : BebruberException
 {
     public NonExistingCategoryException(CarCategory category)
-        : base($"{nameof(CarCategory)} {category} does not exists")
-    {
-    }
+        : base($"{nameof(CarCategory)} {category} does not exists") { }
 }
