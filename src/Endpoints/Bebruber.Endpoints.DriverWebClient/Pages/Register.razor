@@ -4,6 +4,7 @@
 @inject IJSRuntime _js
 @inject NavigationManager _navigationManager
 @inject IAccountService _accountService
+@inject IHttpService _httpService
 
 <div class="card">
     <h4 class="card-header" style="background-color: #ffffff">Регистрация</h4>
@@ -65,12 +66,19 @@
                 <InputText @bind-Value="_model.CarNumber" placeholder="A001AA198"  class="form-control"/>
                 <ValidationMessage For="@(() => _model.CarNumber)" />
             </div>
-
-            @* TODO: fix this shit(maybe dropdownlist)*@
+            
             <div class="form-group">
                 <label>Категория автомобиля</label>
-                <InputText @bind-Value="_model.CarCategory" placeholder="Business" class="form-control"/>
-                <ValidationMessage For="@(() => _model.CarCategory)" />
+                @if (_taxiCategories is not null)
+                {
+                    <div class="btn-group btn-group-toggle d-flex" role="group" data-toggle="buttons">
+                        @foreach (var category in _taxiCategories) {
+                            <label class="btn btn-outline-primary">
+                                <input type="radio" name="options" id="tariff-economy" @onclick="() => {_model.CarCategory=category;}"> @category
+                            </label>
+                        }
+                    </div>
+                }
             </div>
             
             <div class="form-group">
@@ -129,6 +137,12 @@
     private bool _loading;
     private string _passwordFieldType = "password";
     private string _buttonText = "Показать пароль";
+    private List<string> _taxiCategories;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        _taxiCategories = await _httpService.GetAsync<List<string>>("/cars/categories");
+    }
 
     private async Task OnValidSubmit()
     {
