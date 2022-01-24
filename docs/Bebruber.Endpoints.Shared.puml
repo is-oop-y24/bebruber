@@ -3,6 +3,7 @@
 interface IActionService
 {
     +User : UserToken
+    ---
     +Initialize() : void
     +Login(LoginModel model) : void
     +Logout() : void
@@ -13,37 +14,41 @@ interface IActionService
 
 interface IHttpService
 {
-    Get<T>(string uri) : T;
-    Post(string uri, object value) : void;
-    T Post<T>(string uri, object value) : T;
-    Put(string uri, object value) : void;
-    Put<T>(string uri, object value) : T;
-    DeleteAsync(string uri) : void;
-    DeleteAsync<T>(string uri) : T;
+    ---
+    +Get<T>(string uri) : T;
+    +Post(string uri, object value) : void;
+    +T Post<T>(string uri, object value) : T;
+    +Put(string uri, object value) : void;
+    +Put<T>(string uri, object value) : T;
+    +DeleteAsync(string uri) : void;
+    +DeleteAsync<T>(string uri) : T;
 }
 
 class LocationInfo
 {
-    PlaceId : string
-    Licence : string
-    OsmType : string 
-    OsmId : string
-    Lat : string
-    Lon : string
-    DisplayName : string
-    Address : Address
+    +PlaceId : string
+    +Licence : string
+    +OsmType : string 
+    +OsmId : string
+    +Lat : string
+    +Lon : string
+    +DisplayName : string
+    +Address : Address
+    ---
 }
 
 class LoginModel
 {
-    Email : string
-    Password : string 
+    +Email : string
+    +Password : string 
+    ---
 }
 
 class MapPoint
 {
-    Latitude : double
-    Longitude : double
+    +Latitude : double
+    +Longitude : double
+    ---
 }
 
 class Marker
@@ -52,6 +57,7 @@ class Marker
     +Address : string
     +Coordinates : MapPoint
     +Tooltip : string
+    ---
     +SetTooltip(string tooltip) : void
     +RemoveTooltip() : void
     +Delete() : void
@@ -59,9 +65,10 @@ class Marker
 
 class MarkerConfig
 {
-    IconUrl : string
-    IconSize : Point
-    IconAnchor : Point
+    +IconUrl : string
+    +IconSize : Point
+    +IconAnchor : Point
+    ---
 }
 
 @enduml

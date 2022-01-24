@@ -10,6 +10,7 @@ package Bebruber.Domain
         +Name : CarName
         +Color : CarColor
         +CarCategory : CarCategory
+        ---
     }
 
     class CardInfo
@@ -17,6 +18,7 @@ package Bebruber.Domain
         +CardNumber : CardNumber
         +ExpirationDate : ExpirationDate
         +CvvCode : CvvCode
+        ---
     }
 
     class Client
@@ -28,10 +30,10 @@ package Bebruber.Domain
         +PhoneNumber : PhoneNumber
         +PaymentInfos : CardInfo[]
         +Rides : Ride[]
-        
-        RemovePaymentInfo(CardInfo cardInfo) : void
-        AddRide(Ride ride) : void
-        RemoveRide(Ride ride)
+        ---
+        + RemovePaymentInfo(CardInfo cardInfo) : void
+        + AddRide(Ride ride) : void
+        + RemoveRide(Ride ride)
     }
 
     class Driver
@@ -43,6 +45,7 @@ package Bebruber.Domain
         +CardInfo : CardInfo
         +Car : Car
         +Rides : Ride[]
+        ---
     }
 
     class DriverLocation
@@ -50,6 +53,7 @@ package Bebruber.Domain
         +Driver: Driver
         +Coordinate: Coordinate
         +LastUpdateTime: DateTime
+        ---
     }
 
     class Ride
@@ -61,7 +65,8 @@ package Bebruber.Domain
         +DateTime : DateTime
         +Origin : Location
         +Destination : Location
-        +IntermediatePoints : Location[] 
+        +IntermediatePoints : Location[]
+        ---
     }
 
     class RideEntry
@@ -71,6 +76,7 @@ package Bebruber.Domain
         +State : RideEntryState
         +IntermediatePoints : Location[]
         +DismissedDrivers : Driver[]
+        ---
     }
 
     Driver --o DriverLocation
@@ -86,12 +92,14 @@ package Bebruber.Domain
         +Origin : Location
         +Destination : Location
         +IntermediatePoints : Location[]
+        ---
     }
 
     class Route
     {
         -_sectors : RouteSector[]
         +Count : int
+        ---
     }
 
     class RouteSector
@@ -99,64 +107,69 @@ package Bebruber.Domain
         +Length : double
         +Begin : Coordinate
         +End : Coordinate
-        :LoadLevel : LoadLevel
+        +LoadLevel : LoadLevel
     }
 
     RouteSector --o Route
 
     interface IClientNotificationService
     {
-        PostDriverCoordinates(Client client, Coordinate coordinate, CancellationToken cancellationToken) : void
-        NotifyDriverFound(Client client, CancellationToken cancellationToken) : void
-        NotifyDriverArrived(Client client, CancellationToken cancellationToken) : void
-        NotifyRideStarted(Client client, CancellationToken cancellationToken) : void
-        NotifyRideFinished(Client client,   CancellationToken cancellationToken) : void
+        ---
+        +PostDriverCoordinates(Client client, Coordinate coordinate, CancellationToken cancellationToken) : void
+        +NotifyDriverFound(Client client, CancellationToken cancellationToken) : void
+        +NotifyDriverArrived(Client client, CancellationToken cancellationToken) : void
+        +NotifyRideStarted(Client client, CancellationToken cancellationToken) : void
+        +NotifyRideFinished(Client client,   CancellationToken cancellationToken) : void
     }
 
     interface IDriverLocationService
     {
-        GetDriversNearby(Coordinate coordinate, CancellationToken cancellationToken) : Driver[]
-        UpdateDriverLocation(Driver driver, Coordinate coordinate, CancellationToken cancellationToken) : void
-        SubscribeToLocationUpdatesAsync(Driver driver, Client client, CancellationToken cancellationToken) : void
-        UnsubscribeFromLocationUpdatedAsync(Driver driver, Client client, CancellationToken cancellationToken) : void
+        ---
+        +GetDriversNearby(Coordinate coordinate, CancellationToken cancellationToken) : Driver[]
+        +UpdateDriverLocation(Driver driver, Coordinate coordinate, CancellationToken cancellationToken) : void
+        +SubscribeToLocationUpdatesAsync(Driver driver, Client client, CancellationToken cancellationToken) : void
+        +UnsubscribeFromLocationUpdatedAsync(Driver driver, Client client, CancellationToken cancellationToken) : void
     }
 
     interface IDriverNotificationService
     {
-        OfferRideToDriver(Driver driver, RideEntry rideEntry, TimeSpan awaitingTimeSpan, CancellationToken cancellationToken) : void
-        NotifySuccessfulAcceptance(Driver driver, Ride rideEntry, CancellationToken cancellationToken) : void
-        NotifyFailedAcceptance(Driver driver, CancellationToken cancellationToken) : void
+        ---
+        +OfferRideToDriver(Driver driver, RideEntry rideEntry, TimeSpan awaitingTimeSpan, CancellationToken cancellationToken) : void
+        +NotifySuccessfulAcceptance(Driver driver, Ride rideEntry, CancellationToken cancellationToken) : void
+        +NotifyFailedAcceptance(Driver driver, CancellationToken cancellationToken) : void
     }
 
     interface IPaymentService
     {
-        Withdraw(CardInfo cardInfo, Roubles amount, CancellationToken cancellationToken) : void
-        Accrue(CardInfo cardInfo, Roubles amount, CancellationToken cancellationToken) : void
+        ---
+        +Withdraw(CardInfo cardInfo, Roubles amount, CancellationToken cancellationToken) : void
+        +Accrue(CardInfo cardInfo, Roubles amount, CancellationToken cancellationToken) : void
     }
 
     interface IPricingService
     {
-        Calculate(RideContext context) : Roubles
+        ---
+        +Calculate(RideContext context) : Roubles
     }
 
     interface IRideQueueService
     {
-        EnqueueRideEntry(RideEntry rideEntry, CancellationToken cancellationToken) : void
-        DequeueRideEntryAsync(Guid entryId, CancellationToken cancellationToken) : RideEntry
-        DismissRideEntryAsync(Guid entryId, Driver driver, CancellationToken cancellationToken) : void
+        +EnqueueRideEntry(RideEntry rideEntry, CancellationToken cancellationToken) : void
+        +DequeueRideEntryAsync(Guid entryId, CancellationToken cancellationToken) : RideEntry
+        +DismissRideEntryAsync(Guid entryId, Driver driver, CancellationToken cancellationToken) : void
     }
 
     interface IRideService
     {
-        RegisterRideAsync(RideContext context, CancellationToken cancellationToken) : Ride
-        SetRideDriverArrivedAsync(Ride ride, CancellationToken cancellationToken) : void
-        StartRideAsync(Ride ride, CancellationToken cancellationToken) : void
-        FinishRideAsync(Ride ride, CancellationToken cancellationToken) : void
+        +RegisterRideAsync(RideContext context, CancellationToken cancellationToken) : Ride
+        +SetRideDriverArrivedAsync(Ride ride, CancellationToken cancellationToken) : void
+        +StartRideAsync(Ride ride, CancellationToken cancellationToken) : void
+        +FinishRideAsync(Ride ride, CancellationToken cancellationToken) : void
     }
 
     interface IRouteService
     {
-        CreateRouteAsync(Location origin, Location destination, IReadOnlyCollection<Location> intermediatePoints) : Route
+        +CreateRouteAsync(Location origin, Location destination, IReadOnlyCollection<Location> intermediatePoints) : Route
     }
 }
 
