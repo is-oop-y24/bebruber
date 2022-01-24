@@ -17,7 +17,7 @@ public class DriverLocation : Entity<DriverLocation>
     protected DriverLocation() { }
 
     public virtual Driver Driver { get; private init; }
-    public Coordinate Coordinate { get; set; }
+    public virtual Coordinate Coordinate { get; set; }
     public DateTime LastUpdateTime { get; set; }
 
     public override string ToString()

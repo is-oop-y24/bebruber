@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bebruber.DataAccess.Seeding\Bebruber.DataAccess.Seeding.csproj" />
     <ProjectReference Include="..\Bebruber.Domain\Bebruber.Domain.csproj" />
     <ProjectReference Include="..\Bebruber.Identity\Bebruber.Identity.csproj" />
   </ItemGroup>

@@ -9,7 +9,6 @@ internal class CarConfiguration : EntityConfiguration<Car>
 {
     protected override void ConfigureEntity(EntityTypeBuilder<Car> builder)
     {
-        // builder.HasOne(c => c.Owner);
         builder.OwnsOne(d => d.Number).ConfigureCarNumber();
         builder.OwnsOne(c => c.Brand);
         builder.OwnsOne(c => c.Name);

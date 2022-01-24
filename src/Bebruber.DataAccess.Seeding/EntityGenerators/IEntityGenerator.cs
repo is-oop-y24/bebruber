@@ -4,5 +4,5 @@ namespace Bebruber.DataAccess.Seeding.EntityGenerators;
 
 public interface IEntityGenerator
 {
-    void Seed(ModelBuilder modelBuilder);
+    void Seed(BebruberDatabaseContext context);
 }

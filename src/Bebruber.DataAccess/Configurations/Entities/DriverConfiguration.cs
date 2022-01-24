@@ -1,3 +1,4 @@
+using Bebruber.DataAccess.Configurations.ValueObjects;
 using Bebruber.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,7 +10,6 @@ internal class DriverConfiguration : EntityConfiguration<Driver>
     {
         builder.OwnsOne(d => d.Name);
         builder.OwnsOne(d => d.Rating);
-        builder.OwnsOne(d => d.PaymentAddress);
         builder.OwnsOne(d => d.PhoneNumber);
         builder.HasOne(d => d.CardInfo);
         builder.HasOne(d => d.Car);
