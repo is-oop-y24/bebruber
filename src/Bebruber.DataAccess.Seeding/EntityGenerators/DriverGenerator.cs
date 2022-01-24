@@ -29,25 +29,28 @@ public class DriverGenerator : IEntityGenerator
             new Rating(10),
             new CardInfo(new CardNumber("0000000000000000"), new ExpirationDate(2023, 10), new CvvCode("123")),
             carGenerator.Cars[0],
-            new PhoneNumber("88005553535"));
+            new PhoneNumber("88005553535"),
+            new Email("mud@bebra.com"));
 
         var secondDriver = new Driver(
             new Name("Bebra", "Vodila", "Sestra-Rodila"),
             new Rating(10),
             new CardInfo(new CardNumber("0000000000000000"), new ExpirationDate(2023, 10), new CvvCode("123")),
             carGenerator.Cars[1],
-            new PhoneNumber("88005553535"));
+            new PhoneNumber("88005553535"),
+            new Email("ses@bebra.com"));
 
         var thirdDriver = new Driver(
             new Name("Bebra", "Vodila", "Rossia-Pobedila"),
             new Rating(10),
             new CardInfo(new CardNumber("0000000000000000"), new ExpirationDate(2023, 10), new CvvCode("123")),
             carGenerator.Cars[2],
-            new PhoneNumber("88005553535"));
+            new PhoneNumber("88005553535"),
+            new Email("Ros@bebra.com"));
 
         var firstUser = new ApplicationUser
         {
-            Email = "mud@bebra.com",
+            Email = firstDriver.Email.Value,
             UserName = "MudBebra",
             ModelId = firstDriver.Id,
             ModelType = typeof(Driver),
@@ -55,7 +58,7 @@ public class DriverGenerator : IEntityGenerator
 
         var secondUser = new ApplicationUser
         {
-            Email = "ses@bebra.com",
+            Email = secondDriver.Email.Value,
             UserName = "SesBebra",
             ModelId = secondDriver.Id,
             ModelType = typeof(Driver),
@@ -63,7 +66,7 @@ public class DriverGenerator : IEntityGenerator
 
         var thirdUser = new ApplicationUser
         {
-            Email = "Ros@bebra.com",
+            Email = thirdDriver.Email.Value,
             UserName = "RosBebra",
             ModelId = thirdDriver.Id,
             ModelType = typeof(Driver),

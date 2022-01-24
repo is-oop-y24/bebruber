@@ -26,21 +26,24 @@ public class ClientGenerator : IEntityGenerator
         var firstClient = new Client(
             new Name("Giant", "Bebra", "Lover"),
             new Rating(10),
-            new PhoneNumber("88005553535"));
+            new PhoneNumber("88005553535"),
+            new Email("Giant@bebra.love"));
 
         var secondClient = new Client(
             new Name("Mega", "Bebra", "Lover"),
             new Rating(10),
-            new PhoneNumber("88005553535"));
+            new PhoneNumber("88005553535"),
+            new Email("Mega@bebra.love"));
 
         var thirdClient = new Client(
             new Name("Omega", "Bebra", "Lover"),
             new Rating(10),
-            new PhoneNumber("88005553535"));
+            new PhoneNumber("88005553535"),
+            new Email("Omega@bebra.love"));
 
         var firstUser = new ApplicationUser
         {
-            Email = "Giant@bebra.love",
+            Email = firstClient.Email.Value,
             UserName = "GiantBebra",
             ModelId = firstClient.Id,
             ModelType = typeof(Client),
@@ -48,7 +51,7 @@ public class ClientGenerator : IEntityGenerator
 
         var secondUser = new ApplicationUser
         {
-            Email = "Mega@bebra.love",
+            Email = secondClient.Email.Value,
             UserName = "MegaBebra",
             ModelId = secondClient.Id,
             ModelType = typeof(Client),
@@ -56,7 +59,7 @@ public class ClientGenerator : IEntityGenerator
 
         var thirdUser = new ApplicationUser
         {
-            Email = "Omega@bebra.love",
+            Email = thirdClient.Email.Value,
             UserName = "OmegaBebra",
             ModelId = thirdClient.Id,
             ModelType = typeof(Client),

@@ -10,6 +10,7 @@ using Bebruber.DataAccess;
 using Bebruber.DataAccess.Seeding;
 using Bebruber.Domain.Entities;
 using Bebruber.Domain.Services;
+using Bebruber.Endpoints.SignalR;
 using Bebruber.Endpoints.SignalR.Users;
 using Bebruber.Identity;
 using Bebruber.Identity.Tools;
@@ -22,6 +23,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -169,6 +171,8 @@ namespace Bebruber.Endpoints.Server
                 .GetRequiredService<BebruberDatabaseSeeder>()
                 .Seed(provider.GetRequiredService<BebruberDatabaseContext>());
 #pragma warning restore ASP0000
+
+            services.AddScoped<IUserIdProvider, ClientIdProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

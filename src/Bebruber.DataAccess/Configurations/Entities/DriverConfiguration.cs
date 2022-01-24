@@ -11,6 +11,7 @@ internal class DriverConfiguration : EntityConfiguration<Driver>
         builder.OwnsOne(d => d.Name);
         builder.OwnsOne(d => d.Rating);
         builder.OwnsOne(d => d.PhoneNumber);
+        builder.OwnsOne(d => d.Email);
         builder.HasOne(d => d.CardInfo);
         builder.HasOne(d => d.Car);
         builder.Navigation(d => d.Rides).HasField("_rides");

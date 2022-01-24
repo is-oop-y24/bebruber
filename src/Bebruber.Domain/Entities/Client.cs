@@ -11,13 +11,14 @@ public class Client : Entity<Client>
     private readonly List<CardInfo> _paymentInfos;
     private readonly List<Ride> _rides;
 
-    public Client(Name name, Rating rating, PhoneNumber phoneNumber)
+    public Client(Name name, Rating rating, PhoneNumber phoneNumber, Email email)
     {
         _paymentInfos = new List<CardInfo>();
         _rides = new List<Ride>();
         Name = name.ThrowIfNull();
         Rating = rating.ThrowIfNull();
         PhoneNumber = phoneNumber.ThrowIfNull();
+        Email = email.ThrowIfNull();
     }
 
     protected Client() { }
@@ -25,6 +26,7 @@ public class Client : Entity<Client>
     public virtual Name Name { get; protected init; }
     public virtual Rating Rating { get; set; }
     public virtual PhoneNumber PhoneNumber { get; set; }
+    public virtual Email Email { get; set; }
     public virtual IReadOnlyCollection<CardInfo> PaymentInfos => _paymentInfos.AsReadOnly();
     public virtual IReadOnlyCollection<Ride> Rides => _rides.AsReadOnly();
 
